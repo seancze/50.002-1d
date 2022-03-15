@@ -1,0 +1,202 @@
+module shifterTester (
+    input clk,  // clock
+    input rst,  // reset
+    input start,
+    output status[2], // 0 = not done; 1 = pass; 2 = fail
+    output out[16]
+  ) {
+  
+  //shifter module
+  shifter shift;
+ 
+  //connecting clock signal of dff and fsm to clock signal above
+  //fsm with 4 states IDLE(not doing anything), TEST(Testing in progess), PASS(Testing has completed successfully), FAIL(Testing has completed unsuccessfully)
+  fsm currentstate (.clk(clk), .rst(rst)) = {IDLE, TEST, PASS, FAIL};
+  //4bit dff = 4x1 bit dff. 4 bits used as testing 13 cases
+  dff counter[4](.clk(clk), .rst(rst));
+
+  always {
+    shift.a = 0;
+    shift.b = 0;
+    shift.alufn[0] = 0;
+    shift.alufn[1] = 0;
+    status = 0;
+    
+    //while start signal not given, remain idle, do nothing
+    if(start == 0){
+      //change state to idle
+      currentstate.d = currentstate.IDLE;
+      //set status to 0 as shift test not done
+      status = 0;
+    }
+    
+    else{
+    //Specify what happens when start == 1 in different states
+    case(currentstate.q){
+        //if currentstate is IDLE, change to test to start testing
+        currentstate.IDLE:
+          currentstate.d = currentstate.TEST;
+        //if currentstate is TEST, begin testing
+        currentstate.TEST:
+          //use dff to cycle through testcases
+          case(counter.q){
+            //test cases 1-4 test shift left 
+            //test case 1: shift FFFF left by 8
+            4b0001:
+              shift.alufn[0] = 0;
+              shift.alufn[1] = 0;
+              shift.a = 16hFFFF;
+              shift.b = 4b1000;
+              
+              if(shift.out != 16hFF00){
+                currentstate.d = currentstate.FAIL;
+              }
+            //testcase 2: shift FFFF left by 0
+            4b0010:
+              shift.alufn[0] = 0;
+              shift.alufn[1] = 0;
+              shift.a = 16hFFFF;
+              shift.b = 4b0000;
+              
+              if(shift.out != 16hFFFF){
+                currentstate.d = currentstate.FAIL;
+              }
+            //testcase 3: shift F0F0 left by 4
+            4b0011:
+              shift.alufn[0] = 0;
+              shift.alufn[1] = 0;
+              shift.a = 16hF0F0;
+              shift.b = 4b0100;
+              
+              if(shift.out != 16h0F00){
+                currentstate.d = currentstate.FAIL;
+              }
+            //testcase 4: shift F00F left by 15
+            4b0100:
+              shift.alufn[0] = 0;
+              shift.alufn[1] = 0;
+              shift.a = 16hF00F;
+              shift.b = 4b1111;
+              
+              if(shift.out != 16h8000){
+                currentstate.d = currentstate.FAIL;
+              }
+              
+              
+              
+            //test cases 5-8 test shift right
+            //test case 5: shift FFFF right by 8
+            4b0101:
+              shift.alufn[0] = 1;
+              shift.alufn[1] = 0;
+              shift.a = 16hFFFF;
+              shift.b = 4b1000;
+              
+              if(shift.out != 16h00FF){
+                currentstate.d = currentstate.FAIL;
+              }
+            //testcase 6: shift FFFF right by 0
+            4b0110:
+              shift.alufn[0] = 1;
+              shift.alufn[1] = 0;
+              shift.a = 16hFFFF;
+              shift.b = 4b0000;
+              
+              if(shift.out != 16hFFFF){
+                currentstate.d = currentstate.FAIL;
+              }
+            //testcase 7: shift F0F0 right by 4
+            4b0111:
+              shift.alufn[0] = 1;
+              shift.alufn[1] = 0;
+              shift.a = 16hF0F0;
+              shift.b = 4b0100;
+              
+              if(shift.out != 16h0F0F){
+                currentstate.d = currentstate.FAIL;
+              }
+            //testcase 8: shift F00F right by 15
+            4b1000:
+              shift.alufn[0] = 1;
+              shift.alufn[1] = 0;
+              shift.a = 16hF00F;
+              shift.b = 4b1111;
+              
+              if(shift.out != 16h0001){
+                currentstate.d = currentstate.FAIL;
+              }
+              
+              
+              
+            //test cases 9-13 test shift right arithmetic
+            //test case 9: shift FFFF right arithmetically by 8
+            4b1001:
+              shift.alufn[0] = 1;
+              shift.alufn[1] = 1;
+              shift.a = 16hFFFF;
+              shift.b = 4b1000;
+              
+              if(shift.out != 16hFFFF){
+                currentstate.d = currentstate.FAIL;
+              }
+            //testcase 10: shift FFFF right arithmetically by 0
+            4b1010:
+              shift.alufn[0] = 1;
+              shift.alufn[1] = 1;
+              shift.a = 16hFFFF;
+              shift.b = 4b0000;
+              
+              if(shift.out != 16hFFFF){
+                currentstate.d = currentstate.FAIL;
+              }
+            //testcase 11: shift F0F0 right arithmetically by 4
+            4b1011:
+              shift.alufn[0] = 1;
+              shift.alufn[1] = 1;
+              shift.a = 16hF0F0;
+              shift.b = 4b0100;
+              
+              if(shift.out != 16hFF0F){
+                currentstate.d = currentstate.FAIL;
+              }
+            //testcase 12: shift F00F right arithmetically by 15
+            4b1100:
+              shift.alufn[0] = 1;
+              shift.alufn[1] = 1;
+              shift.a = 16hF00F;
+              shift.b = 4b1111;
+              
+              if(shift.out != 16hFFFF){
+                currentstate.d = currentstate.FAIL;
+              }
+            //testcase 13: shift 1234 right arithmetically by 4
+            4b1101:
+              shift.alufn[0] = 1;
+              shift.alufn[1] = 1;
+              shift.a = 16h1234;
+              shift.b = 4b0100;
+              
+              if(shift.out != 16h0123){
+                currentstate.d = currentstate.FAIL;
+              }
+            
+            //if all above test case has not returned a fail, return pass  
+            4b1111:
+            currentstate.d = currentstate.PASS;
+            
+            
+        }
+        //if state is a pass, change status to 1
+        currentstate.PASS:
+          status = 1;
+        //if state is a fail, change status to 2
+        currentstate.FAIL:
+          status = 2;  
+
+      }
+    counter.d = counter.q+1;
+    }
+    out = shift.out;
+    
+  }
+}

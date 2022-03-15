@@ -1,0 +1,116 @@
+module au_top (
+    input clk,              // 100MHz clock
+    input rst_n,            // reset button (active low)
+    output led [8],         // 8 user controllable LEDs
+    input usb_rx,           // USB->Serial input
+    output usb_tx,          // USB->Serial output
+    output io_led [3][8],   // LEDs on IO Shield
+    output io_seg [8],      // 7-segment LEDs on IO Shield
+    output io_sel [4],      // Digit select on IO Shield
+    input io_button [5],    // 5 buttons on IO Shield
+    input io_dip [3][8]     // DIP switches on IO Shield
+  ) {
+
+    // TODO: Need to output z, v, n - DONE
+    // TODO: Fix manual not displaying - DONE
+    // TODO: Use a switch to always invert the LSB - DONE
+    // TODO: Make sure that auto test cases appear via LEDs - DONE
+    // TODO: Check if M is outputted correctly - DONE
+    // TODO: Implement test_case_enum + inv for all other components
+    // TODO: Change test cases numbers
+  
+  sig rst;                  // reset signal
+  
+  alu_tester manual(.clk(clk), .rst(rst));  // manual tester
+  auto_tester auto(.clk(clk), .rst(rst));  // auto tester
+  
+  button_conditioner buttoncond[4](.clk(clk));
+  edge_detector buttondetector[4](#RISE(1), #FALL(0), .clk(clk));
+  
+  multi_seven_seg seg(.clk(clk), .rst(rst));  // seven seg
+  
+  fsm tester(.clk(clk), .rst(rst)) = {MAN, AUTO};  // fsm to toggle between manual and auto tester
+  
+  .clk(clk) {
+    // The reset conditioner is used to synchronize the reset signal to the FPGA
+    // clock. This ensures the entire FPGA comes out of reset at the same time.
+    reset_conditioner reset_cond;
+  }
+  
+  always {
+    reset_cond.in = ~rst_n; // input raw inverted reset signal
+    rst = reset_cond.out;   // conditioned reset
+    
+    usb_tx = usb_rx;        // loop serial port
+        
+    led = 8h00;
+    io_led = 3x{{8h00}};    // turn LEDs off
+    io_seg = 8hff;          // turn segments off
+    io_sel = 4b0111;           // select first digit
+    
+    // Note: If all buttons are initialised, then 0: up, 1: middle, 2: down, 3: left, 4: right
+    buttoncond.in = io_button[4:1];  // 0: middle, 1: down, 2: left, 3: right
+    buttondetector.in = buttoncond.out;
+    
+    seg.values = {4d15, 4d15, 4d15, 4d15};
+    
+    // connect manual input
+    manual.button = buttondetector.out[1:0];  // 1: down, 0: middle
+    manual.inv = io_dip[0][0]; // Used to flip LSB (to set error)
+    manual.dip[15:8] = io_dip[2];
+    manual.dip[7:0] = io_dip[1];
+    
+    // connect auto input
+    auto.button[1:0] = buttondetector.out[3:2];  // 3: right, 2: left
+    auto.button[2] = buttondetector.out[0];  // middle
+    auto.inv = io_dip[0][0];
+    
+    io_led[0][0] = io_dip[0][0];
+        
+    case (tester.q) {
+      tester.MAN:
+        io_led[2] = manual.out[15:8];
+        io_led[1] = manual.out[7:0];
+        // seg.values[3:2] = {4d7, 4d0};
+        seg.values = manual.out_segs;
+        
+        if (buttondetector.out[0]) {  // press middle to toggle tester
+          tester.d = tester.AUTO;
+        }
+
+        io_seg = ~seg.seg;
+        io_sel = ~seg.sel;
+        
+      tester.AUTO:
+        if (auto.out_state == 0) {
+          seg.values = {4d0, 4d13, 4d12, 4d8};  // AUTO
+        }
+        else {
+          case(auto.out_state) {
+            1: 
+              seg.values[3:1] = {4d0, 4d3, 4d3};  // ADD
+              io_led[2] = auto.out_led[15:8];
+              io_led[1] = auto.out_led[7:0];
+            2: seg.values[3:1] = {4d2, 4d9, 4d10};  // CPR
+            3: seg.values[3:1] = {4d1, 4d8, 4d8};  // BOO
+            4: seg.values[3:1] = {4d11, 4d5, 4d12}; // SFT
+            5: seg.values[3:1] = {4d7, 4d13, 4d6};// MUL
+            6: seg.values[3:1] = {4d4, 4d10, 4d10}; // ERR
+          }
+          case(auto.out_status) {
+            1: seg.values[0] = 4d9;  // P for Pass
+            2: seg.values[0] = 4d5;  // F for Fail
+          }
+        }
+        
+        io_seg = ~seg.seg;
+        io_sel = ~seg.sel;
+        
+        if (buttondetector.out[0]) {  // press middle to toggle tester
+          tester.d = tester.MAN;
+        }
+    }
+    
+    
+  }
+}

@@ -1,0 +1,44 @@
+module adder (
+    input alufn0,
+    input a[16],
+    input b[16],
+    input inv[1],
+    output out[16],
+    output z,
+    output v,
+    output n
+  ) {
+  
+  //sum for adder  
+  sig sum[16];
+  
+  always {
+    // alufn = 0 add, alufn = 1 subtract
+    case (alufn0) {
+    // determine value of v (overflow) by checking the inputs
+      b0:
+        sum = a+b;
+        v = (a[15] & b[15] & ~sum[15]) | (~a[15] & ~b[15] & sum[15]); 
+      b1:
+        sum = a-b;
+        v = (a[15] & ~b[15] & ~sum[15]) | (~a[15] & b[15] & sum[15]);
+      default:
+        sum = a+b;
+        v = (a[15] & b[15] & ~sum[15]) | (~a[15] & b[15] & sum[15]);
+    }
+    
+    if (inv) {
+    out = sum[15:0] ^ 16b1;
+      } else {
+    out = sum[15:0];
+      }
+    
+    // n = true (sum is negative) when left most digit is 1
+    n = sum[15];
+    
+    // z = true (all outputs are 0)
+    // NOR operator to check if all outputs are 0
+    z = ~|sum;
+    
+  }
+}

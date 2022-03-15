@@ -1,0 +1,101 @@
+module alu_tester (  // tester module to test the 16-bit ALU
+    input clk,  // clock
+    input rst,  // reset
+    input button[2],  // buttons (0: middle, 1: down)
+    input dip[16],
+    input inv[1],
+    output out[16],
+    output out_segs[4][4]
+  ) {
+  // registers to store different input/output values
+  dff inputA[16](#INIT(0), .clk(clk), .rst(rst));
+  dff inputB[16](#INIT(0), .clk(clk), .rst(rst));
+  dff alufn[6](#INIT(0), .clk(clk), .rst(rst));
+  dff inputInv[1](#INIT(0), .clk(clk), .rst(rst));
+  dff result[16](#INIT(0), .clk(clk), .rst(rst));
+  dff segs[4][4](.clk(clk), .rst(rst));
+  
+  // FSM to control the input/output workflow
+  fsm control(.clk(clk), .rst(rst)) = {
+    WAITA,  // wait for input A
+    WAITB,  // wait for input B
+    WAITALUFN,  // wait for ALUFN input
+    GETRESULT  // show result
+  };
+  
+  alu aluunit;
+
+  always {
+    aluunit.a = inputA.q;
+    aluunit.b = inputB.q;
+    aluunit.alufn = alufn.q;
+    aluunit.inv = inputInv.q;
+
+    case (control.q) {
+      control.WAITA:
+        result.d = dip;
+        segs.d = {4d0, 4d15, 4d15, 4d15}; // segs display "A" for input A
+        // segs.d = 8b10001000;  
+        if (button[1]) {
+          inputA.d = dip;
+          control.d = control.WAITB;
+        }
+        else {
+          control.d = control.WAITA;
+        }
+        
+      control.WAITB:
+        result.d = dip;
+        segs.d = {4d1, 4d15, 4d15, 4d15}; // segs display "B" for input B
+        // segs.d = 8b10000011;  
+        if (button[1]) {
+          inputB.d = dip;
+          control.d = control.WAITALUFN;
+        }
+        else {
+          control.d = control.WAITB;
+        }
+        
+      control.WAITALUFN:
+        result.d[15:6] = 0;
+        result.d[5:0] = dip[5:0];
+        segs.d = {4d5, 4d15, 4d15, 4d15}; // segs display "F" for ALUFN
+        // segs.d = 8b10001110;  
+        if (button[1]) {
+          alufn.d = dip[5:0];
+          control.d = control.GETRESULT;
+          // To set inverse bit
+          inputInv.d = inv;
+        }
+        else {
+          control.d = control.WAITALUFN;
+        }
+        
+      control.GETRESULT:
+        result.d = aluunit.out;
+        segs.d = {4d8, aluunit.z, aluunit.v, aluunit.n}; // segs display "O", z==1 ? 'B' : 'A', v==1 ? 'B' : 'A', n==1 ? 'B' : 'A'
+        // segs.d = 8b11000000;  
+        if (button[1]) {
+          // reset all registers and go back to first state
+          inputA.d = 0;
+          inputB.d = 0;
+          alufn.d = 0;
+          result.d = 0;
+          control.d = control.WAITA;
+        }
+        else {
+          control.d = control.GETRESULT;
+        }
+    }
+    
+    if (button[0]) {  // middle button pressed, reset
+      inputA.d = 0;
+      inputB.d = 0;
+      alufn.d = 0;
+      result.d = 0;
+      control.d = control.WAITA;
+    }
+    out = result.q;
+    out_segs = segs.q;
+  }
+}

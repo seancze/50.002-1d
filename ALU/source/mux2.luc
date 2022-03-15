@@ -1,0 +1,11 @@
+module mux2 (
+    input alufn[4],               //defining inputs and outputs of module
+    input a,
+    input b,
+    output out
+
+  ) {
+
+  always {
+    out = alufn[$unsigned(c{b, a})];
+}

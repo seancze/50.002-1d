@@ -1,0 +1,30 @@
+module shifter (
+    input a[16],
+    input b[5],
+    input alufn[6],
+    output out[16]
+  ) {
+
+  var b_unsigned;
+  
+  always {
+    out = 0;
+    // allow b is be used as shift count
+    b_unsigned = $unsigned(b);
+    
+    // b00 = shift left
+    // b01 = shift right
+    // b11 = shift right arithmetic
+    
+    case(alufn[1:0]) {
+      // shift left
+      b00: out = a << b_unsigned;
+      // shift right
+      b01: out = a >> b_unsigned;
+      // shift right arithmetic
+      b11: out = $signed(a) >>> b_unsigned;
+      
+      }
+    
+  }
+}

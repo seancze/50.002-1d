@@ -1,0 +1,24 @@
+module boolean (
+    input a[16],
+    input b[16],
+    input alufn[4], // 5 control signal for each boolean operator
+    output out[16]
+  ) {
+
+  always {
+      
+    // 3 input for each boolean expression      
+    case(alufn[3:0]){
+      b1000: out = a & b;// AND
+      b1110: out = a | b; // OR
+      b1100: out = a ^ b; // XOR
+      b1010: out = a;  //"A"
+      b1100: out = b; //"B"
+      b0111: out = ~(a & b); //NAND
+      b0001: out = ~(a | b); //NOR
+      b1001: out = ~(a ^ b); // XNOR
+      default:
+        out = 16b0;  
+      }
+  }
+}

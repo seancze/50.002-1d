@@ -1,0 +1,78 @@
+module alu (  // 16 bit ALU unit
+    // input clk,  // clock
+    // input rst,  // reset
+    input alufn[6],
+    input a[16],
+    input b[16],
+    input inv[1],
+    output out[16],
+    output z[4],
+    output v[4], 
+    output n[4]
+  ) {
+  
+  // alu modules go here
+  comparator cmp;
+  adder add;
+  shifter shift;
+  boolean bool;
+  multiplier mult;
+  always {
+    // adder
+    add.alufn0 = alufn[0];
+    add.a = a;
+    add.b = b;
+    add.inv = inv; // Hopefully, flips LSB for manual testing
+    // boolean
+    bool.alufn = alufn[3:0];
+    bool.a = a;
+    bool.b = b;
+    // comparator
+    cmp.alufn[2] = alufn[2];
+    cmp.alufn[1] = alufn[1];
+    cmp.z = b0;
+    cmp.n = b0;
+    cmp.v = b0;
+    // shifter
+    shift.alufn[0] = alufn[0];
+    shift.alufn[1] = alufn[1];
+    shift.a = a;
+    shift.b = b[3:0];
+    // multiplier
+    mult.a = a;
+    mult.b = b;
+
+    // default values for z, v, n
+    z = 4b0;
+    v = 4b0;
+    n = 4b0;
+
+    case (alufn[5]) {
+      b0:
+        case (alufn[4]) {
+          b0: 
+            if (alufn[1]==b0) {
+              out = add.out; // add/sub
+              z = add.z;
+              v = add.v;
+              n = add.n;
+            }
+            else {
+              out = mult.out; // multiplier
+            }
+          b1: out = bool.out; // bool
+        }
+      b1:
+        case (alufn[4]) {
+          b0: out = shift.out; // shift 
+          b1: 
+            // assign z, n, v from adder to comparator
+            cmp.z = add.z; 
+            cmp.n = add.n;
+            cmp.v = add.v;
+            out = cmp.out; // cmp 
+       }
+   }
+  }
+}
+
