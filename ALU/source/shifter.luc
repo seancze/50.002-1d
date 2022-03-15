@@ -2,10 +2,12 @@ module shifter (
     input a[16],
     input b[5],
     input alufn[6],
+    input inv,
     output out[16]
   ) {
 
   var b_unsigned;
+  sig temp[16];
   
   always {
     out = 0;
@@ -18,12 +20,18 @@ module shifter (
     
     case(alufn[1:0]) {
       // shift left
-      b00: out = a << b_unsigned;
+      b00: temp = a << b_unsigned;
       // shift right
-      b01: out = a >> b_unsigned;
+      b01: temp = a >> b_unsigned;
       // shift right arithmetic
-      b11: out = $signed(a) >>> b_unsigned;
+      b11: temp = $signed(a) >>> b_unsigned;
+      default: temp = a << b_unsigned;
       
+      }
+    if (inv) {
+    out = temp ^ 16b1;}
+    else {
+      out = temp;
       }
     
   }

@@ -1,10 +1,16 @@
 module multiplier (
     input a[16],
     input b[16],
+    input inv,
     output out[16]
   ) {
 
   always {
-    out = a*b;
+  if (inv) {
+    out = (a*b) ^ 16b1;} else {
+      out = a*b;
+      
+      }
+    
   }
 }

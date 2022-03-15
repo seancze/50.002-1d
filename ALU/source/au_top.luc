@@ -89,18 +89,17 @@ module au_top (
           case(auto.out_state) {
             1: 
               seg.values[3:1] = {4d0, 4d3, 4d3};  // ADD
-              io_led[2] = auto.out_led[15:8];
-              io_led[1] = auto.out_led[7:0];
             2: seg.values[3:1] = {4d2, 4d9, 4d10};  // CPR
             3: seg.values[3:1] = {4d1, 4d8, 4d8};  // BOO
             4: seg.values[3:1] = {4d11, 4d5, 4d12}; // SFT
             5: seg.values[3:1] = {4d7, 4d13, 4d6};// MUL
-            6: seg.values[3:1] = {4d4, 4d10, 4d10}; // ERR
           }
           case(auto.out_status) {
             1: seg.values[0] = 4d9;  // P for Pass
             2: seg.values[0] = 4d5;  // F for Fail
           }
+          io_led[2] = auto.out_led[15:8];
+          io_led[1] = auto.out_led[7:0];
         }
         
         io_seg = ~seg.seg;

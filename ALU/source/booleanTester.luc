@@ -2,18 +2,23 @@ module booleanTester (
     input clk,  // clock
     input rst,  // reset
     input start, //to change from 0-1 in au_top(commencing test)
+    input inv,
     output status[2],
     output out[16]
   ) {
   
   dff counter[4] (.clk(clk) , .rst(rst));
-  fsm state (.clk(clk), .rst(rst)) = {IDLE, TEST, PASS, FAIL};
+  fsm state (.clk(clk), .rst(rst)) = {IDLE, TEST, PASS};
+  fsm track_failure (.clk(clk), .rst(rst)) = {NULL, FAIL_BEFORE};
   boolean bool;
+  
+  test_case_enum enum(.clk(clk), .rst(rst)); 
 
   always {
     status = 0;  // 0:start 1:correct 2:wrong
     bool.a = 0;
     bool.b = 0;
+    bool.inv = inv;
     bool.alufn = 0;
     
     if (start == 0){
@@ -25,6 +30,7 @@ module booleanTester (
         status = 0;
         if(start == 1){
           state.d = state.TEST;
+          track_failure.d = track_failure.NULL;
         }
         
         // using a = 42 and b = 24 as test case
@@ -32,71 +38,89 @@ module booleanTester (
       state.TEST: // test for all 4 operations
         case(counter.q){
           1:bool.alufn = 4b1000; //AND
-            bool.a = 16b101010; //42 
+            bool.a = 16b101010; //42
             bool.b = 16b011000; //24
+            status = 1;
             if( bool.out != 16b01000){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           2:bool.alufn = 4b1110; //OR
             bool.a = 16b101010; //42 
             bool.b = 16b011000; //24
+            status = 1;
             if ( bool.out != 16b111010){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           3:bool.alufn = 4b0110; //XOR
             bool.a = 16b101010; //42 
             bool.b = 16b011000; //24
+            status = 1;
             if (bool.out != 16b110010){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           4:bool.alufn = 4b1010; //"A"
             bool.a = 16b101010; //42
             bool.b = 16b011000; //24 
+            status = 1;
             if (bool.out != 16b101010){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           5:bool.alufn = 4b1100; // "B"
             bool.a = 16b101010; //42
             bool.b = 16b011000; //24
+            status = 1;
             if (bool.out != 16b011000){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           6:bool.alufn = 4b0111; // NAND
             bool.a = 16b101010; //42 
             bool.b = 16b011000; //24
+            status = 1;
             if (bool.out != 16hFFF7){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
           
           7:bool.alufn = 4b0001; // NOR
             bool.a = 16b101010; //42 
             bool.b = 16b011000; //24
+            status = 1;
             if (bool.out != 16hFFC5){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
           
           8:bool.alufn = 4b1001; // XNOR
             bool.a = 16b101010; //42 
             bool.b = 16b011000; //24
+            status = 1;
             if (bool.out != 16hFFCD){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           9:state.d = state.PASS;
         }
         
       state.PASS:
-        status = 1;
+        if(track_failure.q == track_failure.FAIL_BEFORE) {
+          status = 2;
+            } else {
+          status = 1;
+          }
         
-      state.FAIL:
-        status = 2;
     }    
-    counter.d = counter.q+1;
+    counter.d = enum.sel;
     out = bool.out; 
   }
 }

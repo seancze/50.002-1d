@@ -27,20 +27,24 @@ module alu (  // 16 bit ALU unit
     bool.alufn = alufn[3:0];
     bool.a = a;
     bool.b = b;
+    bool.inv = inv;
     // comparator
     cmp.alufn[2] = alufn[2];
     cmp.alufn[1] = alufn[1];
     cmp.z = b0;
     cmp.n = b0;
     cmp.v = b0;
+    cmp.inv = inv;
     // shifter
     shift.alufn[0] = alufn[0];
     shift.alufn[1] = alufn[1];
     shift.a = a;
     shift.b = b[3:0];
+    shift.inv = inv;
     // multiplier
     mult.a = a;
     mult.b = b;
+    mult.inv = inv;
 
     // default values for z, v, n
     z = 4b0;

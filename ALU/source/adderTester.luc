@@ -8,17 +8,17 @@ module adderTester (
     input rst,  // reset
     input start,
     input inv,
-    output io_led [3][8], 
     output status[2], // 0 - not started, 1 - pass, 2 - fail,
     output out[16]
 
   ) {
 
   // Create the 4 dffs for 4 bits
-  dff register[4](.clk(clk), .rst(rst));
+  dff register[31](.clk(clk), .rst(rst));
   
   // Declare the fsm states
-  fsm state (.clk(clk), .rst(rst)) = {IDLE, TESTING, PASS, FAIL};
+  fsm state (.clk(clk), .rst(rst)) = {IDLE, TESTING, PASS};
+  fsm track_failure (.clk(clk), .rst(rst)) = {NULL, FAIL_BEFORE};
 
   test_case_enum enum(.clk(clk), .rst(rst)); 
   
@@ -32,7 +32,6 @@ module adderTester (
     adder.b = 0;
     adder.inv = inv;
     adder.alufn0 = Func.ADD; // for addition
-    io_led = 3x{{8h00}};    // turn LEDs off
 
     
     // If testing has not started, state is still IDLE
@@ -46,6 +45,7 @@ module adderTester (
         status = 0;
         if(start == 1){
           state.d = state.TESTING;
+          track_failure.d = track_failure.NULL;
         }
       
       // Declare the test cases when state is TESTING
@@ -56,9 +56,11 @@ module adderTester (
             adder.a = 16h0000;
             adder.b = 16h0000;
             adder.alufn0 = Func.ADD;
+            status = 1;
             
             if (adder.out != 16h0000) {
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
           
           // ADD: pos + pos with overflow
@@ -66,9 +68,11 @@ module adderTester (
             adder.a = 16h8001;
             adder.b = 16h8000;
             adder.alufn0 = Func.ADD;
+            status = 1;
             
             if (adder.out != 16h0001) {
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           // ADD: pos + pos with NO overflow
@@ -76,9 +80,11 @@ module adderTester (
             adder.a = 16h0001;
             adder.b = 16h0001;
             adder.alufn0 = Func.ADD;
+            status = 1;
             
             if (adder.out != 16h0002) {
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           // ADD: pos + neg with overflow
@@ -86,9 +92,11 @@ module adderTester (
             adder.a = 16h0004; // 4
             adder.b = 16hFFFF; // -1
             adder.alufn0 = Func.ADD;
+            status = 1;
             
             if (adder.out != 16h0003) {
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
           
           // ADD: pos + neg with NO overflow
@@ -96,9 +104,11 @@ module adderTester (
             adder.a = 16h0001;
             adder.b = 16hF000;
             adder.alufn0 = Func.ADD;
+            status = 1;
             
             if (adder.out != 16hF001) {
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
             
@@ -107,9 +117,11 @@ module adderTester (
             adder.a = 16h0000;
             adder.b = 16h0000;
             adder.alufn0 = Func.SUB;
+            status = 1;
             
             if (adder.out != 16h0000) {
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           // SUB: pos - pos with NO overflow
@@ -117,9 +129,11 @@ module adderTester (
             adder.a = 16h0002;
             adder.b = 16h0001;
             adder.alufn0 = Func.SUB;
+            status = 1;
             
             if (adder.out != 16h0001) {
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           // SUB: pos - neg with overflow
@@ -127,9 +141,11 @@ module adderTester (
             adder.a = 16h7FFF;
             adder.b = 16h8001;
             adder.alufn0 = Func.SUB;
+            status = 1;
             
             if (adder.out != 16hFFFE) {
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
           
           // SUB: pos - neg with NO overflow
@@ -137,9 +153,11 @@ module adderTester (
             adder.a = 16h0001;
             adder.b = 16hFFFF;
             adder.alufn0 = Func.SUB;
+            status = 1;
             
             if (adder.out != 16h0002) {
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           // SUB: neg - pos with overflow
@@ -147,9 +165,11 @@ module adderTester (
             adder.a = 16h8000;
             adder.b = 16h0001;
             adder.alufn0 = Func.SUB;
+            status = 1;
             
             if (adder.out != 16h7FFF) {
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
           
           // SUB: neg - pos with NO overflow
@@ -157,9 +177,11 @@ module adderTester (
             adder.a = 16hFFFF;
             adder.b = 16h0001;
             adder.alufn0 = Func.SUB;
+            status = 1;
             
             if (adder.out != 16hFFFE) {
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           // SUB: neg - neg with NO overflow
@@ -167,9 +189,11 @@ module adderTester (
             adder.a = 16hFFFF;
             adder.b = 16hFFFF;
             adder.alufn0 = Func.SUB;
+            status = 1;
             
             if (adder.out != 16h0000) {
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           // TEST PASSED!
@@ -177,9 +201,11 @@ module adderTester (
             state.d = state.PASS;
         }
       state.PASS:
-         status = 1;
-      state.FAIL:
-         status = 2;
+         if(track_failure.q == track_failure.FAIL_BEFORE) {
+          status =2;
+            } else {
+          status = 1;
+          }
     } 
     
     // Increment the input terminal by 1

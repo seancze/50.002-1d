@@ -24,7 +24,6 @@ module auto_tester (
   booleanTester test_boole(.clk(clk), .rst(rst));
   shifterTester test_shifter(.clk(clk), .rst(rst));
   multiplierTester test_multiply(.clk(clk), .rst(rst));
-  errorTester test_error(.clk(clk), .rst(rst));
   
   fsm state(.clk(clk), .rst(rst)) = {IDLE, ADDER, COMPARATOR, BOOLEAN, SHIFTER, MULTIPLIER, ERROR};
   
@@ -32,11 +31,14 @@ module auto_tester (
     test_adder.start = 0;
     test_adder.inv = inv;
     test_compare.start = 0;
+    test_compare.inv = inv;
     test_boole.start = 0;
+    test_boole.inv = inv;
     test_shifter.start = 0;
+    test_shifter.inv = inv;
     test_multiply.start = 0;
-    test_error.start = 0;
-    
+    test_multiply.inv = inv;
+
     out_status = 2b00;
     out_state = state.q;
     out_led = 16b0;
@@ -46,7 +48,7 @@ module auto_tester (
       state.IDLE:
         out_status = 2b00;
         if (button[0]) {  // pressed left
-          state.d = state.ERROR;
+          state.d = state.MULTIPLIER;
         }
         else if (button[1]) {  // pressed right
           state.d = state.q + 1;
@@ -105,18 +107,9 @@ module auto_tester (
           state.d = state.q - 1;
         }
         else if (button[1]) {  // pressed right
-          state.d = state.q + 1;
-        }
-        
-      state.ERROR:  // ERROR test case, suppose to fail
-        test_error.start = 1;
-        out_status = test_error.status;
-        if (button[0]) {  // pressed left
-          state.d = state.q - 1;
-        }
-        else if (button[1]) {  // pressed right
           state.d = state.IDLE;
         }
+        
     }
  
     if (button[2]) {  // pressed middle, go back to idle

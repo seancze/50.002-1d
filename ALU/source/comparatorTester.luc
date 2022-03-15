@@ -2,6 +2,7 @@ module comparatorTester (
     input clk,  // clock
     input rst,  // reset
     input start,
+    input inv,
     output status[2], //0 = not done, 1=pass, 2 = fail
     output out[16]
   ) {
@@ -9,7 +10,10 @@ module comparatorTester (
   adder ad;
   comparator cmp;
   dff testNum[5](#INIT(0),.clk(clk),.rst(rst)); // 24 cases 5 bits 11000
-  fsm state (.clk(clk),.rst(rst)) = {IDLE,TEST,PASS,FAIL};
+  fsm state (.clk(clk),.rst(rst)) = {IDLE,TEST,PASS};
+  fsm track_failure (.clk(clk), .rst(rst)) = {NULL, FAIL_BEFORE};
+  
+  test_case_enum enum(#NUM_CASES(24), #SIZE(5), .clk(clk), .rst(rst)); 
 
   
 
@@ -24,6 +28,7 @@ module comparatorTester (
     cmp.z = ad.z;
     cmp.n = ad.n;
     cmp.v = ad.v;
+    cmp.inv = inv;
     
     status = 0;
     
@@ -36,6 +41,7 @@ module comparatorTester (
         status = 0;
         if(start==1){ //start test at next cycle
           state.d = state.TEST;
+          track_failure.d = track_failure.NULL;
           testNum.d = 0; 
          }
       state.TEST:
@@ -64,8 +70,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             } 
            h1: //test 1 == 1 pos=pos
             ad.a = 16h1;
@@ -75,8 +83,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }       
           h2: //test 0xFFFF == 0xFFFF neg=neg
             ad.a = 16hFFFF;
@@ -86,8 +96,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
            h3: //test 0x8 == 0xA pos<pos no overflow
             ad.a = 16h8;
@@ -97,8 +109,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=0){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
            
            h4: //test 0xFFFF == 1 neg<pos no overflow
@@ -109,8 +123,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=0){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
            
            h5: //test 0x8000 == 0x7FFF  neg<pos overflow
@@ -121,8 +137,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=0){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
             h6: //test 0xFFFE == 0xFFFF  neg<neg no overflow
@@ -133,8 +151,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=0){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
            h7: //test 0 == 0xFFFF a>b
             ad.a = 16h0;
@@ -144,8 +164,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=0){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
            
@@ -160,8 +182,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=0){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             } 
            h9: //test 1 < 1 pos=pos
             ad.a = 16h1;
@@ -171,8 +195,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=0){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }       
           hA: //test 0xFFFF < 0xFFFF neg=neg
             ad.a = 16hFFFF;
@@ -182,8 +208,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=0){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
            hB: //test 0x8 < 0xA pos<pos no overflow
             ad.a = 16h8;
@@ -193,8 +221,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
            hC: //test 0xFFFF < 1 neg<pos no overflow
             ad.a = 16hFFFF;
@@ -204,8 +234,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
            hD: //test 0x8000 < 0x7FFF  neg<pos overflow
             ad.a = 16h8000;
@@ -215,8 +247,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             hE: //test 0xFFFE < 0xFFFF  neg<neg no overflow
             ad.a = 16hFFFE;
@@ -226,8 +260,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
            hF: //test 0 < 0xFFFF a>b
             ad.a = 16h0;
@@ -237,8 +273,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=0){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             
           //****************************************  
@@ -251,8 +289,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             } 
            h11: //test 1 <= 1 pos=pos
             ad.a = 16h1;
@@ -262,8 +302,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }       
           h12: //test 0xFFFF <= 0xFFFF neg=neg
             ad.a = 16hFFFF;
@@ -273,8 +315,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
            h13: //test 0x8 <=0xA pos<pos no overflow
             ad.a = 16h8;
@@ -284,8 +328,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
            h14: //test 0xFFFF <=1 neg<pos no overflow
             ad.a = 16hFFFF;
@@ -295,8 +341,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
            h15: //test 0x8000 <= 0x7FFF  neg<pos overflow
             ad.a = 16h8000;
@@ -306,8 +354,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
             h16: //test 0xFFFE <= 0xFFFF  neg<neg no overflow
             ad.a = 16hFFFE;
@@ -317,8 +367,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=1){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
            h17: //test 0 <= 0xFFFF a>b
             ad.a = 16h0;
@@ -328,8 +380,10 @@ module comparatorTester (
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
+            status = 1;
             if(cmp.out[0]!=0){
-              state.d = state.FAIL;
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
             }
          
            
@@ -338,11 +392,14 @@ module comparatorTester (
           h18:
             state.d = state.PASS;
           }
-        testNum.d = testNum.q+1; // incremenet for next case 
+        testNum.d = enum.sel; // incremenet for next case 
       state.PASS:
-        status = 1;
-      state.FAIL:
-        status = 2;
+        if(track_failure.q == track_failure.FAIL_BEFORE) {
+          status = 2;
+            } else {
+          status = 1;
+          }
+
      } 
 
      out = cmp.out;
