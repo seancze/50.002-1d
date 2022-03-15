@@ -17,7 +17,6 @@
     <src>multiplier.luc</src>
     <component>decoder.luc</component>
     <src>multiplierTester.luc</src>
-    <src>rom.luc</src>
     <src>comparator.luc</src>
     <src>shifter.luc</src>
     <src>booleanTester.luc</src>

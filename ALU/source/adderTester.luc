@@ -8,6 +8,7 @@ module adderTester (
     input rst,  // reset
     input start,
     input inv,
+    input reset_button,
     output status[2], // 0 - not started, 1 - pass, 2 - fail,
     output out[16]
 
@@ -20,7 +21,7 @@ module adderTester (
   fsm state (.clk(clk), .rst(rst)) = {IDLE, TESTING, PASS};
   fsm track_failure (.clk(clk), .rst(rst)) = {NULL, FAIL_BEFORE};
 
-  test_case_enum enum(.clk(clk), .rst(rst)); 
+  test_case_enum enum(.clk(clk), .rst(reset_button)); 
   
   // Import the adder
   adder adder;
@@ -52,7 +53,7 @@ module adderTester (
       state.TESTING:
         case(register.q) {
           // ADD: 0 + 0
-          4b0000:
+          1:
             adder.a = 16h0000;
             adder.b = 16h0000;
             adder.alufn0 = Func.ADD;
@@ -64,7 +65,7 @@ module adderTester (
             }
           
           // ADD: pos + pos with overflow
-          4b0001:
+          2:
             adder.a = 16h8001;
             adder.b = 16h8000;
             adder.alufn0 = Func.ADD;
@@ -76,7 +77,7 @@ module adderTester (
             }
             
           // ADD: pos + pos with NO overflow
-          4b0010:
+          3:
             adder.a = 16h0001;
             adder.b = 16h0001;
             adder.alufn0 = Func.ADD;
@@ -88,7 +89,7 @@ module adderTester (
             }
             
           // ADD: pos + neg with overflow
-          4b0011:
+          4:
             adder.a = 16h0004; // 4
             adder.b = 16hFFFF; // -1
             adder.alufn0 = Func.ADD;
@@ -100,7 +101,7 @@ module adderTester (
             }
           
           // ADD: pos + neg with NO overflow
-          4b0100:
+          5:
             adder.a = 16h0001;
             adder.b = 16hF000;
             adder.alufn0 = Func.ADD;
@@ -113,7 +114,7 @@ module adderTester (
             
             
           // SUB: 0 - 0
-          4b0101:
+          6:
             adder.a = 16h0000;
             adder.b = 16h0000;
             adder.alufn0 = Func.SUB;
@@ -125,7 +126,7 @@ module adderTester (
             }
             
           // SUB: pos - pos with NO overflow
-          4b0110:
+          7:
             adder.a = 16h0002;
             adder.b = 16h0001;
             adder.alufn0 = Func.SUB;
@@ -137,7 +138,7 @@ module adderTester (
             }
             
           // SUB: pos - neg with overflow
-          4b0111:
+          8:
             adder.a = 16h7FFF;
             adder.b = 16h8001;
             adder.alufn0 = Func.SUB;
@@ -149,7 +150,7 @@ module adderTester (
             }
           
           // SUB: pos - neg with NO overflow
-          4b1000:
+          9:
             adder.a = 16h0001;
             adder.b = 16hFFFF;
             adder.alufn0 = Func.SUB;
@@ -161,7 +162,7 @@ module adderTester (
             }
             
           // SUB: neg - pos with overflow
-          4b1001:
+          10:
             adder.a = 16h8000;
             adder.b = 16h0001;
             adder.alufn0 = Func.SUB;
@@ -173,7 +174,7 @@ module adderTester (
             }
           
           // SUB: neg - pos with NO overflow
-          4b1010:
+          11:
             adder.a = 16hFFFF;
             adder.b = 16h0001;
             adder.alufn0 = Func.SUB;
@@ -185,7 +186,7 @@ module adderTester (
             }
             
           // SUB: neg - neg with NO overflow
-          4b1011:
+          12:
             adder.a = 16hFFFF;
             adder.b = 16hFFFF;
             adder.alufn0 = Func.SUB;
@@ -197,7 +198,7 @@ module adderTester (
             }
             
           // TEST PASSED!
-          4b1100:
+          13:
             state.d = state.PASS;
         }
       state.PASS:
@@ -205,6 +206,9 @@ module adderTester (
           status =2;
             } else {
           status = 1;
+          }
+        if(reset_button) {
+          state.d = state.TESTING;
           }
     } 
     

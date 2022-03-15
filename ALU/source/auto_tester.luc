@@ -1,7 +1,7 @@
 module auto_tester (
     input clk,  // clock
     input rst,  // reset
-    input button[3],  // three buttons (0: left, 1: right, 2: middle)
+    input button[4],  // three buttons (0: left, 1: right, 2: middle)
     input inv[1],
     output out_state[3],  // current testing state
     // 0: idle
@@ -30,14 +30,19 @@ module auto_tester (
   always {
     test_adder.start = 0;
     test_adder.inv = inv;
+    test_adder.reset_button = button[3];
     test_compare.start = 0;
     test_compare.inv = inv;
+    test_compare.reset_button = button[3];
     test_boole.start = 0;
     test_boole.inv = inv;
+    test_boole.reset_button = button[3];
     test_shifter.start = 0;
     test_shifter.inv = inv;
+    test_shifter.reset_button = button[3];
     test_multiply.start = 0;
     test_multiply.inv = inv;
+    test_multiply.reset_button = button[3];
 
     out_status = 2b00;
     out_state = state.q;

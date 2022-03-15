@@ -3,6 +3,7 @@ module shifterTester (
     input rst,  // reset
     input start,
     input inv,
+    input reset_button,
     output status[2], // 0 = not done; 1 = pass; 2 = fail
     output out[16]
   ) {
@@ -17,7 +18,7 @@ module shifterTester (
   //4bit dff = 4x1 bit dff. 4 bits used as testing 13 cases
   dff counter[4](.clk(clk), .rst(rst));
   
-  test_case_enum enum(.clk(clk), .rst(rst)); 
+  test_case_enum enum(.clk(clk), .rst(reset_button)); 
 
   always {
     shift.a = 0;
@@ -214,7 +215,7 @@ module shifterTester (
               }
             
             //if all above test case has not returned a fail, return pass  
-            4b1111:
+            4b1110:
             currentstate.d = currentstate.PASS;
             
             
@@ -225,6 +226,9 @@ module shifterTester (
           status = 2;
             } else {
           status = 1;
+          }
+          if(reset_button) {
+          currentstate.d = currentstate.TEST;
           }
           
 

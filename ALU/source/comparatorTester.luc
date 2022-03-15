@@ -3,6 +3,7 @@ module comparatorTester (
     input rst,  // reset
     input start,
     input inv,
+    input reset_button,
     output status[2], //0 = not done, 1=pass, 2 = fail
     output out[16]
   ) {
@@ -13,7 +14,7 @@ module comparatorTester (
   fsm state (.clk(clk),.rst(rst)) = {IDLE,TEST,PASS};
   fsm track_failure (.clk(clk), .rst(rst)) = {NULL, FAIL_BEFORE};
   
-  test_case_enum enum(#NUM_CASES(24), #SIZE(5), .clk(clk), .rst(rst)); 
+  test_case_enum enum(#NUM_CASES(25), #SIZE(5), .clk(clk), .rst(reset_button)); 
 
   
 
@@ -62,7 +63,7 @@ module comparatorTester (
             5. if not correct, then fail
           */ 
           //first we test equals
-          h0: // test 0 == 0  a=b 
+          1: // test 0 == 0  a=b 
             ad.a = 16h0; 
             ad.b = 16h0;
             cmp.alufn[2] = 0;
@@ -75,33 +76,7 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             } 
-           h1: //test 1 == 1 pos=pos
-            ad.a = 16h1;
-            ad.b = 16h1;
-            cmp.alufn[2] = 0;
-            cmp.alufn[1] = 1;
-            cmp.z = ad.z;
-            cmp.n = ad.n;
-            cmp.v = ad.v;
-            status = 1;
-            if(cmp.out[0]!=1){
-              track_failure.d = track_failure.FAIL_BEFORE;
-              status = 2;
-            }       
-          h2: //test 0xFFFF == 0xFFFF neg=neg
-            ad.a = 16hFFFF;
-            ad.b = 16hFFFF;
-            cmp.alufn[2] = 0;
-            cmp.alufn[1] = 1;
-            cmp.z = ad.z;
-            cmp.n = ad.n;
-            cmp.v = ad.v;
-            status = 1;
-            if(cmp.out[0]!=1){
-              track_failure.d = track_failure.FAIL_BEFORE;
-              status = 2;
-            }
-           h3: //test 0x8 == 0xA pos<pos no overflow
+           2: //test 0x8 == 0xA pos<pos no overflow
             ad.a = 16h8;
             ad.b = 16hA;
             cmp.alufn[2] = 0;
@@ -114,8 +89,20 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
-           
-           h4: //test 0xFFFF == 1 neg<pos no overflow
+          3: //test 0xFFFF == 0xFFFF neg=neg
+            ad.a = 16hFFFF;
+            ad.b = 16hFFFF;
+            cmp.alufn[2] = 0;
+            cmp.alufn[1] = 1;
+            cmp.z = ad.z;
+            cmp.n = ad.n;
+            cmp.v = ad.v;
+            status = 1;
+            if(cmp.out[0]!=1){
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
+            }
+           4: //test 0xFFFF == 1 neg<pos no overflow
             ad.a = 16hFFFF;
             ad.b = 16h1;
             cmp.alufn[2] = 0;
@@ -127,9 +114,23 @@ module comparatorTester (
             if(cmp.out[0]!=0){
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
-            }
+            }      
+
+           5: //test 1 == 1 pos=pos
+            ad.a = 16h1;
+            ad.b = 16h1;
+            cmp.alufn[2] = 0;
+            cmp.alufn[1] = 1;
+            cmp.z = ad.z;
+            cmp.n = ad.n;
+            cmp.v = ad.v;
+            status = 1;
+            if(cmp.out[0]!=1){
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
+            } 
            
-           h5: //test 0x8000 == 0x7FFF  neg<pos overflow
+           6: //test 0x8000 == 0x7FFF  neg<pos overflow
             ad.a = 16h8000;
             ad.b = 16h7FFF;
             cmp.alufn[2] = 0;
@@ -143,7 +144,7 @@ module comparatorTester (
               status = 2;
             }
             
-            h6: //test 0xFFFE == 0xFFFF  neg<neg no overflow
+            7: //test 0xFFFE == 0xFFFF  neg<neg no overflow
             ad.a = 16hFFFE;
             ad.b = 16hFFFF;
             cmp.alufn[2] = 0;
@@ -156,7 +157,7 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
-           h7: //test 0 == 0xFFFF a>b
+           8: //test 0 == 0xFFFF a>b
             ad.a = 16h0;
             ad.b = 16hFFFF;
             cmp.alufn[2] = 0;
@@ -174,46 +175,7 @@ module comparatorTester (
           //****************************************  
           //second we test A<B 
           
-          h8: // test 0 < 0  a=b 
-            ad.a = 16h0; 
-            ad.b = 16h0;
-            cmp.alufn[2] = 1;
-            cmp.alufn[1] = 0;
-            cmp.z = ad.z;
-            cmp.n = ad.n;
-            cmp.v = ad.v;
-            status = 1;
-            if(cmp.out[0]!=0){
-              track_failure.d = track_failure.FAIL_BEFORE;
-              status = 2;
-            } 
-           h9: //test 1 < 1 pos=pos
-            ad.a = 16h1;
-            ad.b = 16h1;
-            cmp.alufn[2] = 1;
-            cmp.alufn[1] = 0;
-            cmp.z = ad.z;
-            cmp.n = ad.n;
-            cmp.v = ad.v;
-            status = 1;
-            if(cmp.out[0]!=0){
-              track_failure.d = track_failure.FAIL_BEFORE;
-              status = 2;
-            }       
-          hA: //test 0xFFFF < 0xFFFF neg=neg
-            ad.a = 16hFFFF;
-            ad.b = 16hFFFF;
-            cmp.alufn[2] = 1;
-            cmp.alufn[1] = 0;
-            cmp.z = ad.z;
-            cmp.n = ad.n;
-            cmp.v = ad.v;
-            status = 1;
-            if(cmp.out[0]!=0){
-              track_failure.d = track_failure.FAIL_BEFORE;
-              status = 2;
-            }
-           hB: //test 0x8 < 0xA pos<pos no overflow
+          9: //test 0x8 < 0xA pos<pos no overflow
             ad.a = 16h8;
             ad.b = 16hA;
             cmp.alufn[2] = 1;
@@ -226,7 +188,20 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
-           hC: //test 0xFFFF < 1 neg<pos no overflow
+           10: //test 1 < 1 pos=pos
+            ad.a = 16h1;
+            ad.b = 16h1;
+            cmp.alufn[2] = 1;
+            cmp.alufn[1] = 0;
+            cmp.z = ad.z;
+            cmp.n = ad.n;
+            cmp.v = ad.v;
+            status = 1;
+            if(cmp.out[0]!=0){
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
+            }       
+          11: //test 0xFFFF < 1 neg<pos no overflow
             ad.a = 16hFFFF;
             ad.b = 16h1;
             cmp.alufn[2] = 1;
@@ -239,7 +214,20 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
-           hD: //test 0x8000 < 0x7FFF  neg<pos overflow
+           12: // test 0 < 0  a=b 
+            ad.a = 16h0; 
+            ad.b = 16h0;
+            cmp.alufn[2] = 1;
+            cmp.alufn[1] = 0;
+            cmp.z = ad.z;
+            cmp.n = ad.n;
+            cmp.v = ad.v;
+            status = 1;
+            if(cmp.out[0]!=0){
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
+            } 
+           13: //test 0x8000 < 0x7FFF  neg<pos overflow
             ad.a = 16h8000;
             ad.b = 16h7FFF;
             cmp.alufn[2] = 1;
@@ -252,7 +240,20 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
-            hE: //test 0xFFFE < 0xFFFF  neg<neg no overflow
+           14: //test 0xFFFF < 0xFFFF neg=neg
+            ad.a = 16hFFFF;
+            ad.b = 16hFFFF;
+            cmp.alufn[2] = 1;
+            cmp.alufn[1] = 0;
+            cmp.z = ad.z;
+            cmp.n = ad.n;
+            cmp.v = ad.v;
+            status = 1;
+            if(cmp.out[0]!=0){
+              track_failure.d = track_failure.FAIL_BEFORE;
+              status = 2;
+            }
+            15: //test 0xFFFE < 0xFFFF  neg<neg no overflow
             ad.a = 16hFFFE;
             ad.b = 16hFFFF;
             cmp.alufn[2] = 1;
@@ -265,7 +266,7 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
-           hF: //test 0 < 0xFFFF a>b
+           16: //test 0 < 0xFFFF a>b
             ad.a = 16h0;
             ad.b = 16hFFFF;
             cmp.alufn[2] = 1;
@@ -281,7 +282,7 @@ module comparatorTester (
             
           //****************************************  
           //lastly we test A<=B 
-          h10: // test 0 <= 0  a=b 
+          17: // test 0 <= 0  a=b 
             ad.a = 16h0; 
             ad.b = 16h0;
             cmp.alufn[2] = 1;
@@ -294,20 +295,20 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             } 
-           h11: //test 1 <= 1 pos=pos
-            ad.a = 16h1;
-            ad.b = 16h1;
+           18: //test 0 <= 0xFFFF a>b
+            ad.a = 16h0;
+            ad.b = 16hFFFF;
             cmp.alufn[2] = 1;
             cmp.alufn[1] = 1;
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
             status = 1;
-            if(cmp.out[0]!=1){
+            if(cmp.out[0]!=0){
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
-            }       
-          h12: //test 0xFFFF <= 0xFFFF neg=neg
+            }   
+          19: //test 0xFFFF <= 0xFFFF neg=neg
             ad.a = 16hFFFF;
             ad.b = 16hFFFF;
             cmp.alufn[2] = 1;
@@ -320,7 +321,7 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
-           h13: //test 0x8 <=0xA pos<pos no overflow
+           20: //test 0x8 <=0xA pos<pos no overflow
             ad.a = 16h8;
             ad.b = 16hA;
             cmp.alufn[2] = 1;
@@ -333,7 +334,7 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
-           h14: //test 0xFFFF <=1 neg<pos no overflow
+           21: //test 0xFFFF <=1 neg<pos no overflow
             ad.a = 16hFFFF;
             ad.b = 16h1;
             cmp.alufn[2] = 1;
@@ -346,7 +347,7 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
-           h15: //test 0x8000 <= 0x7FFF  neg<pos overflow
+           22: //test 0x8000 <= 0x7FFF  neg<pos overflow
             ad.a = 16h8000;
             ad.b = 16h7FFF;
             cmp.alufn[2] = 1;
@@ -359,7 +360,7 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
-            h16: //test 0xFFFE <= 0xFFFF  neg<neg no overflow
+            23: //test 0xFFFE <= 0xFFFF  neg<neg no overflow
             ad.a = 16hFFFE;
             ad.b = 16hFFFF;
             cmp.alufn[2] = 1;
@@ -372,24 +373,23 @@ module comparatorTester (
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
-           h17: //test 0 <= 0xFFFF a>b
-            ad.a = 16h0;
-            ad.b = 16hFFFF;
+           24: //test 1 <= 1 pos=pos
+            ad.a = 16h1;
+            ad.b = 16h1;
             cmp.alufn[2] = 1;
             cmp.alufn[1] = 1;
             cmp.z = ad.z;
             cmp.n = ad.n;
             cmp.v = ad.v;
             status = 1;
-            if(cmp.out[0]!=0){
+            if(cmp.out[0]!=1){
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
-            }
+            }    
          
-           
            //****************************************  
            //if all test cases passed up to here, pass
-          h18:
+          25:
             state.d = state.PASS;
           }
         testNum.d = enum.sel; // incremenet for next case 
@@ -398,6 +398,9 @@ module comparatorTester (
           status = 2;
             } else {
           status = 1;
+          }
+        if(reset_button) {
+          state.d = state.TEST;
           }
 
      } 

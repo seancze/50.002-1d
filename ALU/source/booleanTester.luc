@@ -3,6 +3,7 @@ module booleanTester (
     input rst,  // reset
     input start, //to change from 0-1 in au_top(commencing test)
     input inv,
+    input reset_button,
     output status[2],
     output out[16]
   ) {
@@ -12,7 +13,7 @@ module booleanTester (
   fsm track_failure (.clk(clk), .rst(rst)) = {NULL, FAIL_BEFORE};
   boolean bool;
   
-  test_case_enum enum(.clk(clk), .rst(rst)); 
+  test_case_enum enum(.clk(clk), .rst(reset_button)); 
 
   always {
     status = 0;  // 0:start 1:correct 2:wrong
@@ -38,73 +39,73 @@ module booleanTester (
       state.TEST: // test for all 4 operations
         case(counter.q){
           1:bool.alufn = 4b1000; //AND
-            bool.a = 16b101010; //42
-            bool.b = 16b011000; //24
+            bool.a = 16b001100; //12
+            bool.b = 16b011110; //30
             status = 1;
-            if( bool.out != 16b01000){
+            if( bool.out != 16b1100){
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
             
           2:bool.alufn = 4b1110; //OR
-            bool.a = 16b101010; //42 
-            bool.b = 16b011000; //24
+            bool.a = 16b001100; //12 
+            bool.b = 16b011110; //30
             status = 1;
-            if ( bool.out != 16b111010){
+            if ( bool.out != 16b11110){
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
             
           3:bool.alufn = 4b0110; //XOR
-            bool.a = 16b101010; //42 
-            bool.b = 16b011000; //24
+            bool.a = 16b001100; //12 
+            bool.b = 16b011110; //30
             status = 1;
-            if (bool.out != 16b110010){
+            if (bool.out != 16b10010){
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
             
           4:bool.alufn = 4b1010; //"A"
-            bool.a = 16b101010; //42
-            bool.b = 16b011000; //24 
+            bool.a = 16b001100; //12
+            bool.b = 16b011110; //30 
             status = 1;
-            if (bool.out != 16b101010){
+            if (bool.out != 16b001100){
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
             
           5:bool.alufn = 4b1100; // "B"
-            bool.a = 16b101010; //42
-            bool.b = 16b011000; //24
+            bool.a = 16b001100; //12
+            bool.b = 16b011110; //30
             status = 1;
-            if (bool.out != 16b011000){
+            if (bool.out != 16b011110){
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
             
           6:bool.alufn = 4b0111; // NAND
-            bool.a = 16b101010; //42 
-            bool.b = 16b011000; //24
+            bool.a = 16b001100; //12 
+            bool.b = 16b011110; //30
             status = 1;
-            if (bool.out != 16hFFF7){
+            if (bool.out != 16hFFF3){
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
           
           7:bool.alufn = 4b0001; // NOR
-            bool.a = 16b101010; //42 
-            bool.b = 16b011000; //24
+            bool.a = 16b001100; //12 
+            bool.b = 16b011110; //30
             status = 1;
-            if (bool.out != 16hFFC5){
+            if (bool.out != 16hFFE1){
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
           
           8:bool.alufn = 4b1001; // XNOR
-            bool.a = 16b101010; //42 
-            bool.b = 16b011000; //24
+            bool.a = 16b001100; //12 
+            bool.b = 16b011110; //30
             status = 1;
-            if (bool.out != 16hFFCD){
+            if (bool.out != 16hFFED){
               track_failure.d = track_failure.FAIL_BEFORE;
               status = 2;
             }
@@ -117,6 +118,9 @@ module booleanTester (
           status = 2;
             } else {
           status = 1;
+          }
+        if(reset_button) {
+          state.d = state.TEST;
           }
         
     }    
