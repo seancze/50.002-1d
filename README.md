@@ -4,8 +4,14 @@
 
 ## Authors
 
-- Sean Chen @Seancze
+- Javier @javiertzr01
 - Joseph Lai @kwerer
+- Kellie @kellieay
+- Kevin @lemons4lyf
+- Kevin @thatrichan
+- Louis @gnuppie
+- Sean Chen @Seancze
+- Theresa @Theresalzl
 
 ## In This Repository:
 

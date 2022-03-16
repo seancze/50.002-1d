@@ -2,28 +2,28 @@
 <project name="ALU" board="Alchitry Au" language="Lucid" version="3">
   <files>
     <src>auto_tester.luc</src>
+    <src>adderTester.luc</src>
     <component>pipeline.luc</component>
+    <src>alu_tester.luc</src>
     <src>multi_seven_seg.luc</src>
     <component>counter.luc</component>
-    <src>seven_seg.luc</src>
-    <src>alu.luc</src>
-    <src>test_case_enum.luc</src>
-    <src>comparatorTester.luc</src>
-    <component>reset_conditioner.luc</component>
-    <component>button_conditioner.luc</component>
-    <src>adderTester.luc</src>
-    <src>alu_tester.luc</src>
     <src>boolean.luc</src>
     <src>multiplier.luc</src>
+    <src>seven_seg.luc</src>
+    <src>alu.luc</src>
     <component>decoder.luc</component>
+    <src>test_case_enum.luc</src>
     <src>multiplierTester.luc</src>
     <src>comparator.luc</src>
+    <src>comparatorTester.luc</src>
     <src>shifter.luc</src>
     <src>booleanTester.luc</src>
     <src>mux2.luc</src>
     <src>shifterTester.luc</src>
+    <component>reset_conditioner.luc</component>
     <component>edge_detector.luc</component>
     <src>adder.luc</src>
+    <component>button_conditioner.luc</component>
     <src top="true">au_top.luc</src>
     <constraint lib="true">alchitry.acf</constraint>
     <constraint lib="true">io.acf</constraint>
