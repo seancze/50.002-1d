@@ -1,0 +1,86 @@
+// This file is DEPRECATED
+
+// // Input: 2D level_data array
+// // Buttons to cycle through the 9 levels
+// // Input: arrow_generator module that takes in 2D level_data array and returns the corresponding arrow to map to matrix_writer
+// How? 
+// 1. Get level.location input to retrieve offset
+// 2. Use randomiser to retrieve appropriate arrow (future dev)
+// 3. Pass the offset to the specified arrow to generate arrow at specified location
+// Inputs Required
+// 1. A 2-D array that represents [level][location] I.e. [[1a], [2a, 2b], [3a, 3b, 3c], ..., [9a,...,9i]]
+// 1a / 2a / 2b... = The location of the middle dot of said arrow
+// 2. An integer to determine which arrow UP, DOWN, LEFT, RIGHT I should be choosing
+
+// module arrow_location (  // tester module to test the 16-bit ALU
+//     input clk,  // clock
+//     input rst,  // reset
+//     input button[5],  // 0: up, 1: middle, 2: down, 3: left, 4: right
+//     input dip[16],
+//     input inv[1],
+//     input arrow_center[4][4], // 2D array used to hold the middle coordinate of each arrow; [4][4] because there are 9 levels (1st 4) with a maximum of 9 arrows (2nd 4)
+//     output out[16],
+//     output out_segs[4][4]
+//   ) {
+//   // registers to store different input/output values
+//   dff inputA[16](#INIT(0), .clk(clk), .rst(rst));
+//   dff inputB[16](#INIT(0), .clk(clk), .rst(rst));
+//   dff alufn[6](#INIT(0), .clk(clk), .rst(rst));
+//   dff inputInv[1](#INIT(0), .clk(clk), .rst(rst));
+//   dff result[16](#INIT(0), .clk(clk), .rst(rst));
+//   dff segs[4][4](.clk(clk), .rst(rst));
+  
+//   // FSM to control the input/output workflow
+//   fsm control(.clk(clk), .rst(rst)) = {
+//     LEVEL1,  // wait for input A
+//     GETRESULT  // show result
+//   };
+  
+//   alu aluunit;
+
+//   always {
+//     aluunit.a = inputA.q;
+//     aluunit.b = inputB.q;
+//     aluunit.alufn = alufn.q;
+//     aluunit.inv = inputInv.q;
+
+//     case (control.q) {
+//       control.LEVEL1:
+//         result.d = dip;
+//         segs.d = {4d0, 4d15, 4d15, 4d15}; // segs display "A" for input A
+//         // segs.d = 8b10001000;  
+//         if (button[1]) {
+//           inputA.d = dip;
+//           control.d = control.WAITB;
+//         }
+//         else {
+//           control.d = control.LEVEL1;
+//         }
+//       control.GETRESULT:
+//         result.d = aluunit.out;
+//         segs.d = {4d8, aluunit.z, aluunit.v, aluunit.n}; // segs display "O", z==1 ? 'B' : 'A', v==1 ? 'B' : 'A', n==1 ? 'B' : 'A'
+//         // segs.d = 8b11000000;  
+//         if (button[1]) {
+//           // reset all registers and go back to first state
+//           inputA.d = 0;
+//           inputB.d = 0;
+//           alufn.d = 0;
+//           result.d = 0;
+//           control.d = control.LEVEL1;
+//         }
+//         else {
+//           control.d = control.GETRESULT;
+//         }
+//     }
+    
+//     if (button[0]) {  // middle button pressed, reset
+//       inputA.d = 0;
+//       inputB.d = 0;
+//       alufn.d = 0;
+//       result.d = 0;
+//       control.d = control.LEVEL1;
+//     }
+//     out = result.q;
+//     out_segs = segs.q;
+//   }
+// }
