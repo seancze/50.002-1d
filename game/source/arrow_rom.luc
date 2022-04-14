@@ -1,0 +1,98 @@
+module arrow_rom (
+    input choice[2],  // ROM choice; 2 bits because there are 4 different kind of arrows
+    output arrow [16][2][6]  // ROM output; 4 bits because there are 9 rows
+  ) {
+
+    // Test: If offset works
+    // TODO: If offset works, need to implement module to take in level as input and returns the respective number of arrows as output
+  
+  // 0 index is on the RIGHT
+  const RIGHT_ARROW = {
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d9, 6d10},
+        {6d8, 6d11},
+        {6d7, 6d12},
+        {6d7, 6d11},
+        {6d7, 6d10}, // middle
+        {6d7, 6d9},
+        {6d7, 6d8},
+        {6d6, 6d11},
+        {6d5, 6d10}
+  };
+
+    const LEFT_ARROW = {
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d9, 6d10},
+        {6d8, 6d9},
+        {6d7, 6d12},
+        {6d7, 6d11},
+        {6d7, 6d10}, // middle
+        {6d7, 6d9},
+        {6d7, 6d8},
+        {6d6, 6d9},
+        {6d5, 6d10}
+  };
+
+      const UP_ARROW = {
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d9, 6d10},
+        {6d8, 6d10},
+        {6d7, 6d10}, // middle
+        {6d6, 6d10},
+        {6d5, 6d10},
+        {6d6, 6d9}, // Next 4 lines (inclusive) is to make the edges of the arrow
+        {6d6, 6d11},
+        {6d7, 6d8},
+        {6d7, 6d12}
+  };
+  
+        const DOWN_ARROW = {
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d8, 6d9}, // Next 4 lines (inclusive) is to make the edges of the arrow
+        {6d8, 6d11},
+        {6d7, 6d8},
+        {6d7, 6d12},
+        {6d9, 6d10},
+        {6d8, 6d10},
+        {6d7, 6d10}, // middle
+        {6d6, 6d10},
+        {6d5, 6d10}
+
+  };
+  
+  always {
+
+    case (choice) {
+      0: arrow = RIGHT_ARROW;
+      1: arrow = LEFT_ARROW;
+      2: arrow = UP_ARROW;
+      3: arrow = DOWN_ARROW;
+      
+      default: arrow = UP_ARROW;
+    }
+  }
+}
