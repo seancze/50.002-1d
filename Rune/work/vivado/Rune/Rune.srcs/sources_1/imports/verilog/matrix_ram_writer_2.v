@@ -16,7 +16,10 @@ module matrix_ram_writer_2 (
     input rst,
     input [47:0] new_data,
     input [4:0] button_clicked,
-    input [159:0] out,
+    input [3:0] level_input,
+    input [143:0] arrow_type_input,
+    input [3:0] timer,
+    input [3:0] score,
     output reg [3:0] row_address_top,
     output reg [5:0] col_address_top,
     output reg we_top,
@@ -35,12 +38,13 @@ module matrix_ram_writer_2 (
   
   
   
-  localparam START_writer_state = 2'd0;
-  localparam LOAD_ADDRESS_writer_state = 2'd1;
-  localparam LOAD_WAIT_writer_state = 2'd2;
-  localparam LOOP_writer_state = 2'd3;
+  localparam START_writer_state = 3'd0;
+  localparam LOAD_ADDRESS_writer_state = 3'd1;
+  localparam LOAD_WAIT_writer_state = 3'd2;
+  localparam LOOP_writer_state = 3'd3;
+  localparam WAIT_FOR_NEXT_LEVEL_writer_state = 3'd4;
   
-  reg [1:0] M_writer_state_d, M_writer_state_q = START_writer_state;
+  reg [2:0] M_writer_state_d, M_writer_state_q = START_writer_state;
   
   
   localparam READY_button_state = 1'd0;
@@ -53,6 +57,8 @@ module matrix_ram_writer_2 (
   localparam MAX_LEVEL = 4'h9;
   
   localparam START_DATA = 48'h787f7fe07fff;
+  
+  localparam PSEUDO_OFFSET = 96'h8208204a44a4c20410318930;
   
   wire [192-1:0] M_rom_arrow;
   wire [3-1:0] M_rom_colour;
@@ -67,7 +73,7 @@ module matrix_ram_writer_2 (
   
   reg [47:0] M_data_d, M_data_q = 1'h0;
   
-  reg [3:0] M_arrow_type_d, M_arrow_type_q = 1'h0;
+  reg [3:0] M_prev_arrows_d, M_prev_arrows_q = 1'h0;
   
   reg [3:0] M_current_arrow_d, M_current_arrow_q = 1'h0;
   
@@ -86,8 +92,9 @@ module matrix_ram_writer_2 (
     M_bitloader_d = M_bitloader_q;
     M_current_arrow_d = M_current_arrow_q;
     M_current_level_d = M_current_level_q;
-    M_arrow_type_d = M_arrow_type_q;
+    M_prev_arrows_d = M_prev_arrows_q;
     M_data_col_address_d = M_data_col_address_q;
+    M_data_row_address_d = M_data_row_address_q;
     
     ready = 1'h0;
     we_top = 1'h0;
@@ -98,40 +105,45 @@ module matrix_ram_writer_2 (
     col_address_btm = 1'h0;
     wd_top = 1'h0;
     wd_btm = 1'h0;
-    M_rom_choice = out[(M_current_arrow_q)*16+0+3-:4];
+    M_rom_choice = arrow_type_input[(M_current_arrow_q)*16+0+3-:4];
     
     case (M_writer_state_q)
       START_writer_state: begin
-        M_arrow_type_d = 1'h0;
-        M_current_arrow_d = 1'h0;
+        M_current_arrow_d = level_input;
         M_current_level_d = 1'h0;
         M_data_d = 48'h787f7fe07fff;
+        M_prev_arrows_d = arrow_type_input[(M_current_arrow_q)*16+0+3-:4];
         M_writer_state_d = LOAD_ADDRESS_writer_state;
         M_button_state_d = READY_button_state;
       end
       LOAD_ADDRESS_writer_state: begin
-        row_address_top = M_rom_arrow[(M_bitloader_q)*12+6+5-:6];
-        
-        case (M_rom_arrow[(M_bitloader_q)*12+0+5-:6])
-          6'h0c: begin
-            col_address_top = 7'h40 / (M_current_level_q + 1'h1) * (M_current_arrow_q + 1'h1) + 2'h2;
-          end
-          6'h0b: begin
-            col_address_top = 7'h40 / (M_current_level_q + 1'h1) * (M_current_arrow_q + 1'h1) + 1'h1;
-          end
-          6'h0a: begin
-            col_address_top = 7'h40 / (M_current_level_q + 1'h1) * (M_current_arrow_q + 1'h1);
-          end
-          6'h09: begin
-            col_address_top = 7'h40 / (M_current_level_q + 1'h1) * (M_current_arrow_q + 1'h1) - 1'h1;
-          end
-          6'h08: begin
-            col_address_top = 7'h40 / (M_current_level_q + 1'h1) * (M_current_arrow_q + 1'h1) - 2'h2;
-          end
-          default: begin
-            col_address_top = M_rom_arrow[(M_bitloader_q)*12+0+5-:6];
-          end
-        endcase
+        if (M_button_state_q == LOADING_button_state) begin
+          row_address_top = M_data_row_address_q;
+          col_address_top = M_data_col_address_q;
+        end else begin
+          row_address_top = M_rom_arrow[(M_bitloader_q)*12+6+5-:6];
+          
+          case (M_rom_arrow[(M_bitloader_q)*12+0+5-:6])
+            6'h0c: begin
+              col_address_top = 7'h40 / (M_current_level_q + 1'h1) * (M_current_arrow_q + 1'h1) + 2'h2;
+            end
+            6'h0b: begin
+              col_address_top = 7'h40 / (M_current_level_q + 1'h1) * (M_current_arrow_q + 1'h1) + 1'h1;
+            end
+            6'h0a: begin
+              col_address_top = 7'h40 / (M_current_level_q + 1'h1) * (M_current_arrow_q + 1'h1);
+            end
+            6'h09: begin
+              col_address_top = 7'h40 / (M_current_level_q + 1'h1) * (M_current_arrow_q + 1'h1) - 1'h1;
+            end
+            6'h08: begin
+              col_address_top = 7'h40 / (M_current_level_q + 1'h1) * (M_current_arrow_q + 1'h1) - 2'h2;
+            end
+            default: begin
+              col_address_top = M_rom_arrow[(M_bitloader_q)*12+0+5-:6];
+            end
+          endcase
+        end
         row_address_btm = M_data_row_address_q;
         col_address_btm = M_data_col_address_q;
         wd_top = 3'h0;
@@ -144,30 +156,46 @@ module matrix_ram_writer_2 (
         M_writer_state_d = LOAD_WAIT_writer_state;
         if ((&M_bitloader_q) == 1'h1) begin
           M_bitloader_d = 1'h0;
-          if (M_current_arrow_q < (M_current_level_q - 1'h1)) begin
-            M_current_arrow_d = M_current_arrow_q + 1'h1;
-            M_writer_state_d = LOAD_ADDRESS_writer_state;
+          M_writer_state_d = LOAD_ADDRESS_writer_state;
+          if (M_data_col_address_q < 8'h3f) begin
+            M_data_col_address_d = M_data_col_address_q + 1'h1;
           end else begin
-            M_current_arrow_d = 1'h0;
-            M_button_state_d = READY_button_state;
-            M_writer_state_d = LOAD_ADDRESS_writer_state;
-            if (M_button_state_q == LOADING_button_state) begin
-              M_current_level_d = out[0+0+2-:3];
+            if (M_current_arrow_q < (M_current_level_q - 1'h1)) begin
+              M_current_arrow_d = M_current_arrow_q + 1'h1;
             end else begin
-              M_writer_state_d = LOOP_writer_state;
+              M_current_arrow_d = 1'h0;
+              M_button_state_d = READY_button_state;
+              if (M_button_state_q == LOADING_button_state) begin
+                M_current_level_d = level_input;
+              end else begin
+                M_writer_state_d = LOOP_writer_state;
+              end
             end
           end
         end
       end
       LOAD_WAIT_writer_state: begin
         M_bitloader_d = M_bitloader_q + 1'h1;
-        M_data_col_address_d = M_data_col_address_q + 1'h1;
+        M_data_row_address_d = M_data_row_address_q + 1'h1;
         M_writer_state_d = LOAD_ADDRESS_writer_state;
       end
       LOOP_writer_state: begin
         ready = 1'h1;
         M_writer_state_d = LOOP_writer_state;
         if (button_clicked[0+0-:1] || button_clicked[1+0-:1] || button_clicked[2+0-:1] || button_clicked[3+0-:1] || button_clicked[4+0-:1]) begin
+          M_writer_state_d = LOAD_ADDRESS_writer_state;
+          M_button_state_d = LOADING_button_state;
+        end else begin
+          if (timer == 1'h0) begin
+            M_writer_state_d = WAIT_FOR_NEXT_LEVEL_writer_state;
+          end
+        end
+      end
+      WAIT_FOR_NEXT_LEVEL_writer_state: begin
+        if (timer == 1'h0) begin
+          M_writer_state_d = WAIT_FOR_NEXT_LEVEL_writer_state;
+        end else begin
+          M_data_col_address_d = 1'h0;
           M_writer_state_d = LOAD_ADDRESS_writer_state;
           M_button_state_d = LOADING_button_state;
         end
@@ -186,36 +214,9 @@ module matrix_ram_writer_2 (
   
   always @(posedge clk) begin
     if (rst == 1'b1) begin
-      M_current_level_q <= 1'h0;
+      M_data_row_address_q <= 1'h0;
     end else begin
-      M_current_level_q <= M_current_level_d;
-    end
-  end
-  
-  
-  always @(posedge clk) begin
-    if (rst == 1'b1) begin
-      M_current_arrow_q <= 1'h0;
-    end else begin
-      M_current_arrow_q <= M_current_arrow_d;
-    end
-  end
-  
-  
-  always @(posedge clk) begin
-    if (rst == 1'b1) begin
-      M_arrow_type_q <= 1'h0;
-    end else begin
-      M_arrow_type_q <= M_arrow_type_d;
-    end
-  end
-  
-  
-  always @(posedge clk) begin
-    if (rst == 1'b1) begin
-      M_ram_writer_address_q <= 1'h0;
-    end else begin
-      M_ram_writer_address_q <= M_ram_writer_address_d;
+      M_data_row_address_q <= M_data_row_address_d;
     end
   end
   
@@ -231,18 +232,27 @@ module matrix_ram_writer_2 (
   
   always @(posedge clk) begin
     if (rst == 1'b1) begin
-      M_data_row_address_q <= 1'h0;
+      M_ram_writer_address_q <= 1'h0;
     end else begin
-      M_data_row_address_q <= M_data_row_address_d;
+      M_ram_writer_address_q <= M_ram_writer_address_d;
     end
   end
   
   
   always @(posedge clk) begin
     if (rst == 1'b1) begin
-      M_writer_state_q <= 1'h0;
+      M_current_arrow_q <= 1'h0;
     end else begin
-      M_writer_state_q <= M_writer_state_d;
+      M_current_arrow_q <= M_current_arrow_d;
+    end
+  end
+  
+  
+  always @(posedge clk) begin
+    if (rst == 1'b1) begin
+      M_current_level_q <= 1'h0;
+    end else begin
+      M_current_level_q <= M_current_level_d;
     end
   end
   
@@ -261,6 +271,24 @@ module matrix_ram_writer_2 (
       M_button_state_q <= 1'h0;
     end else begin
       M_button_state_q <= M_button_state_d;
+    end
+  end
+  
+  
+  always @(posedge clk) begin
+    if (rst == 1'b1) begin
+      M_prev_arrows_q <= 1'h0;
+    end else begin
+      M_prev_arrows_q <= M_prev_arrows_d;
+    end
+  end
+  
+  
+  always @(posedge clk) begin
+    if (rst == 1'b1) begin
+      M_writer_state_q <= 1'h0;
+    end else begin
+      M_writer_state_q <= M_writer_state_d;
     end
   end
   

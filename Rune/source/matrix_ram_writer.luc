@@ -10,7 +10,10 @@ module matrix_ram_writer #(
     input rst,  // reset
     input new_data[DATA_SET][DATA_WIDTH],
     input button_clicked[5],
-    input out[10][16],
+    input level_input[4], // 4 bits because there are 9 levels
+    input arrow_type_input[9][16], // 9 different arrows that are 16 bits in length
+    input timer[4],
+    input score[4],
     
     output row_address_top[ADDRESS_SIZE],
     output col_address_top[$clog2(MATRIX_WIDTH)],
@@ -25,7 +28,7 @@ module matrix_ram_writer #(
     output ready
   ) {
   
-    fsm writer_state(.clk(clk), .rst(rst)) = {START, LOAD_ADDRESS, LOAD_WAIT, LOOP};
+    fsm writer_state(.clk(clk), .rst(rst)) = {START, LOAD_ADDRESS, LOAD_WAIT, LOOP, WAIT_FOR_NEXT_LEVEL};
     fsm button_state(.clk(clk), .rst(rst)) = {READY, LOADING};
 
     const NUM_ARROW_TYPES = 9;
@@ -33,6 +36,7 @@ module matrix_ram_writer #(
  
 //  BLUE | GREEN | RED
     const START_DATA = {16b0111100001111111, 16b0111111111100000, 16b0111111111111111}; // some random triangle 
+    const PSEUDO_OFFSET = {{6d32, 6d32, 6d32, 6d32}, {6d18, 6d36, 6d18, 6d36}, {6d48, 6d32, 6d16, 6d16}, {6d12, 6d24, 6d36, 6d48}};
 
     arrow_rom rom;
   
@@ -41,8 +45,8 @@ module matrix_ram_writer #(
   
     dff data[DATA_SET][DATA_WIDTH](.clk(clk), .rst(rst)); 
 
-// Used to choose the type of arrow from rom
-    dff arrow_type[$clog2(NUM_ARROW_TYPES)](#INIT(0), .clk(clk), .rst(rst));
+// Used to save the state of the previous arrows for the fsm to erase them before loading the new arrows' data
+    dff prev_arrows[$clog2(NUM_ARROW_TYPES)](#INIT(0), .clk(clk), .rst(rst));
 // Used to track how many arrows have been loaded onto the LED matrix
     dff current_arrow[$clog2(MAX_LEVEL)](#INIT(0), .clk(clk), .rst(rst));
 // Used to track the current level
@@ -66,14 +70,19 @@ module matrix_ram_writer #(
     col_address_btm = 0;
     wd_top = 0;
     wd_btm = 0;
-    rom.choice = out[current_arrow.q][3:0]; // Connect arrow_type dff to rom.choice to allow for toggling between arrows
+    rom.choice = arrow_type_input[current_arrow.q][3:0]; // Connect arrow_type dff to rom.choice to allow for toggling between arrows
+
+    // TODO: Manipulate bottom to include score + timer
+    // TODO: Figure out how to remove anything from printing when timer is 0
+    // TODO: Cause score and timer to remain on screen after everything is done
+
 
     case(writer_state.q){
       writer_state.START:
-        arrow_type.d = 0;
-        current_arrow.d = 0;
+        current_arrow.d = level_input;
         current_level.d = 0;
         data.d = START_DATA;
+        prev_arrows.d = arrow_type_input[current_arrow.q][3:0];
         writer_state.d = writer_state.LOAD_ADDRESS;
         button_state.d = button_state.READY;
         
@@ -81,109 +90,105 @@ module matrix_ram_writer #(
         // MAPPING used to generate the arrow
         // START_DATA is used to showcase the first colours
       writer_state.LOAD_ADDRESS:
-      // row_address_top is 4 bits but rom.arrow's numerical entry is 6 bits
-        row_address_top = rom.arrow[bitloader.q][1];
 
-
-      // FORMULA
-      // column_offset = 64 / (current_level+1)
-      // coordinate = column_offset * (current_arrow+1) + row_offset
-      case(rom.arrow[bitloader.q][0]) {
-        6d12: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1) + 2;
-        6d11: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1) + 1;
-        6d10: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1);
-        6d9: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1) - 1;
-        6d8: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1) - 2;
-        default: col_address_top = rom.arrow[bitloader.q][0];
-      }
-        
-      row_address_btm = data_row_address.q;
-      col_address_btm = data_col_address.q;
-      
-      // color accordingly
-      wd_top = b000;
-      // If button_state.READY AND current_level is not 0, then set the colour
-      // When it is NEXT_LEVEL / NEXT_ARROW / RESET, it is still erasing the previous arrow
-      if (button_state.q == button_state.READY && current_level.q != 0) {
-        wd_top = rom.colour;
-      } 
-      
-      wd_btm = b100;
-      we_top = b1;
-      we_btm = b1;
-      writer_state.d = writer_state.LOAD_WAIT;
-      if (&bitloader.q == 1){
-        bitloader.d = 0;
-        if (current_arrow.q < (current_level.q-1)) {
-          // If still less than the required number, increment the num_arrow index by 1
-          current_arrow.d = current_arrow.q + 1;
-          // For some reason, I still need to call LOAD_ADDRESS even though that's where I currently am at right now
-          // Otherwise, there will be a bug that will cause 1 bit to be missing
-          writer_state.d = writer_state.LOAD_ADDRESS;
-
-        } else {
-          // Only continue on after all the arrows of the previous stage had been iterated over
-          // Reset # of arrows
-          current_arrow.d = 0;
-          // Reset button_state to START
-          // Note: I can set button_state here because I am setting for the next cycle
-          button_state.d = button_state.READY;
-          // For some reason, I still need to call LOAD_ADDRESS even though that's where I currently am at right now
-          // Otherwise, there will be a bug that will cause 1 bit to be missing
-          writer_state.d = writer_state.LOAD_ADDRESS;
-          
-          
-          if(button_state.q == button_state.LOADING) {
-            current_level.d = out[0][2:0];
-
-            // NEXT_ARROW: Assign new arrow type
-
-            // if (arrow_type.q < NUM_ARROW_TYPES) {
-            //   arrow_type.d = arrow_type.q + 1;
-            // } else {
-            //   arrow_type.d = 0;
-            // }
-
-          } 
-          
-          // else if (button_state.q == button_state.LOADING) {
-          //   // RESET: Set back to default values
-          //   arrow_type.d = 0;
-          // } else if (button_state.q == button_state.NEXT_LEVEL) {
-          //   // NEXT_LEVEL: Increment level
-          //   if (current_level.q < MAX_LEVEL) {
-          //     current_level.d = current_level.q + 1;
-          //   } else {
-          //     // After max level is reached, go back to level 1
-          //     current_level.d = 0;
-          //   }
-            
-          // } 
-          
-          else {
-            // START: Only go back to loop AFTER all arrows have been generated, where # of arrows == (current level + 1)
-            writer_state.d = writer_state.LOOP;
+          if (button_state.q == button_state.LOADING) {
+            row_address_top = data_row_address.q;
+            col_address_top = data_col_address.q;
           }
-        }
-
-      }     
+          else {
+            row_address_top = rom.arrow[bitloader.q][1];
+            case(rom.arrow[bitloader.q][0]) {
+            6d12: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1) + 2;
+            6d11: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1) + 1;
+            6d10: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1);
+            6d9: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1) - 1;
+            6d8: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1) - 2;
+            default: col_address_top = rom.arrow[bitloader.q][0];
+          }
+          }
+          
+        row_address_btm = data_row_address.q;
+        col_address_btm = data_col_address.q;
         
+        // color accordingly
+        wd_top = b000;
+        // If button_state.READY AND current_level is not 0, then set the colour
+        // When button_state.LOADING, it is still erasing the previous level's arrows
+        if (button_state.q == button_state.READY && current_level.q != 0) {
+          wd_top = rom.colour;  
+        } 
+
+        wd_btm = b100;
+        we_top = b1;
+        we_btm = b1;
+        writer_state.d = writer_state.LOAD_WAIT;
+        if (&bitloader.q == 1){
+          bitloader.d = 0;
+          // Workaround: For some reason, I still need to call LOAD_ADDRESS even though that's where I currently am at right now
+          // Otherwise, there will be a bug that will cause 1 bit to be missing
+          writer_state.d = writer_state.LOAD_ADDRESS;
+
+          // Workaround: Clear the entire LED matrix first
+          if (data_col_address.q < (MATRIX_WIDTH-1)) {
+            // Case 1: LOADING && LED matrix have not been cleared
+            data_col_address.d = data_col_address.q + 1;
+
+          } else if (current_arrow.q < (current_level.q - 1)) {
+            // Case 2: Not all arrows have been printed
+            // If still less than the required number, increment the num_arrow index by 1
+            current_arrow.d = current_arrow.q + 1;
+
+          } else {
+            // Only continue on after all the arrows of the previous stage had been iterated over
+            // Reset # of arrows
+            current_arrow.d = 0;
+            // Reset button_state to START
+            // Note: I can set button_state here because I am setting for the next cycle
+            button_state.d = button_state.READY;
+            current_level.d = level_input;
+            
+            if(button_state.q == button_state.READY) {
+              // Case 3: READY && All arrows have been printed
+              // START: Only go back to loop AFTER all arrows have been generated, where # of arrows == (current level + 1)
+              writer_state.d = writer_state.LOOP;
+            } 
+            // Case 4: Otherwise, LOADING && All arrows have been printed
+          }
+
+        }     
+          
       writer_state.LOAD_WAIT:
         //advance write address by 1
         bitloader.d = bitloader.q + 1;
-        data_col_address.d = data_col_address.q + 1;
+        data_row_address.d = data_row_address.q + 1;
         writer_state.d = writer_state.LOAD_ADDRESS;
 
       writer_state.LOOP:
         //provide output from ram after writing is done
         ready = 1;
         writer_state.d = writer_state.LOOP;
+        
         if (button_clicked[0] || button_clicked[1] || button_clicked[2] || button_clicked[3] || button_clicked[4]) {
           writer_state.d = writer_state.LOAD_ADDRESS;
           button_state.d = button_state.LOADING;
 
+        } else if (timer == 0) {
+          
+          writer_state.d = writer_state.WAIT_FOR_NEXT_LEVEL;
         }
 
+      // Handle that ~1s when timer is outputting 0
+      writer_state.WAIT_FOR_NEXT_LEVEL:
+      // Set ready = 1 to not show a blank screen when timer is 0
+        // ready = 1;
+        if (timer == 0) {
+          writer_state.d = writer_state.WAIT_FOR_NEXT_LEVEL;
+        } else {
+          // Only set data_col_address.d to be 0 here because you only want to clear the lED matrix when loading the next level, not on every button click
+          data_col_address.d = 0;
+          writer_state.d = writer_state.LOAD_ADDRESS;
+          button_state.d = button_state.LOADING;
+        }
   }
       
  

@@ -27,7 +27,7 @@ module arrow_rom_9 (
     case (choice)
       1'h0: begin
         arrow = 192'h00000000000000000000024a20b1cc1cb1ca1c91c818b14a;
-        colour = 3'h0;
+        colour = 3'h1;
       end
       1'h1: begin
         arrow = 192'h00000000000000000000024a2091cc1cb1ca1c91c818914a;
@@ -46,11 +46,11 @@ module arrow_rom_9 (
         colour = 3'h7;
       end
       3'h5: begin
-        arrow = 192'h00000000000000000000024a20b1cc1cb1ca1c91c818b14a;
+        arrow = 192'h00000000000000000000024a2091cc1cb1ca1c91c818914a;
         colour = 3'h2;
       end
       3'h6: begin
-        arrow = 192'h00000000000000000000024a2091cc1cb1ca1c91c818914a;
+        arrow = 192'h00000000000000000000024a20b1cc1cb1ca1c91c818b14a;
         colour = 3'h2;
       end
       3'h7: begin

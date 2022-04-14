@@ -71,6 +71,7 @@ module au_top (
     io_sel = 4hf;           // select no digits
     
     //start here
+    // 0: UP 1: MIDDLE 2: DOWN 3: LEFT 4: RIGHT
     buttoncond.in = io_button[4:0];
     buttondetector.in = buttoncond.out;
     
@@ -94,7 +95,10 @@ module au_top (
     // // For debugging purposes; assign new arrow type
     // ramwriter.next_arrow = buttondetector.out[4];
 
-    ramwriter.out = cpu.out;
+    ramwriter.level_input = cpu.out[0][3:0];
+    ramwriter.arrow_type_input = cpu.out[9:1];
+    ramwriter.timer = cpu.timer[3:0];
+    ramwriter.score = cpu.score[3:0];
     ramwriter.button_clicked = buttondetector.out;
     ramwriter.new_data = {c{io_dip[2], io_dip[2]}, c{io_dip[1], io_dip[1]}, c{io_dip[0], io_dip[0]}}; // replace this from reg content from CPU
     

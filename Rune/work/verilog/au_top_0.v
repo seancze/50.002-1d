@@ -75,13 +75,19 @@ module au_top_0 (
   wire [1-1:0] M_ramwriter_ready;
   reg [48-1:0] M_ramwriter_new_data;
   reg [5-1:0] M_ramwriter_button_clicked;
-  reg [160-1:0] M_ramwriter_out;
+  reg [4-1:0] M_ramwriter_level_input;
+  reg [144-1:0] M_ramwriter_arrow_type_input;
+  reg [4-1:0] M_ramwriter_timer;
+  reg [4-1:0] M_ramwriter_score;
   matrix_ram_writer_2 ramwriter (
     .clk(clk),
     .rst(rst),
     .new_data(M_ramwriter_new_data),
     .button_clicked(M_ramwriter_button_clicked),
-    .out(M_ramwriter_out),
+    .level_input(M_ramwriter_level_input),
+    .arrow_type_input(M_ramwriter_arrow_type_input),
+    .timer(M_ramwriter_timer),
+    .score(M_ramwriter_score),
     .row_address_top(M_ramwriter_row_address_top),
     .col_address_top(M_ramwriter_col_address_top),
     .we_top(M_ramwriter_we_top),
@@ -226,7 +232,10 @@ module au_top_0 (
     io_seg = ~M_seg_seg;
     io_sel = ~M_seg_sel;
     io_led[0+15-:16] = M_cpu_score;
-    M_ramwriter_out = M_cpu_out;
+    M_ramwriter_level_input = M_cpu_out[0+0+3-:4];
+    M_ramwriter_arrow_type_input = M_cpu_out[16+143-:144];
+    M_ramwriter_timer = M_cpu_timer[0+3-:4];
+    M_ramwriter_score = M_cpu_score[0+3-:4];
     M_ramwriter_button_clicked = M_buttondetector_out;
     M_ramwriter_new_data = {{io_dip[16+7-:8], io_dip[16+7-:8]}, {io_dip[8+7-:8], io_dip[8+7-:8]}, {io_dip[0+7-:8], io_dip[0+7-:8]}};
     M_matrixram_row_address_top = M_ramwriter_row_address_top;

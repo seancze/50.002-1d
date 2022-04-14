@@ -37,13 +37,13 @@ module arrow_rom (
         {6d0, 6d0},
         {6d0, 6d0},
         {6d9, 6d10},
-        {6d8, 6d9},
+        {6d8, 6d9}, // Does not get removed
         {6d7, 6d12},
         {6d7, 6d11},
         {6d7, 6d10}, // middle
         {6d7, 6d9},
         {6d7, 6d8},
-        {6d6, 6d9},
+        {6d6, 6d9}, // Does not get removed
         {6d5, 6d10}
   };
 
@@ -79,9 +79,9 @@ module arrow_rom (
         {6d7, 6d8},
         {6d7, 6d12},
         {6d9, 6d10},
-        {6d8, 6d10},
+        {6d8, 6d10}, // Does not get removed
         {6d7, 6d10}, // middle
-        {6d6, 6d10},
+        {6d6, 6d10}, // Does not get removed
         {6d5, 6d10}
 
   };
@@ -92,7 +92,7 @@ module arrow_rom (
       // No arrows
       0: 
         arrow = RIGHT_ARROW; // placeholder value
-        colour = COLOUR[0];
+        colour = COLOUR[4]; // TODO: Change colour back to 0 (no colour); Set to red for debugging purposes
       1: 
         arrow = LEFT_ARROW;
         colour = COLOUR[1];
@@ -106,10 +106,10 @@ module arrow_rom (
         arrow = DOWN_ARROW;
         colour = COLOUR[1];
       5:
-        arrow = RIGHT_ARROW;
+        arrow = LEFT_ARROW;
         colour = COLOUR[3];
       6: 
-        arrow = LEFT_ARROW;
+        arrow = RIGHT_ARROW;
         colour = COLOUR[3];
       7:
         arrow = UP_ARROW;
