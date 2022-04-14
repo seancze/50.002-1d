@@ -1,0 +1,126 @@
+module arrow_rom (
+    input choice[4],  // ROM choice; 4 bits because there are 9 different inputs which maps to the 4 arrows (but different colours)
+    output arrow [16][2][6],  // ROM output; 4 bits because there are 9 rows
+    output colour [3]
+  ) {
+
+  // 000: OFF | 111: WHITE | 100: BLUE | 010: GREEN | 001: RED | 110: CYAN | 011: YELLOW | 101: PURPLE
+  // 0: OFF | 1: WHITE | 2: BLUE | 3: GREEN | 4: RED | 5: CYAN | 6: YELLOW | 7: PURPLE (Reversed order)
+  const COLOUR = {b101, b011, b110, b001, b010, b100, b111, b000};
+  
+  // 0 index is on the RIGHT
+  const RIGHT_ARROW = {
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d9, 6d10},
+        {6d8, 6d11},
+        {6d7, 6d12},
+        {6d7, 6d11},
+        {6d7, 6d10}, // middle
+        {6d7, 6d9},
+        {6d7, 6d8},
+        {6d6, 6d11},
+        {6d5, 6d10}
+  };
+
+    const LEFT_ARROW = {
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d9, 6d10},
+        {6d8, 6d9},
+        {6d7, 6d12},
+        {6d7, 6d11},
+        {6d7, 6d10}, // middle
+        {6d7, 6d9},
+        {6d7, 6d8},
+        {6d6, 6d9},
+        {6d5, 6d10}
+  };
+
+      const UP_ARROW = {
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d9, 6d10},
+        {6d8, 6d10},
+        {6d7, 6d10}, // middle
+        {6d6, 6d10},
+        {6d5, 6d10},
+        {6d6, 6d9}, // Next 4 lines (inclusive) is to make the edges of the arrow
+        {6d6, 6d11},
+        {6d7, 6d8},
+        {6d7, 6d12}
+  };
+  
+        const DOWN_ARROW = {
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d0, 6d0},
+        {6d8, 6d9}, // Next 4 lines (inclusive) is to make the edges of the arrow
+        {6d8, 6d11},
+        {6d7, 6d8},
+        {6d7, 6d12},
+        {6d9, 6d10},
+        {6d8, 6d10},
+        {6d7, 6d10}, // middle
+        {6d6, 6d10},
+        {6d5, 6d10}
+
+  };
+  
+  always {
+
+    case (choice) {
+      // No arrows
+      0: 
+        arrow = RIGHT_ARROW; // placeholder value
+        colour = COLOUR[0];
+      1: 
+        arrow = LEFT_ARROW;
+        colour = COLOUR[1];
+      2: 
+        arrow = RIGHT_ARROW;
+        colour = COLOUR[1];
+      3: 
+        arrow = UP_ARROW;
+        colour = COLOUR[1];
+      4:
+        arrow = DOWN_ARROW;
+        colour = COLOUR[1];
+      5:
+        arrow = RIGHT_ARROW;
+        colour = COLOUR[3];
+      6: 
+        arrow = LEFT_ARROW;
+        colour = COLOUR[3];
+      7:
+        arrow = UP_ARROW;
+        colour = COLOUR[3];
+      8:
+        arrow = DOWN_ARROW;
+        colour = COLOUR[3];
+      
+      default: 
+        arrow = UP_ARROW;
+        colour = COLOUR[5];
+    }
+  }
+}

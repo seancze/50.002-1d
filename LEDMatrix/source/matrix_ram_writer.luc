@@ -1,0 +1,193 @@
+module matrix_ram_writer #(
+  // 32 by 64 LED matrix by default, separated into top-16 rows and bottom 16-rows
+  // both halves row i are written together for all rows 0 to 15 in a rapid loop 
+  ADDRESS_SIZE = 4 : ADDRESS_SIZE > 0, //width of the address field (ABCD signals for matrix_led) 
+  MATRIX_WIDTH = 64 : MATRIX_WIDTH > 0, //number of LEDs per row in the matrix
+  DATA_WIDTH = 16 : DATA_WIDTH > 0, 
+  DATA_SET = 3 : DATA_SET > 0
+  )(
+    input clk,  // clock
+    input rst,  // reset
+    input reload,
+    input new_data[DATA_SET][DATA_WIDTH],
+    input next_arrow, // Right button
+    input next_level, // Up button
+    
+    output row_address_top[ADDRESS_SIZE],
+    output col_address_top[$clog2(MATRIX_WIDTH)],
+    output we_top,
+    output wd_top[3],
+    
+    output row_address_btm[ADDRESS_SIZE],
+    output col_address_btm[$clog2(MATRIX_WIDTH)],
+    output we_btm,
+    output wd_btm[3],
+    
+    output ready
+  ) {
+  
+    fsm writer_state(.clk(clk), .rst(rst)) = {START, LOAD_ADDRESS, LOAD_WAIT, LOOP};
+    fsm button_state(.clk(clk), .rst(rst)) = {START, RESET, NEXT_ARROW, NEXT_LEVEL};
+
+    const NUM_ARROW_TYPES = 9;
+    const MAX_LEVEL = 9;    
+ 
+//  BLUE | GREEN | RED
+    const START_DATA = {16b0111100001111111, 16b0111111111100000, 16b0111111111111111}; // some random triangle 
+
+    arrow_rom rom;
+  
+  // Note: Even though DATA_WIDTH can handle sizes that are not a multiple of 2, better to just set to 2^n to prevent random bits from lighting up
+    dff bitloader[$clog2(DATA_WIDTH)](#INIT(0), .clk(clk), .rst(rst));
+  
+    dff data[DATA_SET][DATA_WIDTH](.clk(clk), .rst(rst)); 
+
+// Used to choose the type of arrow from rom
+    dff arrow_type[$clog2(NUM_ARROW_TYPES)](#INIT(0), .clk(clk), .rst(rst));
+// Used to track how many arrows have been loaded onto the LED matrix
+    dff current_arrow[$clog2(MAX_LEVEL)](#INIT(0), .clk(clk), .rst(rst));
+// Used to track the current level
+    dff current_level[$clog2(MAX_LEVEL)](#INIT(0), .clk(clk), .rst(rst));
+
+  
+    dff data_col_address[$clog2(MATRIX_WIDTH)](#INIT(0),.clk(clk),.rst(rst));
+    dff data_row_address[ADDRESS_SIZE](#INIT(0),.clk(clk),.rst(rst));
+  
+    // to write to all 3-bit cells in top_ram and bottom_ram 
+    // for 64 by 32 matrix, there are 64 by 16 cells in each ram, each cell contains 3 bit, so ram_writer_address is 10 bit long
+    dff ram_writer_address[$clog2(MATRIX_WIDTH*$pow(ADDRESS_SIZE, 2))](#INIT(0), .clk(clk), .rst(rst));
+  
+  always {
+    ready = b0;
+    we_top = b0;
+    we_btm = b0;
+    row_address_top = 0;
+    row_address_btm = 0;
+    col_address_top = 0;
+    col_address_btm = 0;
+    wd_top = 0;
+    wd_btm = 0;
+    rom.choice = arrow_type.q; // Connect arrow_type dff to rom.choice to allow for toggling between arrows
+
+    case(writer_state.q){
+      writer_state.START:
+        arrow_type.d = 0;
+        current_arrow.d = 0;
+        current_level.d = 0;
+        data.d = START_DATA;
+        writer_state.d = writer_state.LOAD_ADDRESS;
+        button_state.d = button_state.START;
+        
+
+        // MAPPING used to generate the arrow
+        // START_DATA is used to showcase the first colours
+      writer_state.LOAD_ADDRESS:
+      // row_address_top is 4 bits but rom.arrow's numerical entry is 6 bits
+        row_address_top = rom.arrow[bitloader.q][1];
+
+
+      // FORMULA
+      // column_offset = 64 / (current_level+1)
+      // coordinate = column_offset * (current_arrow+1) + row_offset
+      case(rom.arrow[bitloader.q][0]) {
+        6d12: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1) + 2;
+        6d11: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1) + 1;
+        6d10: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1);
+        6d9: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1) - 1;
+        6d8: col_address_top = 64 / (current_level.q + 1) * (current_arrow.q+1) - 2;
+        default: col_address_top = rom.arrow[bitloader.q][0];
+      }
+        
+      row_address_btm = data_row_address.q;
+      col_address_btm = data_col_address.q;
+      
+      // color accordingly
+      wd_top = b000;
+      // If button_state.START AND current_level is not 0, then set the colour
+      // When it is NEXT_LEVEL / NEXT_ARROW / RESET, it is still erasing the previous arrow
+      if (button_state.q == button_state.START && current_level.q != 0) {
+        wd_top = rom.colour;
+      } 
+      
+      wd_btm = b100;
+      we_top = b1;
+      we_btm = b1;
+      writer_state.d = writer_state.LOAD_WAIT;
+      if (&bitloader.q == 1){
+        bitloader.d = 0;
+        if (current_arrow.q < (current_level.q-1)) {
+          // If still less than the required number, increment the num_arrow index by 1
+          current_arrow.d = current_arrow.q + 1;
+          // For some reason, I still need to call LOAD_ADDRESS even though that's where I currently am at right now
+          // Otherwise, there will be a bug that will cause 1 bit to be missing
+          writer_state.d = writer_state.LOAD_ADDRESS;
+
+        } else {
+          // Only continue on after all the arrows of the previous stage had been iterated over
+          // Reset # of arrows
+          current_arrow.d = 0;
+          // Reset button_state to START
+          // Note: I can set button_state here because I am setting for the next cycle
+          button_state.d = button_state.START;
+          // For some reason, I still need to call LOAD_ADDRESS even though that's where I currently am at right now
+          // Otherwise, there will be a bug that will cause 1 bit to be missing
+          writer_state.d = writer_state.LOAD_ADDRESS;
+          
+          
+          if(button_state.q == button_state.NEXT_ARROW) {
+            // NEXT_ARROW: Assign new arrow type
+
+            if (arrow_type.q < NUM_ARROW_TYPES) {
+              arrow_type.d = arrow_type.q + 1;
+            } else {
+              arrow_type.d = 0;
+            }
+
+          } else if (button_state.q == button_state.RESET) {
+            // RESET: Set back to default values
+            arrow_type.d = 0;
+          } else if (button_state.q == button_state.NEXT_LEVEL) {
+            // NEXT_LEVEL: Increment level
+            if (current_level.q < MAX_LEVEL) {
+              current_level.d = current_level.q + 1;
+            } else {
+              // After max level is reached, go back to level 1
+              current_level.d = 0;
+            }
+            
+          } else {
+            // START: Only go back to loop AFTER all arrows have been generated, where # of arrows == (current level + 1)
+            writer_state.d = writer_state.LOOP;
+          }
+        }
+
+      }     
+        
+      writer_state.LOAD_WAIT:
+        //advance write address by 1
+        bitloader.d = bitloader.q + 1;
+        data_col_address.d = data_col_address.q + 1;
+        writer_state.d = writer_state.LOAD_ADDRESS;
+
+      writer_state.LOOP:
+        //provide output from ram after writing is done
+        ready = 1;
+        writer_state.d = writer_state.LOOP;
+        if (reload){
+           data.d = new_data;
+           writer_state.d = writer_state.LOAD_ADDRESS;
+           button_state.d = button_state.RESET;
+        } else if (next_arrow) {
+          // Switch off previous LEDs first > Then, init new data
+          writer_state.d = writer_state.LOAD_ADDRESS;
+          button_state.d = button_state.NEXT_ARROW;
+        } else if (next_level) {
+          writer_state.d = writer_state.LOAD_ADDRESS;
+          button_state.d = button_state.NEXT_LEVEL;
+        }
+
+  }
+      
+ 
+  }
+}

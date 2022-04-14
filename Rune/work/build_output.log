@@ -1,49 +1,59 @@
-Warnings in file C:\Users\Javier\Documents\Alchitry\Rune\source\variable_counter.luc:
-    Line 38, Column 12 : The signal "random_number.num" is wider than "debug" and the most significant bits will be dropped
-Warnings in file C:\Users\Javier\Documents\Alchitry\Rune\source\variable_counter_unrestricted.luc:
+Warnings in file C:\Users\seanc\OneDrive\Desktop\Work\SUTD\50.002 1D\50.002-1d\Rune\source\variable_counter_unrestricted.luc:
     Line 37, Column 12 : The signal "random_number.num" is wider than "debug" and the most significant bits will be dropped
+Warnings in file C:\Users\seanc\OneDrive\Desktop\Work\SUTD\50.002 1D\50.002-1d\Rune\source\matrix_ram_writer.luc:
+    Line 85, Column 26 : The signal "rom.arrow[bitloader.q][1]" is wider than "row_address_top" and the most significant bits will be dropped
+    Line 11, Column 4 : "new_data" was never used
+    Line 42, Column 4 : "data" was never used
+    Line 45, Column 4 : "arrow_type" was never used
+    Line 57, Column 4 : "ram_writer_address" was never used
+Warnings in file C:\Users\seanc\OneDrive\Desktop\Work\SUTD\50.002 1D\50.002-1d\Rune\source\au_top.luc:
+    Line 33, Column 2 : "col_index" was never used
+    Line 32, Column 2 : "row_index" was never used
+Warnings in file C:\Users\seanc\OneDrive\Desktop\Work\SUTD\50.002 1D\50.002-1d\Rune\source\variable_counter.luc:
+    Line 38, Column 12 : The signal "random_number.num" is wider than "debug" and the most significant bits will be dropped
+Warnings in file C:\Users\seanc\OneDrive\Desktop\Work\SUTD\50.002 1D\50.002-1d\Rune\source\matrix_ram.luc:
+    Line 8, Column 4 : "rst" was never used
 Starting Vivado...
 
-****** Vivado v2021.2 (64-bit)
-  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
-  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
-    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+****** Vivado v2020.2 (64-bit)
+  **** SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+  **** IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 
-source {C:\Users\Javier\Documents\Alchitry\Rune\work\project.tcl}
-# set projDir "C:/Users/Javier/Documents/Alchitry/Rune/work/vivado"
+source {C:\Users\seanc\OneDrive\Desktop\Work\SUTD\50.002 1D\50.002-1d\Rune\work\project.tcl}
+# set projDir "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/vivado"
 # set projName "Rune"
 # set topName top
 # set device xc7a35tftg256-1
 # if {[file exists "$projDir/$projName"]} { file delete -force "$projDir/$projName" }
 # create_project $projName "$projDir/$projName" -part $device
-create_project: Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1239.352 ; gain = 0.000
+INFO: [ProjectBase 1-489] The host OS only allows 260 characters in a normal path. The project is stored in a path with more than 80 characters. If you experience issues with IP, Block Designs, or files not being found, please consider moving the project to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter.
+Current project path is 'C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune'
 # set_property design_mode RTL [get_filesets sources_1]
-# set verilogSources [list "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/au_top_0.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/full_circuit_1.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/reset_conditioner_2.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/button_conditioner_3.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/edge_detector_4.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/multi_seven_seg_5.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/counter_6.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/variable_counter_7.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/variable_counter_unrestricted_8.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/game_CU_9.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/regfile_10.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/alu_11.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/wasel_12.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/ra2sel_13.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/asel_14.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/bsel_15.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/wdsel_16.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/pipeline_17.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/counter_18.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/seven_seg_19.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/decoder_20.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/edge_detector_21.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/counter_22.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/pn_gen_23.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/counter_24.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/comparator_25.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/adder_26.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/shifter_27.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/boolean_28.v" "C:/Users/Javier/Documents/Alchitry/Rune/work/verilog/multiplier_29.v" ]
+# set verilogSources [list "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/au_top_0.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/matrix_writer_1.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/matrix_ram_writer_2.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/matrix_ram_3.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/full_circuit_4.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/multi_seven_seg_5.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/reset_conditioner_6.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/button_conditioner_7.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/edge_detector_8.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/arrow_rom_9.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/simple_dual_ram_10.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/counter_11.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/variable_counter_12.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/variable_counter_unrestricted_13.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/game_CU_14.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/regfile_15.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/alu_16.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/wasel_17.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/ra2sel_18.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/asel_19.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/bsel_20.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/wdsel_21.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/counter_22.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/seven_seg_23.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/decoder_24.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/pipeline_25.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/edge_detector_26.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/counter_27.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/pn_gen_28.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/counter_29.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/comparator_30.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/adder_31.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/shifter_32.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/boolean_33.v" "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/verilog/multiplier_34.v" ]
 # import_files -fileset [get_filesets sources_1] -force -norecurse $verilogSources
-# set xdcSources [list "C:/Users/Javier/Documents/Alchitry/Rune/work/constraint/alchitry.xdc" "C:/Users/Javier/Documents/Alchitry/Rune/work/constraint/io.xdc" "C:/Program\ Files/Alchitry/Alchitry\ Labs/library/components/au.xdc" ]
+# set xdcSources [list "C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002\ 1D/50.002-1d/Rune/work/constraint/custom.xdc" "C:/Program\ Files/Alchitry/Alchitry\ Labs/library/components/au.xdc" ]
 # read_xdc $xdcSources
 # set_property STEPS.WRITE_BITSTREAM.ARGS.BIN_FILE true [get_runs impl_1]
 # update_compile_order -fileset sources_1
 # launch_runs -runs synth_1 -jobs 12
-WARNING: [Vivado 12-7122] Auto Incremental Compile:: No reference checkpoint was found in run synth_1. Auto-incremental flow will not be run, the standard flow will be run instead.
-[Thu Apr 14 13:29:13 2022] Launched synth_1...
-Run output will be captured here: C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/synth_1/runme.log
-# wait_on_run synth_1
-[Thu Apr 14 13:29:13 2022] Waiting for synth_1 to finish...
 
+[Thu Apr 14 22:52:35 2022] Launched synth_1...
+Run output will be captured here: C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.runs/synth_1/runme.log
+# wait_on_run synth_1
+[Thu Apr 14 22:52:36 2022] Waiting for synth_1 to finish...
 
 *** Running vivado
     with args -log au_top_0.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source au_top_0.tcl
 
 
 
-****** Vivado v2021.2 (64-bit)
-  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
-  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
-    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+****** Vivado v2020.2 (64-bit)
+  **** SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+  **** IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 
 source au_top_0.tcl -notrace
-create_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1247.664 ; gain = 7.965
 Command: synth_design -top au_top_0 -part xc7a35tftg256-1
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
@@ -51,206 +61,302 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t
 INFO: [Device 21-403] Loading part xc7a35tftg256-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 9492
+INFO: [Synth 8-7075] Helper process launched with PID 17212
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Starting RTL Elaboration : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1000.426 ; gain = 0.000
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-6157] synthesizing module 'au_top_0' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/au_top_0.v:7]
-INFO: [Synth 8-6157] synthesizing module 'button_conditioner_3' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/button_conditioner_3.v:13]
-INFO: [Synth 8-6157] synthesizing module 'pipeline_17' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/pipeline_17.v:11]
-INFO: [Synth 8-6155] done synthesizing module 'pipeline_17' (1#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/pipeline_17.v:11]
-INFO: [Synth 8-6155] done synthesizing module 'button_conditioner_3' (2#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/button_conditioner_3.v:13]
-INFO: [Synth 8-6157] synthesizing module 'edge_detector_4' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/edge_detector_4.v:12]
-INFO: [Synth 8-6155] done synthesizing module 'edge_detector_4' (3#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/edge_detector_4.v:12]
-INFO: [Synth 8-6157] synthesizing module 'full_circuit_1' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/full_circuit_1.v:7]
-INFO: [Synth 8-6157] synthesizing module 'counter_6' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_6.v:14]
-INFO: [Synth 8-6155] done synthesizing module 'counter_6' (4#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_6.v:14]
-INFO: [Synth 8-6157] synthesizing module 'variable_counter_7' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_7.v:11]
-INFO: [Synth 8-6157] synthesizing module 'edge_detector_21' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/edge_detector_21.v:12]
-INFO: [Synth 8-6155] done synthesizing module 'edge_detector_21' (5#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/edge_detector_21.v:12]
-INFO: [Synth 8-6157] synthesizing module 'counter_22' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_22.v:14]
-INFO: [Synth 8-6155] done synthesizing module 'counter_22' (6#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_22.v:14]
-INFO: [Synth 8-6157] synthesizing module 'pn_gen_23' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/pn_gen_23.v:11]
-INFO: [Synth 8-6155] done synthesizing module 'pn_gen_23' (7#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/pn_gen_23.v:11]
-WARNING: [Synth 8-151] case item 4'b1000 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_7.v:100]
-WARNING: [Synth 8-151] case item 4'b1001 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_7.v:103]
-WARNING: [Synth 8-151] case item 4'b1010 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_7.v:106]
-WARNING: [Synth 8-151] case item 4'b1011 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_7.v:109]
-WARNING: [Synth 8-151] case item 4'b1100 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_7.v:112]
-WARNING: [Synth 8-151] case item 4'b1101 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_7.v:115]
-WARNING: [Synth 8-151] case item 4'b1110 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_7.v:118]
-WARNING: [Synth 8-151] case item 4'b1111 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_7.v:121]
-WARNING: [Synth 8-3936] Found unconnected internal register 'temp_pointer_reg' and it is trimmed from '4' to '3' bits. [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_7.v:69]
-INFO: [Synth 8-6155] done synthesizing module 'variable_counter_7' (8#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_7.v:11]
-INFO: [Synth 8-6157] synthesizing module 'variable_counter_unrestricted_8' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_8.v:11]
-INFO: [Synth 8-6157] synthesizing module 'counter_24' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_24.v:14]
-INFO: [Synth 8-6155] done synthesizing module 'counter_24' (9#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_24.v:14]
-WARNING: [Synth 8-151] case item 4'b1000 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_8.v:100]
-WARNING: [Synth 8-151] case item 4'b1001 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_8.v:103]
-WARNING: [Synth 8-151] case item 4'b1010 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_8.v:106]
-WARNING: [Synth 8-151] case item 4'b1011 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_8.v:109]
-WARNING: [Synth 8-151] case item 4'b1100 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_8.v:112]
-WARNING: [Synth 8-151] case item 4'b1101 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_8.v:115]
-WARNING: [Synth 8-151] case item 4'b1110 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_8.v:118]
-WARNING: [Synth 8-151] case item 4'b1111 is unreachable [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_8.v:121]
-WARNING: [Synth 8-3936] Found unconnected internal register 'temp_pointer_reg' and it is trimmed from '4' to '3' bits. [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_8.v:69]
-INFO: [Synth 8-6155] done synthesizing module 'variable_counter_unrestricted_8' (10#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_8.v:11]
-INFO: [Synth 8-6157] synthesizing module 'game_CU_9' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/game_CU_9.v:7]
-INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/game_CU_9.v:140]
-INFO: [Synth 8-6155] done synthesizing module 'game_CU_9' (11#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/game_CU_9.v:7]
-INFO: [Synth 8-6157] synthesizing module 'regfile_10' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/regfile_10.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'regfile_10' (12#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/regfile_10.v:7]
-INFO: [Synth 8-6157] synthesizing module 'alu_11' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/alu_11.v:7]
-INFO: [Synth 8-6157] synthesizing module 'comparator_25' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/comparator_25.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'comparator_25' (13#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/comparator_25.v:7]
-INFO: [Synth 8-6157] synthesizing module 'adder_26' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/adder_26.v:7]
-INFO: [Synth 8-226] default block is never used [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/adder_26.v:23]
-INFO: [Synth 8-6155] done synthesizing module 'adder_26' (14#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/adder_26.v:7]
-INFO: [Synth 8-6157] synthesizing module 'shifter_27' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/shifter_27.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'shifter_27' (15#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/shifter_27.v:7]
-INFO: [Synth 8-6157] synthesizing module 'boolean_28' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/boolean_28.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'boolean_28' (16#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/boolean_28.v:7]
-INFO: [Synth 8-6157] synthesizing module 'multiplier_29' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/multiplier_29.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'multiplier_29' (17#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/multiplier_29.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'alu_11' (18#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/alu_11.v:7]
-INFO: [Synth 8-6157] synthesizing module 'wasel_12' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/wasel_12.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'wasel_12' (19#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/wasel_12.v:7]
-INFO: [Synth 8-6157] synthesizing module 'ra2sel_13' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/ra2sel_13.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'ra2sel_13' (20#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/ra2sel_13.v:7]
-INFO: [Synth 8-6157] synthesizing module 'asel_14' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/asel_14.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'asel_14' (21#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/asel_14.v:7]
-INFO: [Synth 8-6157] synthesizing module 'bsel_15' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/bsel_15.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'bsel_15' (22#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/bsel_15.v:7]
-INFO: [Synth 8-6157] synthesizing module 'wdsel_16' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/wdsel_16.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'wdsel_16' (23#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/wdsel_16.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'full_circuit_1' (24#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/full_circuit_1.v:7]
-INFO: [Synth 8-6157] synthesizing module 'reset_conditioner_2' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/reset_conditioner_2.v:11]
-INFO: [Synth 8-6155] done synthesizing module 'reset_conditioner_2' (25#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/reset_conditioner_2.v:11]
-INFO: [Synth 8-6157] synthesizing module 'multi_seven_seg_5' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/multi_seven_seg_5.v:12]
-INFO: [Synth 8-6157] synthesizing module 'counter_18' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_18.v:14]
-INFO: [Synth 8-6155] done synthesizing module 'counter_18' (26#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_18.v:14]
-INFO: [Synth 8-6157] synthesizing module 'seven_seg_19' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/seven_seg_19.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'seven_seg_19' (27#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/seven_seg_19.v:7]
-INFO: [Synth 8-6157] synthesizing module 'decoder_20' [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/decoder_20.v:11]
-INFO: [Synth 8-6155] done synthesizing module 'decoder_20' (28#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/decoder_20.v:11]
-INFO: [Synth 8-6155] done synthesizing module 'multi_seven_seg_5' (29#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/multi_seven_seg_5.v:12]
-INFO: [Synth 8-6155] done synthesizing module 'au_top_0' (30#1) [C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/au_top_0.v:7]
-WARNING: [Synth 8-3917] design au_top_0 has port led[7] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[6] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[5] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[4] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[3] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[2] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[1] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[0] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[23] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[22] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[21] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[20] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[19] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[18] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[17] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[16] driven by constant 0
-WARNING: [Synth 8-7129] Port alufn[5] in module shifter_27 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port alufn[4] in module shifter_27 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port alufn[3] in module shifter_27 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port alufn[2] in module shifter_27 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port alufn[5] in module comparator_25 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port alufn[4] in module comparator_25 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port alufn[3] in module comparator_25 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port alufn[0] in module comparator_25 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[15] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[14] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[13] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[12] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[11] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[10] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[9] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[8] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[7] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[6] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[5] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[4] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[3] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[2] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rb_data[1] in module game_CU_9 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[23] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[22] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[21] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[20] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[19] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[18] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[17] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[16] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[15] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[14] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[13] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[12] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[11] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[10] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[9] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[8] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[7] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[6] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[5] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[4] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[3] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[2] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[1] in module au_top_0 is either unconnected or has no load
+INFO: [Synth 8-6157] synthesizing module 'au_top_0' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/au_top_0.v:7]
+INFO: [Synth 8-6157] synthesizing module 'button_conditioner_7' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/button_conditioner_7.v:13]
+	Parameter CLK_FREQ bound to: 26'b10111110101111000010000000 
+	Parameter MIN_DELAY bound to: 5'b10100 
+	Parameter NUM_SYNC bound to: 2'b10 
+INFO: [Synth 8-6157] synthesizing module 'pipeline_25' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/pipeline_25.v:11]
+	Parameter DEPTH bound to: 2'b10 
+INFO: [Synth 8-6155] done synthesizing module 'pipeline_25' (1#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/pipeline_25.v:11]
+INFO: [Synth 8-6155] done synthesizing module 'button_conditioner_7' (2#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/button_conditioner_7.v:13]
+INFO: [Synth 8-6157] synthesizing module 'edge_detector_8' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/edge_detector_8.v:12]
+	Parameter RISE bound to: 1'b1 
+	Parameter FALL bound to: 1'b0 
+INFO: [Synth 8-6155] done synthesizing module 'edge_detector_8' (3#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/edge_detector_8.v:12]
+INFO: [Synth 8-6157] synthesizing module 'matrix_writer_1' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/matrix_writer_1.v:12]
+	Parameter ADDRESS_SIZE bound to: 3'b100 
+	Parameter MATRIX_WIDTH bound to: 7'b1000000 
+	Parameter DIV bound to: 3'b110 
+INFO: [Synth 8-6155] done synthesizing module 'matrix_writer_1' (4#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/matrix_writer_1.v:12]
+INFO: [Synth 8-6157] synthesizing module 'matrix_ram_writer_2' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/matrix_ram_writer_2.v:14]
+	Parameter ADDRESS_SIZE bound to: 3'b100 
+	Parameter MATRIX_WIDTH bound to: 7'b1000000 
+	Parameter DATA_WIDTH bound to: 5'b10000 
+	Parameter DATA_SET bound to: 2'b11 
+	Parameter START_writer_state bound to: 2'b00 
+	Parameter LOAD_ADDRESS_writer_state bound to: 2'b01 
+	Parameter LOAD_WAIT_writer_state bound to: 2'b10 
+	Parameter LOOP_writer_state bound to: 2'b11 
+	Parameter READY_button_state bound to: 1'b0 
+	Parameter LOADING_button_state bound to: 1'b1 
+	Parameter NUM_ARROW_TYPES bound to: 4'b1001 
+	Parameter MAX_LEVEL bound to: 4'b1001 
+	Parameter START_DATA bound to: 48'b011110000111111101111111111000000111111111111111 
+INFO: [Synth 8-6157] synthesizing module 'arrow_rom_9' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/arrow_rom_9.v:7]
+	Parameter COLOUR bound to: 24'b101011110001010100111000 
+	Parameter RIGHT_ARROW bound to: 192'b000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001001010001000001011000111001100000111001011000111001010000111001001000111001000000110001011000101001010 
+	Parameter LEFT_ARROW bound to: 192'b000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001001010001000001001000111001100000111001011000111001010000111001001000111001000000110001001000101001010 
+	Parameter UP_ARROW bound to: 192'b000000000000000000000000000000000000000000000000000000000000000000000000000000000000001001001010001000001010000111001010000110001010000101001010000110001001000110001011000111001000000111001100 
+	Parameter DOWN_ARROW bound to: 192'b000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000001001001000001011000111001000000111001100001001001010001000001010000111001010000110001010000101001010 
+INFO: [Synth 8-6155] done synthesizing module 'arrow_rom_9' (5#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/arrow_rom_9.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'matrix_ram_writer_2' (6#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/matrix_ram_writer_2.v:14]
+INFO: [Synth 8-6157] synthesizing module 'matrix_ram_3' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/matrix_ram_3.v:12]
+	Parameter ADDRESS_SIZE bound to: 3'b100 
+	Parameter MATRIX_WIDTH bound to: 7'b1000000 
+INFO: [Synth 8-6157] synthesizing module 'simple_dual_ram_10' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/simple_dual_ram_10.v:48]
+	Parameter SIZE bound to: 2'b11 
+	Parameter DEPTH bound to: 12'b010000000000 
+INFO: [Synth 8-6155] done synthesizing module 'simple_dual_ram_10' (7#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/simple_dual_ram_10.v:48]
+INFO: [Synth 8-6155] done synthesizing module 'matrix_ram_3' (8#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/matrix_ram_3.v:12]
+INFO: [Synth 8-6157] synthesizing module 'full_circuit_4' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/full_circuit_4.v:7]
+INFO: [Synth 8-6157] synthesizing module 'counter_11' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_11.v:14]
+	Parameter SIZE bound to: 1'b1 
+	Parameter DIV bound to: 5'b11010 
+	Parameter TOP bound to: 1'b0 
+	Parameter UP bound to: 1'b1 
+	Parameter MAX_VALUE bound to: 27'b011111111111111111111111111 
+INFO: [Synth 8-6155] done synthesizing module 'counter_11' (9#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_11.v:14]
+INFO: [Synth 8-6157] synthesizing module 'variable_counter_12' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_12.v:11]
+	Parameter SEED bound to: 128'b10000100001100100011001101010010001110100110000100111001011001100100001000111011011000100010010101100010010110010010110001100010 
+INFO: [Synth 8-6157] synthesizing module 'edge_detector_26' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/edge_detector_26.v:12]
+	Parameter RISE bound to: 1'b1 
+	Parameter FALL bound to: 1'b1 
+INFO: [Synth 8-6155] done synthesizing module 'edge_detector_26' (10#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/edge_detector_26.v:12]
+INFO: [Synth 8-6157] synthesizing module 'counter_27' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_27.v:14]
+	Parameter SIZE bound to: 1'b1 
+	Parameter DIV bound to: 5'b10101 
+	Parameter TOP bound to: 1'b0 
+	Parameter UP bound to: 1'b1 
+	Parameter MAX_VALUE bound to: 22'b0111111111111111111111 
+INFO: [Synth 8-6155] done synthesizing module 'counter_27' (11#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_27.v:14]
+INFO: [Synth 8-6157] synthesizing module 'pn_gen_28' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/pn_gen_28.v:11]
+	Parameter SEED bound to: 128'b10000100001100100011001101010010001110100110000100111001011001100100001000111011011000100010010101100010010110010010110001100010 
+INFO: [Synth 8-6155] done synthesizing module 'pn_gen_28' (12#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/pn_gen_28.v:11]
+WARNING: [Synth 8-151] case item 4'b1000 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_12.v:100]
+WARNING: [Synth 8-151] case item 4'b1001 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_12.v:103]
+WARNING: [Synth 8-151] case item 4'b1010 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_12.v:106]
+WARNING: [Synth 8-151] case item 4'b1011 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_12.v:109]
+WARNING: [Synth 8-151] case item 4'b1100 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_12.v:112]
+WARNING: [Synth 8-151] case item 4'b1101 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_12.v:115]
+WARNING: [Synth 8-151] case item 4'b1110 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_12.v:118]
+WARNING: [Synth 8-151] case item 4'b1111 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_12.v:121]
+INFO: [Synth 8-6155] done synthesizing module 'variable_counter_12' (13#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_12.v:11]
+INFO: [Synth 8-6157] synthesizing module 'variable_counter_unrestricted_13' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_13.v:11]
+	Parameter SEED bound to: 128'b10000100001100100011001101010010001110100110000100111001011001100100001000111011011000100010010101100010010110010010110001100010 
+INFO: [Synth 8-6157] synthesizing module 'counter_29' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_29.v:14]
+	Parameter SIZE bound to: 1'b1 
+	Parameter DIV bound to: 1'b0 
+	Parameter TOP bound to: 1'b0 
+	Parameter UP bound to: 1'b1 
+	Parameter MAX_VALUE bound to: 1'b0 
+INFO: [Synth 8-6155] done synthesizing module 'counter_29' (14#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_29.v:14]
+WARNING: [Synth 8-151] case item 4'b1000 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_13.v:100]
+WARNING: [Synth 8-151] case item 4'b1001 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_13.v:103]
+WARNING: [Synth 8-151] case item 4'b1010 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_13.v:106]
+WARNING: [Synth 8-151] case item 4'b1011 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_13.v:109]
+WARNING: [Synth 8-151] case item 4'b1100 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_13.v:112]
+WARNING: [Synth 8-151] case item 4'b1101 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_13.v:115]
+WARNING: [Synth 8-151] case item 4'b1110 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_13.v:118]
+WARNING: [Synth 8-151] case item 4'b1111 is unreachable [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_13.v:121]
+INFO: [Synth 8-6155] done synthesizing module 'variable_counter_unrestricted_13' (15#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_13.v:11]
+INFO: [Synth 8-6157] synthesizing module 'game_CU_14' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/game_CU_14.v:7]
+	Parameter START_game_fsm bound to: 7'b0000000 
+	Parameter GAME_OVER_game_fsm bound to: 7'b0000001 
+	Parameter INCREMENT_LEVEL_game_fsm bound to: 7'b0000010 
+	Parameter CHECK_LEVEL_LTE9_game_fsm bound to: 7'b0000011 
+	Parameter BRANCH_CHECK_LEVEL_LTE9_game_fsm bound to: 7'b0000100 
+	Parameter INCREMENT_RANDOMIZER_1_game_fsm bound to: 7'b0000101 
+	Parameter CHECK_RANDOMIZER_1_LTE4_game_fsm bound to: 7'b0000110 
+	Parameter BRANCH_CHECK_RANDOMIZER_1_LTE4_game_fsm bound to: 7'b0000111 
+	Parameter MAKE_RANDOMIZER_1_1_game_fsm bound to: 7'b0001000 
+	Parameter SET_CURRENT_ARROW_TO_1_RESET_game_fsm bound to: 7'b0001001 
+	Parameter SET_CURRENT_ARROW_TO_1_RSA_1_game_fsm bound to: 7'b0001010 
+	Parameter SET_CURRENT_ARROW_TO_1_RSA_2_game_fsm bound to: 7'b0001011 
+	Parameter SET_CURRENT_ARROW_TO_1_IDLE_game_fsm bound to: 7'b0001100 
+	Parameter SETUP_NTH_EQ_RANDOMIZER_game_fsm bound to: 7'b0001101 
+	Parameter INCREMENT_CURRENT_ARROW_GREEN_game_fsm bound to: 7'b0001110 
+	Parameter INCREMENT_CURRENT_ARROW_RESET_game_fsm bound to: 7'b0001111 
+	Parameter INCREMENT_CURRENT_ARROW_RSA_1_game_fsm bound to: 7'b0010000 
+	Parameter INCREMENT_CURRENT_ARROW_RSA_2_game_fsm bound to: 7'b0010001 
+	Parameter IDLE_game_fsm bound to: 7'b0010010 
+	Parameter IDLE1_game_fsm bound to: 7'b0010011 
+	Parameter INCREMENT_RANDOMIZER_RSA_1_game_fsm bound to: 7'b0010100 
+	Parameter CHECK_RANDOMIZER_RSA_1_LTE4_game_fsm bound to: 7'b0010101 
+	Parameter BRANCH_CHECK_RANDOMIZER_RSA_1_LTE4_game_fsm bound to: 7'b0010110 
+	Parameter MAKE_RANDOMIZER_RSA_1_1_game_fsm bound to: 7'b0010111 
+	Parameter IDLE2_game_fsm bound to: 7'b0011000 
+	Parameter INCREMENT_RANDOMIZER_RSA_2_game_fsm bound to: 7'b0011001 
+	Parameter CHECK_RANDOMIZER_RSA_2_LTE4_game_fsm bound to: 7'b0011010 
+	Parameter BRANCH_CHECK_RANDOMIZER_RSA_2_LTE4_game_fsm bound to: 7'b0011011 
+	Parameter MAKE_RANDOMIZER_RSA_2_1_game_fsm bound to: 7'b0011100 
+	Parameter IDLE3_game_fsm bound to: 7'b0011101 
+	Parameter INCREMENT_RANDOMIZER_RSA_3_game_fsm bound to: 7'b0011110 
+	Parameter CHECK_RANDOMIZER_RSA_3_LTE4_game_fsm bound to: 7'b0011111 
+	Parameter BRANCH_CHECK_RANDOMIZER_RSA_3_LTE4_game_fsm bound to: 7'b0100000 
+	Parameter MAKE_RANDOMIZER_RSA_3_1_game_fsm bound to: 7'b0100001 
+	Parameter CHECK_CURRENT_ARROW_LTE_LEVEL_game_fsm bound to: 7'b0100010 
+	Parameter BRANCH_CHECK_CURRENT_ARROW_LTE_LEVEL_game_fsm bound to: 7'b0100011 
+	Parameter RESET_TIMER_EQ4_game_fsm bound to: 7'b0100100 
+	Parameter LOAD_CURRENT_ARROW_DATA_TO_TEMP_LEFT_game_fsm bound to: 7'b0100101 
+	Parameter LOAD_CURRENT_ARROW_DATA_TO_TEMP_RIGHT_game_fsm bound to: 7'b0100110 
+	Parameter LOAD_CURRENT_ARROW_DATA_TO_TEMP_UP_game_fsm bound to: 7'b0100111 
+	Parameter LOAD_CURRENT_ARROW_DATA_TO_TEMP_DOWN_game_fsm bound to: 7'b0101000 
+	Parameter CHECK_CORRECT_INPUT_LEFT_game_fsm bound to: 7'b0101001 
+	Parameter CHECK_CORRECT_INPUT_RIGHT_game_fsm bound to: 7'b0101010 
+	Parameter CHECK_CORRECT_INPUT_UP_game_fsm bound to: 7'b0101011 
+	Parameter CHECK_CORRECT_INPUT_DOWN_game_fsm bound to: 7'b0101100 
+	Parameter BRANCH_CHECK_CORRECT_INPUT_game_fsm bound to: 7'b0101101 
+	Parameter MAKE_NTH_ARROW_GREEN_game_fsm bound to: 7'b0101110 
+	Parameter CHECK_GAME_TIMER_MT_0_game_fsm bound to: 7'b0101111 
+	Parameter BRANCH_GAME_TIMER_game_fsm bound to: 7'b0110000 
+	Parameter CHECK_NUMBER_OF_CORRECT_INPUT_EQ_LEVEL_game_fsm bound to: 7'b0110001 
+	Parameter DECREASE_GAME_TIMER_game_fsm bound to: 7'b0110010 
+	Parameter BRANCH_CHECK_NUMBER_OF_CORRECT_INPUT_EQ_LEVEL_game_fsm bound to: 7'b0110011 
+	Parameter INCREMENT_SCORE_game_fsm bound to: 7'b0110100 
+	Parameter SET_NUMBER_OF_CORRECT_INPUT_EQ_0_game_fsm bound to: 7'b0110101 
+	Parameter SET_R0_0_game_fsm bound to: 7'b0110110 
+	Parameter SET_R1_0_game_fsm bound to: 7'b0110111 
+	Parameter SET_R2_0_game_fsm bound to: 7'b0111000 
+	Parameter SET_R3_0_game_fsm bound to: 7'b0111001 
+	Parameter SET_R4_0_game_fsm bound to: 7'b0111010 
+	Parameter SET_R5_0_game_fsm bound to: 7'b0111011 
+	Parameter SET_R6_0_game_fsm bound to: 7'b0111100 
+	Parameter SET_R7_0_game_fsm bound to: 7'b0111101 
+	Parameter SET_R8_0_game_fsm bound to: 7'b0111110 
+	Parameter SET_R9_0_game_fsm bound to: 7'b0111111 
+	Parameter SET_R10_0_game_fsm bound to: 7'b1000000 
+	Parameter SET_R11_0_game_fsm bound to: 7'b1000001 
+	Parameter SET_R12_0_game_fsm bound to: 7'b1000010 
+	Parameter SET_R13_0_game_fsm bound to: 7'b1000011 
+	Parameter SET_R14_0_game_fsm bound to: 7'b1000100 
+	Parameter SET_R15_0_game_fsm bound to: 7'b1000101 
+	Parameter INCREMENT_NUMBER_OF_CORRECT_INPUT_game_fsm bound to: 7'b1000110 
+	Parameter CHECK_NUMBER_OF_CORRECT_INPUT_game_fsm bound to: 7'b1000111 
+	Parameter CHECK_NUMBER_OF_CORRECT_INPUT_LT_LEVEL_game_fsm bound to: 7'b1001000 
+	Parameter BRANCH_CHECK_LT_LEVEL_game_fsm bound to: 7'b1001001 
+	Parameter BRANCH_CHECK_NTH_ARROW_EMPTY_game_fsm bound to: 7'b1001010 
+	Parameter CHECK_NTH_ARROW_EMPTY_game_fsm bound to: 7'b1001011 
+	Parameter CHECK_CURRENT_ARROW_LTE_NUMBER_OF_CORRECT_INPUT_game_fsm bound to: 7'b1001100 
+	Parameter BRANCH_CHECK_CURRENT_ARROW_LTE_NUMBER_OF_CORRECT_INPUT_game_fsm bound to: 7'b1001101 
+	Parameter MAKE_NTH_ARROW_WHITE_game_fsm bound to: 7'b1001110 
+	Parameter INCREMENT_RANDOMIZER_IDLE_game_fsm bound to: 7'b1001111 
+	Parameter CHECK_RANDOMIZER_IDLE_LTE4_game_fsm bound to: 7'b1010000 
+	Parameter BRANCH_CHECK_RANDOMIZER_IDLE_LTE4_game_fsm bound to: 7'b1010001 
+	Parameter MAKE_RANDOMIZER_IDLE_1_game_fsm bound to: 7'b1010010 
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/game_CU_14.v:140]
+INFO: [Synth 8-6155] done synthesizing module 'game_CU_14' (16#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/game_CU_14.v:7]
+INFO: [Synth 8-6157] synthesizing module 'regfile_15' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/regfile_15.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'regfile_15' (17#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/regfile_15.v:7]
+INFO: [Synth 8-6157] synthesizing module 'alu_16' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/alu_16.v:7]
+INFO: [Synth 8-6157] synthesizing module 'comparator_30' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/comparator_30.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'comparator_30' (18#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/comparator_30.v:7]
+INFO: [Synth 8-6157] synthesizing module 'adder_31' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/adder_31.v:7]
+INFO: [Synth 8-226] default block is never used [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/adder_31.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'adder_31' (19#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/adder_31.v:7]
+INFO: [Synth 8-6157] synthesizing module 'shifter_32' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/shifter_32.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'shifter_32' (20#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/shifter_32.v:7]
+INFO: [Synth 8-6157] synthesizing module 'boolean_33' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/boolean_33.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'boolean_33' (21#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/boolean_33.v:7]
+INFO: [Synth 8-6157] synthesizing module 'multiplier_34' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/multiplier_34.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'multiplier_34' (22#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/multiplier_34.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'alu_16' (23#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/alu_16.v:7]
+INFO: [Synth 8-6157] synthesizing module 'wasel_17' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/wasel_17.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'wasel_17' (24#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/wasel_17.v:7]
+INFO: [Synth 8-6157] synthesizing module 'ra2sel_18' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/ra2sel_18.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'ra2sel_18' (25#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/ra2sel_18.v:7]
+INFO: [Synth 8-6157] synthesizing module 'asel_19' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/asel_19.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'asel_19' (26#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/asel_19.v:7]
+INFO: [Synth 8-6157] synthesizing module 'bsel_20' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/bsel_20.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'bsel_20' (27#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/bsel_20.v:7]
+INFO: [Synth 8-6157] synthesizing module 'wdsel_21' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/wdsel_21.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'wdsel_21' (28#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/wdsel_21.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'full_circuit_4' (29#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/full_circuit_4.v:7]
+INFO: [Synth 8-6157] synthesizing module 'multi_seven_seg_5' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/multi_seven_seg_5.v:12]
+	Parameter DIGITS bound to: 3'b100 
+	Parameter DIV bound to: 5'b10000 
+	Parameter DIGIT_BITS bound to: 2'b10 
+INFO: [Synth 8-6157] synthesizing module 'counter_22' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_22.v:14]
+	Parameter SIZE bound to: 2'b10 
+	Parameter DIV bound to: 5'b10000 
+	Parameter TOP bound to: 4'b0011 
+	Parameter UP bound to: 1'b1 
+	Parameter MAX_VALUE bound to: 20'b00111111111111111111 
+INFO: [Synth 8-6155] done synthesizing module 'counter_22' (30#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_22.v:14]
+INFO: [Synth 8-6157] synthesizing module 'seven_seg_23' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/seven_seg_23.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'seven_seg_23' (31#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/seven_seg_23.v:7]
+INFO: [Synth 8-6157] synthesizing module 'decoder_24' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/decoder_24.v:11]
+	Parameter WIDTH bound to: 2'b10 
+INFO: [Synth 8-6155] done synthesizing module 'decoder_24' (32#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/decoder_24.v:11]
+INFO: [Synth 8-6155] done synthesizing module 'multi_seven_seg_5' (33#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/multi_seven_seg_5.v:12]
+INFO: [Synth 8-6157] synthesizing module 'reset_conditioner_6' [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/reset_conditioner_6.v:11]
+	Parameter STAGES bound to: 3'b100 
+INFO: [Synth 8-6155] done synthesizing module 'reset_conditioner_6' (34#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/reset_conditioner_6.v:11]
+INFO: [Synth 8-6155] done synthesizing module 'au_top_0' (35#1) [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/au_top_0.v:7]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Finished RTL Elaboration : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1000.426 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1000.426 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1000.426 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.051 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.163 . Memory (MB): peak = 1000.426 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [C:/Users/Javier/Documents/Alchitry/Rune/work/constraint/alchitry.xdc]
-Finished Parsing XDC File [C:/Users/Javier/Documents/Alchitry/Rune/work/constraint/alchitry.xdc]
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/Javier/Documents/Alchitry/Rune/work/constraint/alchitry.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/au_top_0_propImpl.xdc].
-Resolution: To avoid this warning, move constraints listed in [.Xil/au_top_0_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
-Parsing XDC File [C:/Users/Javier/Documents/Alchitry/Rune/work/constraint/io.xdc]
-Finished Parsing XDC File [C:/Users/Javier/Documents/Alchitry/Rune/work/constraint/io.xdc]
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/Javier/Documents/Alchitry/Rune/work/constraint/io.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/au_top_0_propImpl.xdc].
+Parsing XDC File [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/constraint/custom.xdc]
+Finished Parsing XDC File [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/constraint/custom.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/constraint/custom.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/au_top_0_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/au_top_0_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Parsing XDC File [C:/Program Files/Alchitry/Alchitry Labs/library/components/au.xdc]
 Finished Parsing XDC File [C:/Program Files/Alchitry/Alchitry Labs/library/components/au.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1000.426 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.014 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 1000.426 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:22 ; elapsed = 00:00:23 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Finished Constraint Validation : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1000.426 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tftg256-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:22 ; elapsed = 00:00:23 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1000.426 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:22 ; elapsed = 00:00:23 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:33 ; elapsed = 00:00:35 . Memory (MB): peak = 1000.426 ; gain = 0.000
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'M_writer_state_q_reg' in module 'matrix_ram_writer_2'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+      START_writer_state |                               00 |                               00
+LOAD_ADDRESS_writer_state |                               01 |                               01
+       LOOP_writer_state |                               10 |                               11
+  LOAD_WAIT_writer_state |                               11 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'M_writer_state_q_reg' using encoding 'sequential' in module 'matrix_ram_writer_2'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:35 ; elapsed = 00:00:38 . Memory (MB): peak = 1000.426 ; gain = 0.000
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-223] decloning instance 'cpu/vi_ur/slowclock_forvariablecounter' (counter_24) to 'cpu/vi_ur/slowerclock'
+INFO: [Synth 8-223] decloning instance 'cpu/vi_ur/slowclock_forvariablecounter' (counter_29) to 'cpu/vi_ur/slowerclock'
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -259,6 +365,10 @@ Detailed RTL Component Info :
 	   2 Input   18 Bit       Adders := 1     
 	   3 Input   16 Bit       Adders := 1     
 	   2 Input   16 Bit       Adders := 1     
+	   2 Input    7 Bit       Adders := 1     
+	   2 Input    6 Bit       Adders := 2     
+	   2 Input    5 Bit       Adders := 1     
+	   2 Input    4 Bit       Adders := 4     
 	   2 Input    1 Bit       Adders := 1     
 +---XORs : 
 	   2 Input     32 Bit         XORs := 4     
@@ -269,12 +379,18 @@ Detailed RTL Component Info :
 	              256 Bit    Registers := 1     
 	               32 Bit    Registers := 8     
 	               18 Bit    Registers := 1     
-	                7 Bit    Registers := 1     
-	                4 Bit    Registers := 1     
-	                2 Bit    Registers := 5     
-	                1 Bit    Registers := 13    
+	               16 Bit    Registers := 1     
+	                7 Bit    Registers := 2     
+	                6 Bit    Registers := 3     
+	                4 Bit    Registers := 9     
+	                3 Bit    Registers := 2     
+	                2 Bit    Registers := 7     
+	                1 Bit    Registers := 15    
++---RAMs : 
+	               3K Bit	(1024 X 3 bit)          RAMs := 2     
 +---Muxes : 
 	   2 Input  256 Bit        Muxes := 1     
+	  10 Input  106 Bit        Muxes := 1     
 	   2 Input   32 Bit        Muxes := 2     
 	   2 Input   18 Bit        Muxes := 1     
 	   2 Input   16 Bit        Muxes := 6     
@@ -283,17 +399,30 @@ Detailed RTL Component Info :
 	   3 Input    7 Bit        Muxes := 1     
 	   7 Input    7 Bit        Muxes := 1     
 	   2 Input    7 Bit        Muxes := 3     
-	   2 Input    6 Bit        Muxes := 6     
+	   2 Input    6 Bit        Muxes := 8     
+	   6 Input    6 Bit        Muxes := 1     
+	   4 Input    6 Bit        Muxes := 2     
 	  83 Input    6 Bit        Muxes := 1     
 	   2 Input    5 Bit        Muxes := 5     
+	   5 Input    4 Bit        Muxes := 1     
+	   6 Input    4 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 3     
+	   4 Input    4 Bit        Muxes := 6     
 	  83 Input    4 Bit        Muxes := 3     
-	   2 Input    4 Bit        Muxes := 2     
-	   4 Input    4 Bit        Muxes := 1     
+	  10 Input    3 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 3     
+	   4 Input    3 Bit        Muxes := 2     
 	  83 Input    3 Bit        Muxes := 1     
+	   6 Input    2 Bit        Muxes := 2     
+	   7 Input    2 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 5     
+	   4 Input    2 Bit        Muxes := 1     
 	  83 Input    2 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 19    
+	   2 Input    1 Bit        Muxes := 23    
+	   7 Input    1 Bit        Muxes := 1     
+	   5 Input    1 Bit        Muxes := 1     
+	   4 Input    1 Bit        Muxes := 9     
 	  81 Input    1 Bit        Muxes := 3     
-	   4 Input    1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -309,61 +438,30 @@ Finished Part Resource Summary
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
-DSP Report: Generating DSP cpu/alu_unit/mult/out0, operation Mode is: A*B.
-DSP Report: operator cpu/alu_unit/mult/out0 is absorbed into DSP cpu/alu_unit/mult/out0.
-WARNING: [Synth 8-3917] design au_top_0 has port led[7] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[6] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[5] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[4] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[3] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[2] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[1] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port led[0] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[23] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[22] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[21] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[20] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[19] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[18] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[17] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_led[16] driven by constant 0
-WARNING: [Synth 8-3917] design au_top_0 has port io_seg[7] driven by constant 1
-WARNING: [Synth 8-7129] Port io_dip[23] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[22] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[21] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[20] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[19] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[18] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[17] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[16] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[15] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[14] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[13] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[12] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[11] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[10] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[9] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[8] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[7] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[6] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[5] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[4] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[3] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[2] in module au_top_0 is either unconnected or has no load
-WARNING: [Synth 8-7129] Port io_dip[1] in module au_top_0 is either unconnected or has no load
+DSP Report: Generating DSP alu_unit/mult/out0, operation Mode is: A*B.
+DSP Report: operator alu_unit/mult/out0 is absorbed into DSP alu_unit/mult/out0.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:20 ; elapsed = 00:01:23 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:00 ; elapsed = 00:01:03 . Memory (MB): peak = 1000.426 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
 ---------------------------------------------------------------------------------
 
-DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
+Block RAM: Preliminary Mapping	Report (see note below)
++------------+------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object                   | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|au_top_0    | matrixram/top_ram/mem_reg    | 1 K x 3(READ_FIRST)    | W |   | 1 K x 3(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
+|au_top_0    | matrixram/bottom_ram/mem_reg | 1 K x 3(READ_FIRST)    | W |   | 1 K x 3(WRITE_FIRST)   |   | R | Port A and B     | 1      | 0      | 
++------------+------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+
+DSP: Preliminary Mapping	Report (see note below)
 +--------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
 |Module Name   | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
 +--------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
-|multiplier_29 | A*B         | 16     | 16     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|multiplier_34 | A*B         | 16     | 16     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 0    | 
 +--------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
 
 Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
@@ -374,1027 +472,19 @@ Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:39 ; elapsed = 00:01:42 . Memory (MB): peak = 1247.664 ; gain = 0.000
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:15 ; elapsed = 00:01:18 . Memory (MB): peak = 1000.426 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:02:06 ; elapsed = 00:02:09 . Memory (MB): peak = 1386.750 ; gain = 139.086
+Finished Timing Optimization : Time (s): cpu = 00:01:18 ; elapsed = 00:01:21 . Memory (MB): peak = 1000.426 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Start Technology Mapping
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:02:08 ; elapsed = 00:02:12 . Memory (MB): peak = 1396.801 ; gain = 149.137
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Start IO Insertion
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Start Flattening Before IO Insertion
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Finished Flattening Before IO Insertion
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Start Final Netlist Cleanup
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Finished Final Netlist Cleanup
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:02:22 ; elapsed = 00:02:26 . Memory (MB): peak = 1396.801 ; gain = 149.137
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Start Renaming Generated Instances
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:02:22 ; elapsed = 00:02:26 . Memory (MB): peak = 1396.801 ; gain = 149.137
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Start Rebuilding User Hierarchy
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:23 ; elapsed = 00:02:26 . Memory (MB): peak = 1396.801 ; gain = 149.137
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Start Renaming Generated Ports
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:02:23 ; elapsed = 00:02:26 . Memory (MB): peak = 1396.801 ; gain = 149.137
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Start Handling Custom Attributes
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:02:23 ; elapsed = 00:02:26 . Memory (MB): peak = 1396.801 ; gain = 149.137
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Start Renaming Generated Nets
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:02:23 ; elapsed = 00:02:26 . Memory (MB): peak = 1396.801 ; gain = 149.137
----------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Start Writing Synthesis Report
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
 ---------------------------------------------------------------------------------
 
-Report BlackBoxes: 
-+-+--------------+----------+
-| |BlackBox name |Instances |
-+-+--------------+----------+
-+-+--------------+----------+
-
-Report Cell Usage: 
-+------+-------+------+
-|      |Cell   |Count |
-+------+-------+------+
-|1     |BUFG   |     1|
-|2     |CARRY4 |    59|
-|3     |LUT1   |    22|
-|4     |LUT2   |   129|
-|5     |LUT3   |    54|
-|6     |LUT4   |   144|
-|7     |LUT5   |    52|
-|8     |LUT6   |   320|
-|9     |MUXF7  |     8|
-|10    |MUXF8  |     2|
-|11    |FDRE   |   647|
-|12    |FDSE   |    96|
-|13    |IBUF   |     9|
-|14    |OBUF   |    45|
-+------+-------+------+
----------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:02:23 ; elapsed = 00:02:26 . Memory (MB): peak = 1396.801 ; gain = 149.137
----------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 41 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:02:09 ; elapsed = 00:02:23 . Memory (MB): peak = 1396.801 ; gain = 149.137
-Synthesis Optimization Complete : Time (s): cpu = 00:02:23 ; elapsed = 00:02:27 . Memory (MB): peak = 1396.801 ; gain = 149.137
-INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.070 . Memory (MB): peak = 1399.781 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 69 Unisim elements for replacement
-INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
-INFO: [Project 1-570] Preparing netlist for logic optimization
-INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1403.496 ; gain = 0.000
-INFO: [Project 1-111] Unisim Transformation Summary:
-No Unisim elements were transformed.
-
-Synth Design complete, checksum: 6aa1476f
-INFO: [Common 17-83] Releasing license: Synthesis
-79 Infos, 121 Warnings, 0 Critical Warnings and 0 Errors encountered.
-synth_design completed successfully
-synth_design: Time (s): cpu = 00:02:33 ; elapsed = 00:02:38 . Memory (MB): peak = 1403.496 ; gain = 155.832
-INFO: [Common 17-1381] The checkpoint 'C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/synth_1/au_top_0.dcp' has been generated.
-INFO: [runtcl-4] Executing : report_utilization -file au_top_0_utilization_synth.rpt -pb au_top_0_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Thu Apr 14 13:32:06 2022...
-[Thu Apr 14 13:32:09 2022] synth_1 finished
-wait_on_runs: Time (s): cpu = 00:00:01 ; elapsed = 00:02:56 . Memory (MB): peak = 1239.352 ; gain = 0.000
-# launch_runs impl_1 -to_step write_bitstream -jobs 12
-[Thu Apr 14 13:32:09 2022] Launched impl_1...
-Run output will be captured here: C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/impl_1/runme.log
-# wait_on_run impl_1
-[Thu Apr 14 13:32:09 2022] Waiting for impl_1 to finish...
-
-
-*** Running vivado
-    with args -log au_top_0.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source au_top_0.tcl -notrace
-
-
-
-****** Vivado v2021.2 (64-bit)
-  **** SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
-  **** IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
-    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
-
-source au_top_0.tcl -notrace
-create_project: Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1246.742 ; gain = 8.852
-Command: link_design -top au_top_0 -part xc7a35tftg256-1
-Design is defaulting to srcset: sources_1
-Design is defaulting to constrset: constrs_1
-INFO: [Device 21-403] Loading part xc7a35tftg256-1
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.048 . Memory (MB): peak = 1246.742 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 69 Unisim elements for replacement
-INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
-INFO: [Project 1-479] Netlist was created with Vivado 2021.2
-INFO: [Project 1-570] Preparing netlist for logic optimization
-Parsing XDC File [C:/Users/Javier/Documents/Alchitry/Rune/work/constraint/alchitry.xdc]
-Finished Parsing XDC File [C:/Users/Javier/Documents/Alchitry/Rune/work/constraint/alchitry.xdc]
-Parsing XDC File [C:/Users/Javier/Documents/Alchitry/Rune/work/constraint/io.xdc]
-Finished Parsing XDC File [C:/Users/Javier/Documents/Alchitry/Rune/work/constraint/io.xdc]
-Parsing XDC File [C:/Program Files/Alchitry/Alchitry Labs/library/components/au.xdc]
-Finished Parsing XDC File [C:/Program Files/Alchitry/Alchitry Labs/library/components/au.xdc]
-INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1246.742 ; gain = 0.000
-INFO: [Project 1-111] Unisim Transformation Summary:
-No Unisim elements were transformed.
-
-7 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
-link_design completed successfully
-link_design: Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 1246.742 ; gain = 0.000
-Command: opt_design
-Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
-INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
-Running DRC as a precondition to command opt_design
-
-Starting DRC Task
-INFO: [DRC 23-27] Running DRC with 2 threads
-INFO: [Project 1-461] DRC finished with 0 Errors
-INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
-
-Time (s): cpu = 00:00:05 ; elapsed = 00:00:03 . Memory (MB): peak = 1246.742 ; gain = 0.000
-
-Starting Cache Timing Information Task
-INFO: [Timing 38-35] Done setting XDC timing constraints.
-Ending Cache Timing Information Task | Checksum: 171269bcc
-
-Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 1409.305 ; gain = 162.562
-
-Starting Logic Optimization Task
-
-Phase 1 Retarget
-INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-INFO: [Opt 31-49] Retargeted 0 cell(s).
-Phase 1 Retarget | Checksum: 171269bcc
-
-Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.164 . Memory (MB): peak = 1706.328 ; gain = 0.000
-INFO: [Opt 31-389] Phase Retarget created 0 cells and removed 0 cells
-
-Phase 2 Constant propagation
-INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Phase 2 Constant propagation | Checksum: 171269bcc
-
-Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.190 . Memory (MB): peak = 1706.328 ; gain = 0.000
-INFO: [Opt 31-389] Phase Constant propagation created 0 cells and removed 0 cells
-
-Phase 3 Sweep
-Phase 3 Sweep | Checksum: 14aed45ad
-
-Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.253 . Memory (MB): peak = 1706.328 ; gain = 0.000
-INFO: [Opt 31-389] Phase Sweep created 15 cells and removed 0 cells
-
-Phase 4 BUFG optimization
-Phase 4 BUFG optimization | Checksum: 14aed45ad
-
-Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.296 . Memory (MB): peak = 1706.328 ; gain = 0.000
-INFO: [Opt 31-662] Phase BUFG optimization created 0 cells of which 0 are BUFGs and removed 0 cells.
-
-Phase 5 Shift Register Optimization
-INFO: [Opt 31-1064] SRL Remap converted 0 SRLs to 0 registers and converted 0 registers of register chains to 0 SRLs
-Phase 5 Shift Register Optimization | Checksum: 14aed45ad
-
-Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.306 . Memory (MB): peak = 1706.328 ; gain = 0.000
-INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
-
-Phase 6 Post Processing Netlist
-Phase 6 Post Processing Netlist | Checksum: 171081cbf
-
-Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.319 . Memory (MB): peak = 1706.328 ; gain = 0.000
-INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
-Opt_design Change Summary
-=========================
-
-
--------------------------------------------------------------------------------------------------------------------------
-|  Phase                        |  #Cells created  |  #Cells Removed  |  #Constrained objects preventing optimizations  |
--------------------------------------------------------------------------------------------------------------------------
-|  Retarget                     |               0  |               0  |                                              0  |
-|  Constant propagation         |               0  |               0  |                                              0  |
-|  Sweep                        |              15  |               0  |                                              0  |
-|  BUFG optimization            |               0  |               0  |                                              0  |
-|  Shift Register Optimization  |               0  |               0  |                                              0  |
-|  Post Processing Netlist      |               0  |               0  |                                              0  |
--------------------------------------------------------------------------------------------------------------------------
-
-
-
-Starting Connectivity Check Task
-
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.014 . Memory (MB): peak = 1706.328 ; gain = 0.000
-Ending Logic Optimization Task | Checksum: 1ab315f51
-
-Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.475 . Memory (MB): peak = 1706.328 ; gain = 0.000
-
-Starting Power Optimization Task
-INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
-Ending Power Optimization Task | Checksum: 1ab315f51
-
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.031 . Memory (MB): peak = 1706.328 ; gain = 0.000
-
-Starting Final Cleanup Task
-Ending Final Cleanup Task | Checksum: 1ab315f51
-
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1706.328 ; gain = 0.000
-
-Starting Netlist Obfuscation Task
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1706.328 ; gain = 0.000
-Ending Netlist Obfuscation Task | Checksum: 1ab315f51
-
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1706.328 ; gain = 0.000
-INFO: [Common 17-83] Releasing license: Implementation
-24 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
-opt_design completed successfully
-opt_design: Time (s): cpu = 00:00:33 ; elapsed = 00:00:32 . Memory (MB): peak = 1706.328 ; gain = 459.586
-INFO: [Timing 38-480] Writing timing data to binary archive.
-Writing placer database...
-Writing XDEF routing.
-Writing XDEF routing logical nets.
-Writing XDEF routing special nets.
-Write XDEF Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.150 . Memory (MB): peak = 1706.328 ; gain = 0.000
-INFO: [Common 17-1381] The checkpoint 'C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/impl_1/au_top_0_opt.dcp' has been generated.
-INFO: [runtcl-4] Executing : report_drc -file au_top_0_drc_opted.rpt -pb au_top_0_drc_opted.pb -rpx au_top_0_drc_opted.rpx
-Command: report_drc -file au_top_0_drc_opted.rpt -pb au_top_0_drc_opted.pb -rpx au_top_0_drc_opted.rpx
-INFO: [IP_Flow 19-234] Refreshing IP repositories
-INFO: [IP_Flow 19-1704] No user IP repositories specified
-INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2021.2/data/ip'.
-INFO: [Timing 38-35] Done setting XDC timing constraints.
-INFO: [DRC 23-27] Running DRC with 2 threads
-INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/impl_1/au_top_0_drc_opted.rpt.
-report_drc completed successfully
-report_drc: Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 1744.488 ; gain = 38.160
-Command: place_design
-Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
-INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
-INFO: [DRC 23-27] Running DRC with 2 threads
-INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
-INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
-Running DRC as a precondition to command place_design
-INFO: [DRC 23-27] Running DRC with 2 threads
-INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
-INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
-
-Starting Placer Task
-INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 2 CPUs
-
-Phase 1 Placer Initialization
-
-Phase 1.1 Placer Initialization Netlist Sorting
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Phase 1.1 Placer Initialization Netlist Sorting | Checksum: 182934a42
-
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.022 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
-Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 1205d00c2
-
-Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 1.3 Build Placer Netlist Model
-Phase 1.3 Build Placer Netlist Model | Checksum: 1cf2cfd15
-
-Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 1.4 Constrain Clocks/Macros
-Phase 1.4 Constrain Clocks/Macros | Checksum: 1cf2cfd15
-
-Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Phase 1 Placer Initialization | Checksum: 1cf2cfd15
-
-Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 2 Global Placement
-
-Phase 2.1 Floorplanning
-Phase 2.1 Floorplanning | Checksum: 13d735890
-
-Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 2.2 Update Timing before SLR Path Opt
-Phase 2.2 Update Timing before SLR Path Opt | Checksum: 1dadcbf8b
-
-Time (s): cpu = 00:00:05 ; elapsed = 00:00:03 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 2.3 Post-Processing in Floorplanning
-Phase 2.3 Post-Processing in Floorplanning | Checksum: 1dadcbf8b
-
-Time (s): cpu = 00:00:05 ; elapsed = 00:00:03 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 2.4 Global Placement Core
-
-Phase 2.4.1 Physical Synthesis In Placer
-INFO: [Physopt 32-1035] Found 72 LUTNM shape to break, 17 LUT instances to create LUTNM shape
-INFO: [Physopt 32-1044] Break lutnm for timing: one critical 15, two critical 57, total 72, new lutff created 0
-INFO: [Physopt 32-1138] End 1 Pass. Optimized 77 nets or LUTs. Breaked 72 LUTs, combined 5 existing LUTs and moved 0 existing LUT
-INFO: [Physopt 32-65] No nets found for high-fanout optimization.
-INFO: [Physopt 32-232] Optimized 0 net. Created 0 new instance.
-INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
-INFO: [Physopt 32-456] No candidate cells for DSP register optimization found in the design.
-INFO: [Physopt 32-775] End 2 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
-INFO: [Physopt 32-1123] No candidate cells found for Shift Register to Pipeline optimization
-INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
-INFO: [Physopt 32-677] No candidate cells for Shift Register optimization found in the design
-INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
-INFO: [Physopt 32-526] No candidate cells for BRAM register optimization found in the design
-INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
-INFO: [Physopt 32-846] No candidate cells for URAM register optimization found in the design
-INFO: [Physopt 32-775] End 2 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
-INFO: [Physopt 32-949] No candidate nets found for dynamic/static region interface net replication
-INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Summary of Physical Synthesis Optimizations
-============================================
-
-
------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  Optimization                                     |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  LUT Combining                                    |           72  |              5  |                    77  |           0  |           1  |  00:00:00  |
-|  Retime                                           |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
-|  Very High Fanout                                 |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
-|  DSP Register                                     |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
-|  Shift Register to Pipeline                       |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
-|  Shift Register                                   |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
-|  BRAM Register                                    |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
-|  URAM Register                                    |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
-|  Dynamic/Static Region Interface Net Replication  |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
-|  Total                                            |           72  |              5  |                    77  |           0  |           9  |  00:00:00  |
------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-Phase 2.4.1 Physical Synthesis In Placer | Checksum: 1f9651375
-
-Time (s): cpu = 00:00:21 ; elapsed = 00:00:14 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Phase 2.4 Global Placement Core | Checksum: 2316f0731
-
-Time (s): cpu = 00:00:22 ; elapsed = 00:00:14 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Phase 2 Global Placement | Checksum: 2316f0731
-
-Time (s): cpu = 00:00:22 ; elapsed = 00:00:14 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 3 Detail Placement
-
-Phase 3.1 Commit Multi Column Macros
-Phase 3.1 Commit Multi Column Macros | Checksum: 23e23f828
-
-Time (s): cpu = 00:00:22 ; elapsed = 00:00:15 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 3.2 Commit Most Macros & LUTRAMs
-Phase 3.2 Commit Most Macros & LUTRAMs | Checksum: 20a88e7d1
-
-Time (s): cpu = 00:00:23 ; elapsed = 00:00:15 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 3.3 Area Swap Optimization
-Phase 3.3 Area Swap Optimization | Checksum: 20e78a104
-
-Time (s): cpu = 00:00:23 ; elapsed = 00:00:15 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 3.4 Pipeline Register Optimization
-Phase 3.4 Pipeline Register Optimization | Checksum: 25b7bbcd8
-
-Time (s): cpu = 00:00:23 ; elapsed = 00:00:15 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 3.5 Fast Optimization
-Phase 3.5 Fast Optimization | Checksum: 1b689595e
-
-Time (s): cpu = 00:00:30 ; elapsed = 00:00:22 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 3.6 Small Shape Detail Placement
-Phase 3.6 Small Shape Detail Placement | Checksum: 1b4442752
-
-Time (s): cpu = 00:00:32 ; elapsed = 00:00:24 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 3.7 Re-assign LUT pins
-Phase 3.7 Re-assign LUT pins | Checksum: 19fb5361c
-
-Time (s): cpu = 00:00:32 ; elapsed = 00:00:24 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 3.8 Pipeline Register Optimization
-Phase 3.8 Pipeline Register Optimization | Checksum: 1f4346a59
-
-Time (s): cpu = 00:00:32 ; elapsed = 00:00:25 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 3.9 Fast Optimization
-Phase 3.9 Fast Optimization | Checksum: 20e647f0a
-
-Time (s): cpu = 00:00:45 ; elapsed = 00:00:38 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Phase 3 Detail Placement | Checksum: 20e647f0a
-
-Time (s): cpu = 00:00:45 ; elapsed = 00:00:38 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 4 Post Placement Optimization and Clean-Up
-
-Phase 4.1 Post Commit Optimization
-INFO: [Timing 38-35] Done setting XDC timing constraints.
-
-Phase 4.1.1 Post Placement Optimization
-Post Placement Optimization Initialization | Checksum: 195f28507
-
-Phase 4.1.1.1 BUFG Insertion
-
-Starting Physical Synthesis Task
-
-Phase 1 Physical Synthesis Initialization
-INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-2.326 | TNS=-64.004 |
-Phase 1 Physical Synthesis Initialization | Checksum: 11c1d3e41
-
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.174 . Memory (MB): peak = 1745.477 ; gain = 0.000
-INFO: [Place 46-56] BUFG insertion identified 0 candidate nets. Inserted BUFG: 0, Replicated BUFG Driver: 0, Skipped due to Placement/Routing Conflicts: 0, Skipped due to Timing Degradation: 0, Skipped due to Illegal Netlist: 0.
-Ending Physical Synthesis Task | Checksum: 165096270
-
-Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.192 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Phase 4.1.1.1 BUFG Insertion | Checksum: 195f28507
-
-Time (s): cpu = 00:00:47 ; elapsed = 00:00:39 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 4.1.1.2 Post Placement Timing Optimization
-INFO: [Place 30-746] Post Placement Timing Summary WNS=-0.301. For the most accurate timing information please run report_timing.
-Phase 4.1.1.2 Post Placement Timing Optimization | Checksum: 17aaf263c
-
-Time (s): cpu = 00:01:16 ; elapsed = 00:01:09 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Time (s): cpu = 00:01:16 ; elapsed = 00:01:09 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Phase 4.1 Post Commit Optimization | Checksum: 17aaf263c
-
-Time (s): cpu = 00:01:16 ; elapsed = 00:01:09 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 4.2 Post Placement Cleanup
-Phase 4.2 Post Placement Cleanup | Checksum: 17aaf263c
-
-Time (s): cpu = 00:01:16 ; elapsed = 00:01:09 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 4.3 Placer Reporting
-
-Phase 4.3.1 Print Estimated Congestion
-INFO: [Place 30-612] Post-Placement Estimated Congestion 
- ____________________________________________________
-|           | Global Congestion | Short Congestion  |
-| Direction | Region Size       | Region Size       |
-|___________|___________________|___________________|
-|      North|                1x1|                2x2|
-|___________|___________________|___________________|
-|      South|                1x1|                4x4|
-|___________|___________________|___________________|
-|       East|                1x1|                1x1|
-|___________|___________________|___________________|
-|       West|                1x1|                1x1|
-|___________|___________________|___________________|
-
-Phase 4.3.1 Print Estimated Congestion | Checksum: 17aaf263c
-
-Time (s): cpu = 00:01:16 ; elapsed = 00:01:09 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Phase 4.3 Placer Reporting | Checksum: 17aaf263c
-
-Time (s): cpu = 00:01:16 ; elapsed = 00:01:09 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 4.4 Final Placement Cleanup
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Time (s): cpu = 00:01:16 ; elapsed = 00:01:09 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Phase 4 Post Placement Optimization and Clean-Up | Checksum: 19aa33b8b
-
-Time (s): cpu = 00:01:16 ; elapsed = 00:01:09 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Ending Placer Task | Checksum: 10e44177e
-
-Time (s): cpu = 00:01:16 ; elapsed = 00:01:09 . Memory (MB): peak = 1745.477 ; gain = 0.000
-INFO: [Common 17-83] Releasing license: Implementation
-66 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
-place_design completed successfully
-place_design: Time (s): cpu = 00:01:21 ; elapsed = 00:01:12 . Memory (MB): peak = 1745.477 ; gain = 0.988
-INFO: [Timing 38-480] Writing timing data to binary archive.
-Writing placer database...
-Writing XDEF routing.
-Writing XDEF routing logical nets.
-Writing XDEF routing special nets.
-Write XDEF Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.455 . Memory (MB): peak = 1745.477 ; gain = 0.000
-INFO: [Common 17-1381] The checkpoint 'C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/impl_1/au_top_0_placed.dcp' has been generated.
-INFO: [runtcl-4] Executing : report_io -file au_top_0_io_placed.rpt
-report_io: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.244 . Memory (MB): peak = 1745.477 ; gain = 0.000
-INFO: [runtcl-4] Executing : report_utilization -file au_top_0_utilization_placed.rpt -pb au_top_0_utilization_placed.pb
-INFO: [runtcl-4] Executing : report_control_sets -verbose -file au_top_0_control_sets_placed.rpt
-report_control_sets: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Command: phys_opt_design
-Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
-INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
-INFO: [Vivado_Tcl 4-1435] PhysOpt_Tcl_Interface Runtime Before Starting Physical Synthesis Task | CPU: 2.00s |  WALL: 0.86s
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Starting Physical Synthesis Task
-
-Phase 1 Physical Synthesis Initialization
-INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.301 | TNS=-1.853 |
-Phase 1 Physical Synthesis Initialization | Checksum: 12026a9a3
-
-Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.746 . Memory (MB): peak = 1745.477 ; gain = 0.000
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.301 | TNS=-1.853 |
-
-Phase 2 DSP Register Optimization
-INFO: [Physopt 32-456] No candidate cells for DSP register optimization found in the design.
-INFO: [Physopt 32-775] End 2 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
-Phase 2 DSP Register Optimization | Checksum: 12026a9a3
-
-Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.784 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 3 Critical Path Optimization
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.301 | TNS=-1.853 |
-INFO: [Physopt 32-702] Processed net cpu/rf/M_registers_q_reg[192]_0[0]. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-81] Processed net cpu/cu/sel0[6]. Replicated 1 times.
-INFO: [Physopt 32-735] Processed net cpu/cu/sel0[6]. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.274 | TNS=-1.457 |
-INFO: [Physopt 32-702] Processed net cpu/cu/sel0[6]_repN. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-710] Processed net cpu/cu/M_game_fsm_q_reg[0]_16. Critical path length was reduced through logic transformation on cell cpu/cu/M_registers_q[192]_i_1_comp.
-INFO: [Physopt 32-735] Processed net cpu/cu/M_registers_q[240]_i_2_n_0. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.244 | TNS=-1.266 |
-INFO: [Physopt 32-702] Processed net cpu/rf/M_cpu_timer[0]. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-710] Processed net cpu/cu/M_game_fsm_q_reg[0]_12. Critical path length was reduced through logic transformation on cell cpu/cu/M_registers_q[128]_i_1_comp.
-INFO: [Physopt 32-735] Processed net cpu/cu/M_registers_q[240]_i_2_n_0. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.228 | TNS=-1.192 |
-INFO: [Physopt 32-663] Processed net cpu/rf/M_cpu_out[16].  Re-placed instance cpu/rf/M_registers_q_reg[16]
-INFO: [Physopt 32-735] Processed net cpu/rf/M_cpu_out[16]. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.156 | TNS=-1.102 |
-INFO: [Physopt 32-702] Processed net cpu/rf/M_cpu_out[32]. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-710] Processed net cpu/cu/M_game_fsm_q_reg[0]_14. Critical path length was reduced through logic transformation on cell cpu/cu/M_registers_q[160]_i_1_comp.
-INFO: [Physopt 32-735] Processed net cpu/cu/M_registers_q[240]_i_2_n_0. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.140 | TNS=-0.842 |
-INFO: [Physopt 32-702] Processed net cpu/rf/M_cpu_out[16]. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/cu/M_registers_q[240]_i_2_n_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/alu_unit/add/M_registers_q[255]_i_9. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-134] Processed net cpu/alu_unit/add/M_registers_q[240]_i_10_n_0. Rewiring did not optimize the net.
-INFO: [Physopt 32-702] Processed net cpu/alu_unit/add/M_registers_q[240]_i_10_n_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-608] Optimized 1 net.  Swapped 23 pins.
-INFO: [Physopt 32-735] Processed net cpu/alu_unit/add/M_registers_q[240]_i_13_n_0. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.137 | TNS=-0.734 |
-INFO: [Physopt 32-710] Processed net cpu/cu/M_game_fsm_q_reg[0]_12. Critical path length was reduced through logic transformation on cell cpu/cu/M_registers_q[128]_i_1_comp_1.
-INFO: [Physopt 32-735] Processed net cpu/cu/M_registers_q[240]_i_2_n_0_repN_3. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.118 | TNS=-0.601 |
-INFO: [Physopt 32-663] Processed net cpu/rf/M_registers_q_reg_n_0_[158].  Re-placed instance cpu/rf/M_registers_q_reg[158]
-INFO: [Physopt 32-735] Processed net cpu/rf/M_registers_q_reg_n_0_[158]. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.106 | TNS=-0.482 |
-INFO: [Physopt 32-134] Processed net cpu/alu_unit/add/M_registers_q[240]_i_11_n_0. Rewiring did not optimize the net.
-INFO: [Physopt 32-702] Processed net cpu/alu_unit/add/M_registers_q[240]_i_11_n_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-710] Processed net cpu/alu_unit/add/M_registers_q[240]_i_11_n_0. Critical path length was reduced through logic transformation on cell cpu/alu_unit/add/M_registers_q[240]_i_11_comp.
-INFO: [Physopt 32-735] Processed net cpu/alu_unit/add/M_registers_q[240]_i_14_n_0. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.088 | TNS=-0.430 |
-INFO: [Physopt 32-702] Processed net cpu/rf/M_registers_q_reg_n_0_[94]. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-663] Processed net cpu/cu/M_registers_q[254]_i_2_n_0.  Re-placed instance cpu/cu/M_registers_q[254]_i_2
-INFO: [Physopt 32-735] Processed net cpu/cu/M_registers_q[254]_i_2_n_0. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.070 | TNS=-0.448 |
-INFO: [Physopt 32-663] Processed net cpu/rf/M_registers_q_reg_n_0_[126].  Re-placed instance cpu/rf/M_registers_q_reg[126]
-INFO: [Physopt 32-735] Processed net cpu/rf/M_registers_q_reg_n_0_[126]. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.062 | TNS=-0.378 |
-INFO: [Physopt 32-663] Processed net cpu/rf/M_registers_q_reg[169]_lopt_replica_1.  Re-placed instance cpu/rf/M_registers_q_reg[169]_lopt_replica
-INFO: [Physopt 32-735] Processed net cpu/rf/M_registers_q_reg[169]_lopt_replica_1. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.062 | TNS=-0.316 |
-INFO: [Physopt 32-663] Processed net cpu/rf/M_registers_q_reg_n_0_[14].  Re-placed instance cpu/rf/M_registers_q_reg[14]
-INFO: [Physopt 32-735] Processed net cpu/rf/M_registers_q_reg_n_0_[14]. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.058 | TNS=-0.253 |
-INFO: [Physopt 32-710] Processed net cpu/alu_unit/add/M_registers_q[255]_i_9. Critical path length was reduced through logic transformation on cell cpu/alu_unit/add/M_registers_q[240]_i_7_comp.
-INFO: [Physopt 32-735] Processed net cpu/alu_unit/add/M_registers_q[240]_i_9_n_0. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.046 | TNS=-0.232 |
-INFO: [Physopt 32-663] Processed net cpu/rf/M_registers_q_reg_n_0_[30].  Re-placed instance cpu/rf/M_registers_q_reg[30]
-INFO: [Physopt 32-735] Processed net cpu/rf/M_registers_q_reg_n_0_[30]. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.041 | TNS=-0.186 |
-INFO: [Physopt 32-663] Processed net cpu/rf/data13[10].  Re-placed instance cpu/rf/M_registers_q_reg[218]
-INFO: [Physopt 32-735] Processed net cpu/rf/data13[10]. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.037 | TNS=-0.144 |
-INFO: [Physopt 32-702] Processed net cpu/alu_unit/add/sum00_in[9]. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/alu_unit/add/sum0_inferred__0/i__carry__0_n_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/alu_unit/add/sum0_inferred__0/i__carry_n_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/rf/sum0_carry_i_27[0]. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/rf/M_registers_q_reg[128]_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/rf/sum0_carry_i_24_n_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/cu/M_game_fsm_q_reg[0]_1. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/cu/M_game_fsm_q[5]_i_9_n_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/cu/M_game_fsm_q[5]_i_15_n_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/cu/M_registers_q[255]_i_58_n_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/cu/M_game_fsm_q_reg[0]_13. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net clk_IBUF. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net clk. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/rf/M_cpu_out[16]. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/cu/sel0[6]_repN. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/cu/M_registers_q[240]_i_2_n_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/alu_unit/add/M_registers_q[255]_i_9. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-663] Processed net cpu/alu_unit/add/M_registers_q[240]_i_10_n_0.  Re-placed instance cpu/alu_unit/add/M_registers_q[240]_i_10
-INFO: [Physopt 32-735] Processed net cpu/alu_unit/add/M_registers_q[240]_i_10_n_0. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.036 | TNS=-0.134 |
-INFO: [Physopt 32-663] Processed net cpu/rf/M_registers_q_reg_n_0_[110].  Re-placed instance cpu/rf/M_registers_q_reg[110]
-INFO: [Physopt 32-735] Processed net cpu/rf/M_registers_q_reg_n_0_[110]. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.036 | TNS=-0.101 |
-INFO: [Physopt 32-663] Processed net cpu/rf/data14[14].  Re-placed instance cpu/rf/M_registers_q_reg[238]
-INFO: [Physopt 32-735] Processed net cpu/rf/data14[14]. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.034 | TNS=-0.065 |
-INFO: [Physopt 32-702] Processed net cpu/rf/M_registers_q_reg[192]_0[0]. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-702] Processed net cpu/cu/M_registers_q[240]_i_2_n_0_repN_1. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-663] Processed net cpu/alu_unit/add/M_stage_q_reg[3]_13.  Re-placed instance cpu/alu_unit/add/M_registers_q[240]_i_6
-INFO: [Physopt 32-735] Processed net cpu/alu_unit/add/M_stage_q_reg[3]_13. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.027 | TNS=-0.031 |
-INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
-INFO: [Physopt 32-735] Processed net cpu/alu_unit/add/M_registers_q[240]_i_10_n_0. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.020 | TNS=-0.024 |
-INFO: [Physopt 32-702] Processed net cpu/alu_unit/add/M_registers_q[240]_i_12_n_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-608] Optimized 1 net.  Swapped 20 pins.
-INFO: [Physopt 32-735] Processed net cpu/alu_unit/add/M_registers_q[240]_i_16_n_0. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.007 | TNS=-0.011 |
-INFO: [Physopt 32-702] Processed net cpu/alu_unit/add/M_registers_q[240]_i_11_n_0. Optimizations did not improve timing on the net.
-INFO: [Physopt 32-663] Processed net cpu/alu_unit/add/M_registers_q[240]_i_14_n_0.  Re-placed instance cpu/alu_unit/add/M_registers_q[240]_i_14_comp
-INFO: [Physopt 32-735] Processed net cpu/alu_unit/add/M_registers_q[240]_i_14_n_0. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.003 | TNS=-0.003 |
-INFO: [Physopt 32-663] Processed net cpu/rf/M_registers_q_reg_n_0_[110].  Re-placed instance cpu/rf/M_registers_q_reg[110]
-INFO: [Physopt 32-735] Processed net cpu/rf/M_registers_q_reg_n_0_[110]. Optimization improves timing on the net.
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=0.012 | TNS=0.000 |
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=0.012 | TNS=0.000 |
-Phase 3 Critical Path Optimization | Checksum: 12026a9a3
-
-Time (s): cpu = 00:00:20 ; elapsed = 00:00:13 . Memory (MB): peak = 1745.477 ; gain = 0.000
-
-Phase 4 Critical Path Optimization
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=0.012 | TNS=0.000 |
-INFO: [Physopt 32-619] Estimated Timing Summary | WNS=0.012 | TNS=0.000 |
-Phase 4 Critical Path Optimization | Checksum: 12026a9a3
-
-Time (s): cpu = 00:00:20 ; elapsed = 00:00:13 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.024 . Memory (MB): peak = 1745.477 ; gain = 0.000
-INFO: [Physopt 32-603] Post Physical Optimization Timing Summary | WNS=0.012 | TNS=0.000 |
-
-Summary of Physical Synthesis Optimizations
-============================================
-
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  Optimization   |  WNS Gain (ns)  |  TNS Gain (ns)  |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
--------------------------------------------------------------------------------------------------------------------------------------------------------------
-|  DSP Register   |          0.000  |          0.000  |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
-|  Critical Path  |          0.313  |          1.853  |            1  |              0  |                    24  |           0  |           2  |  00:00:13  |
-|  Total          |          0.313  |          1.853  |            1  |              0  |                    24  |           0  |           3  |  00:00:13  |
--------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1745.477 ; gain = 0.000
-Ending Physical Synthesis Task | Checksum: 15a9e4661
-
-Time (s): cpu = 00:00:20 ; elapsed = 00:00:14 . Memory (MB): peak = 1745.477 ; gain = 0.000
-INFO: [Common 17-83] Releasing license: Implementation
-189 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
-phys_opt_design completed successfully
-phys_opt_design: Time (s): cpu = 00:00:22 ; elapsed = 00:00:14 . Memory (MB): peak = 1745.477 ; gain = 0.000
-INFO: [Timing 38-480] Writing timing data to binary archive.
-Writing placer database...
-Writing XDEF routing.
-Writing XDEF routing logical nets.
-Writing XDEF routing special nets.
-Write XDEF Complete: Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.414 . Memory (MB): peak = 1750.055 ; gain = 4.578
-INFO: [Common 17-1381] The checkpoint 'C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/impl_1/au_top_0_physopt.dcp' has been generated.
-Command: route_design
-Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
-INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
-INFO: [DRC 23-27] Running DRC with 2 threads
-INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
-INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
-Running DRC as a precondition to command route_design
-INFO: [DRC 23-27] Running DRC with 2 threads
-INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
-INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
-
-
-Starting Routing Task
-INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 2 CPUs
-
-Phase 1 Build RT Design
-Checksum: PlaceDB: e1258964 ConstDB: 0 ShapeSum: 4e32b3b5 RouteDB: 0
-Post Restoration Checksum: NetGraph: e857a21c NumContArr: a9930fd9 Constraints: 0 Timing: 0
-Phase 1 Build RT Design | Checksum: 191eab1f5
-
-Time (s): cpu = 00:00:57 ; elapsed = 00:00:51 . Memory (MB): peak = 1830.816 ; gain = 70.684
-
-Phase 2 Router Initialization
-
-Phase 2.1 Create Timer
-Phase 2.1 Create Timer | Checksum: 191eab1f5
-
-Time (s): cpu = 00:00:57 ; elapsed = 00:00:51 . Memory (MB): peak = 1830.824 ; gain = 70.691
-
-Phase 2.2 Fix Topology Constraints
-Phase 2.2 Fix Topology Constraints | Checksum: 191eab1f5
-
-Time (s): cpu = 00:00:57 ; elapsed = 00:00:51 . Memory (MB): peak = 1836.840 ; gain = 76.707
-
-Phase 2.3 Pre Route Cleanup
-Phase 2.3 Pre Route Cleanup | Checksum: 191eab1f5
-
-Time (s): cpu = 00:00:57 ; elapsed = 00:00:51 . Memory (MB): peak = 1836.840 ; gain = 76.707
- Number of Nodes with overlaps = 0
-
-Phase 2.4 Update Timing
-Phase 2.4 Update Timing | Checksum: 16846b011
-
-Time (s): cpu = 00:00:59 ; elapsed = 00:00:53 . Memory (MB): peak = 1848.914 ; gain = 88.781
-INFO: [Route 35-416] Intermediate Timing Summary | WNS=0.227  | TNS=0.000  | WHS=-0.149 | THS=-10.102|
-
-
-Router Utilization Summary
-  Global Vertical Routing Utilization    = 0 %
-  Global Horizontal Routing Utilization  = 0 %
-  Routable Net Status*
-  *Does not include unroutable nets such as driverless and loadless.
-  Run report_route_status for detailed report.
-  Number of Failed Nets               = 1464
-    (Failed Nets is the sum of unrouted and partially routed nets)
-  Number of Unrouted Nets             = 1464
-  Number of Partially Routed Nets     = 0
-  Number of Node Overlaps             = 0
-
-Phase 2 Router Initialization | Checksum: 1f97bb02c
-
-Time (s): cpu = 00:01:00 ; elapsed = 00:00:53 . Memory (MB): peak = 1848.914 ; gain = 88.781
-
-Phase 3 Initial Routing
-
-Phase 3.1 Global Routing
-Phase 3.1 Global Routing | Checksum: 1f97bb02c
-
-Time (s): cpu = 00:01:00 ; elapsed = 00:00:53 . Memory (MB): peak = 1848.914 ; gain = 88.781
-Phase 3 Initial Routing | Checksum: 140175593
-
-Time (s): cpu = 00:01:02 ; elapsed = 00:00:54 . Memory (MB): peak = 1848.914 ; gain = 88.781
-
-Phase 4 Rip-up And Reroute
-
-Phase 4.1 Global Iteration 0
- Number of Nodes with overlaps = 510
- Number of Nodes with overlaps = 207
- Number of Nodes with overlaps = 122
- Number of Nodes with overlaps = 84
- Number of Nodes with overlaps = 53
- Number of Nodes with overlaps = 54
- Number of Nodes with overlaps = 21
- Number of Nodes with overlaps = 13
- Number of Nodes with overlaps = 10
- Number of Nodes with overlaps = 5
- Number of Nodes with overlaps = 5
- Number of Nodes with overlaps = 6
- Number of Nodes with overlaps = 4
- Number of Nodes with overlaps = 0
-INFO: [Route 35-416] Intermediate Timing Summary | WNS=-1.145 | TNS=-60.707| WHS=N/A    | THS=N/A    |
-
-Phase 4.1 Global Iteration 0 | Checksum: 1c67f4878
-
-Time (s): cpu = 00:01:20 ; elapsed = 00:01:06 . Memory (MB): peak = 1848.914 ; gain = 88.781
-
-Phase 4.2 Global Iteration 1
- Number of Nodes with overlaps = 300
- Number of Nodes with overlaps = 168
- Number of Nodes with overlaps = 73
- Number of Nodes with overlaps = 57
- Number of Nodes with overlaps = 38
- Number of Nodes with overlaps = 11
- Number of Nodes with overlaps = 10
- Number of Nodes with overlaps = 6
- Number of Nodes with overlaps = 5
- Number of Nodes with overlaps = 4
- Number of Nodes with overlaps = 1
- Number of Nodes with overlaps = 0
-INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.979 | TNS=-38.816| WHS=N/A    | THS=N/A    |
-
-Phase 4.2 Global Iteration 1 | Checksum: ff8a4742
-
-Time (s): cpu = 00:01:29 ; elapsed = 00:01:13 . Memory (MB): peak = 1849.461 ; gain = 89.328
-
-Phase 4.3 Global Iteration 2
- Number of Nodes with overlaps = 291
- Number of Nodes with overlaps = 111
- Number of Nodes with overlaps = 51
- Number of Nodes with overlaps = 28
- Number of Nodes with overlaps = 22
- Number of Nodes with overlaps = 13
- Number of Nodes with overlaps = 5
- Number of Nodes with overlaps = 4
- Number of Nodes with overlaps = 3
- Number of Nodes with overlaps = 2
- Number of Nodes with overlaps = 2
- Number of Nodes with overlaps = 2
- Number of Nodes with overlaps = 0
-INFO: [Route 35-416] Intermediate Timing Summary | WNS=-1.118 | TNS=-16.223| WHS=N/A    | THS=N/A    |
-
-Phase 4.3 Global Iteration 2 | Checksum: 20c9fc4a1
-
-Time (s): cpu = 00:01:36 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-Phase 4 Rip-up And Reroute | Checksum: 20c9fc4a1
-
-Time (s): cpu = 00:01:36 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-
-Phase 5 Delay and Skew Optimization
-
-Phase 5.1 Delay CleanUp
-
-Phase 5.1.1 Update Timing
-Phase 5.1.1 Update Timing | Checksum: 1e0f51e29
-
-Time (s): cpu = 00:01:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.899 | TNS=-26.918| WHS=N/A    | THS=N/A    |
-
- Number of Nodes with overlaps = 0
-Phase 5.1 Delay CleanUp | Checksum: 1ccefe2c6
-
-Time (s): cpu = 00:01:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-
-Phase 5.2 Clock Skew Optimization
-Phase 5.2 Clock Skew Optimization | Checksum: 1ccefe2c6
-
-Time (s): cpu = 00:01:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-Phase 5 Delay and Skew Optimization | Checksum: 1ccefe2c6
-
-Time (s): cpu = 00:01:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-
-Phase 6 Post Hold Fix
-
-Phase 6.1 Hold Fix Iter
-
-Phase 6.1.1 Update Timing
-Phase 6.1.1 Update Timing | Checksum: 11f5a58b8
-
-Time (s): cpu = 00:01:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.842 | TNS=-19.608| WHS=0.043  | THS=0.000  |
-
-Phase 6.1 Hold Fix Iter | Checksum: 1e56d9cd9
-
-Time (s): cpu = 00:01:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-Phase 6 Post Hold Fix | Checksum: 1e56d9cd9
-
-Time (s): cpu = 00:01:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-
-Phase 7 Route finalize
-
-Router Utilization Summary
-  Global Vertical Routing Utilization    = 0.578171 %
-  Global Horizontal Routing Utilization  = 0.619079 %
-  Routable Net Status*
-  *Does not include unroutable nets such as driverless and loadless.
-  Run report_route_status for detailed report.
-  Number of Failed Nets               = 0
-    (Failed Nets is the sum of unrouted and partially routed nets)
-  Number of Unrouted Nets             = 0
-  Number of Partially Routed Nets     = 0
-  Number of Node Overlaps             = 0
-
-Congestion Report
-North Dir 1x1 Area, Max Cong = 54.955%, No Congested Regions.
-South Dir 1x1 Area, Max Cong = 49.5495%, No Congested Regions.
-East Dir 1x1 Area, Max Cong = 58.8235%, No Congested Regions.
-West Dir 1x1 Area, Max Cong = 52.9412%, No Congested Regions.
-
-------------------------------
-Reporting congestion hotspots
-------------------------------
-Direction: North
-----------------
-Congested clusters found at Level 0
-Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
-Direction: South
-----------------
-Congested clusters found at Level 0
-Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
-Direction: East
-----------------
-Congested clusters found at Level 0
-Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
-Direction: West
-----------------
-Congested clusters found at Level 0
-Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
-
-Phase 7 Route finalize | Checksum: 1b3d09e79
-
-Time (s): cpu = 00:01:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-
-Phase 8 Verifying routed nets
-
- Verification completed successfully
-Phase 8 Verifying routed nets | Checksum: 1b3d09e79
-
-Time (s): cpu = 00:01:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-
-Phase 9 Depositing Routes
-Phase 9 Depositing Routes | Checksum: eb6ca609
-
-Time (s): cpu = 00:01:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-
-Phase 10 Post Router Timing
-INFO: [Route 35-57] Estimated Timing Summary | WNS=-0.842 | TNS=-19.608| WHS=0.043  | THS=0.000  |
-
-WARNING: [Route 35-328] Router estimated timing not met.
-Resolution: For a complete and accurate timing signoff, report_timing_summary must be run after route_design. Alternatively, route_design can be run with the -timing_summary option to enable a complete timing signoff at the end of route_design.
-Phase 10 Post Router Timing | Checksum: eb6ca609
-
-Time (s): cpu = 00:01:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-INFO: [Route 35-16] Router Completed Successfully
-
-Time (s): cpu = 00:01:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1849.508 ; gain = 89.375
-
-Routing Is Done.
-INFO: [Common 17-83] Releasing license: Implementation
-208 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
-route_design completed successfully
-route_design: Time (s): cpu = 00:01:43 ; elapsed = 00:01:23 . Memory (MB): peak = 1849.508 ; gain = 99.453
-INFO: [Timing 38-480] Writing timing data to binary archive.
-Writing placer database...
-Writing XDEF routing.
-Writing XDEF routing logical nets.
-Writing XDEF routing special nets.
-Write XDEF Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.269 . Memory (MB): peak = 1859.301 ; gain = 9.793
-INFO: [Common 17-1381] The checkpoint 'C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/impl_1/au_top_0_routed.dcp' has been generated.
-INFO: [runtcl-4] Executing : report_drc -file au_top_0_drc_routed.rpt -pb au_top_0_drc_routed.pb -rpx au_top_0_drc_routed.rpx
-Command: report_drc -file au_top_0_drc_routed.rpt -pb au_top_0_drc_routed.pb -rpx au_top_0_drc_routed.rpx
-INFO: [IP_Flow 19-1839] IP Catalog is up to date.
-INFO: [DRC 23-27] Running DRC with 2 threads
-INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/impl_1/au_top_0_drc_routed.rpt.
-report_drc completed successfully
-INFO: [runtcl-4] Executing : report_methodology -file au_top_0_methodology_drc_routed.rpt -pb au_top_0_methodology_drc_routed.pb -rpx au_top_0_methodology_drc_routed.rpx
-Command: report_methodology -file au_top_0_methodology_drc_routed.rpt -pb au_top_0_methodology_drc_routed.pb -rpx au_top_0_methodology_drc_routed.rpx
-INFO: [Timing 38-35] Done setting XDC timing constraints.
-INFO: [DRC 23-133] Running Methodology with 2 threads
-INFO: [Vivado_Tcl 2-1520] The results of Report Methodology are in file C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/impl_1/au_top_0_methodology_drc_routed.rpt.
-report_methodology completed successfully
-INFO: [runtcl-4] Executing : report_power -file au_top_0_power_routed.rpt -pb au_top_0_power_summary_routed.pb -rpx au_top_0_power_routed.rpx
-Command: report_power -file au_top_0_power_routed.rpt -pb au_top_0_power_summary_routed.pb -rpx au_top_0_power_routed.rpx
-INFO: [Timing 38-35] Done setting XDC timing constraints.
-Running Vector-less Activity Propagation...
-
-Finished Running Vector-less Activity Propagation
-220 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
-report_power completed successfully
-INFO: [runtcl-4] Executing : report_route_status -file au_top_0_route_status.rpt -pb au_top_0_route_status.pb
-INFO: [runtcl-4] Executing : report_timing_summary -max_paths 10 -report_unconstrained -file au_top_0_timing_summary_routed.rpt -pb au_top_0_timing_summary_routed.pb -rpx au_top_0_timing_summary_routed.rpx -warn_on_violation 
-INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
-INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
-CRITICAL WARNING: [Timing 38-282] The design failed to meet the timing requirements. Please see the timing summary report for details on the timing violations.
-INFO: [runtcl-4] Executing : report_incremental_reuse -file au_top_0_incremental_reuse_routed.rpt
-INFO: [Vivado_Tcl 4-1062] Incremental flow is disabled. No incremental reuse Info to report.
-INFO: [runtcl-4] Executing : report_clock_utilization -file au_top_0_clock_utilization_routed.rpt
-INFO: [runtcl-4] Executing : report_bus_skew -warn_on_violation -file au_top_0_bus_skew_routed.rpt -pb au_top_0_bus_skew_routed.pb -rpx au_top_0_bus_skew_routed.rpx
-INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
-INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
-Command: write_bitstream -force au_top_0.bit -bin_file
-Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
-INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
-Running DRC as a precondition to command write_bitstream
-INFO: [IP_Flow 19-1839] IP Catalog is up to date.
-INFO: [DRC 23-27] Running DRC with 2 threads
-INFO: [Vivado 12-3199] DRC finished with 0 Errors
-INFO: [Vivado 12-3200] Please refer to the DRC report (report_drc) for more information.
-INFO: [Designutils 20-2272] Running write_bitstream with 2 threads.
-Loading data files...
-Loading site data...
-Loading route data...
-Processing options...
-Creating bitmap...
-Creating bitstream...
-Bitstream compression saved 13337664 bits.
-Writing bitstream ./au_top_0.bit...
-Writing bitstream ./au_top_0.bin...
-INFO: [Vivado 12-1842] Bitgen Completed Successfully.
-INFO: [Project 1-1876] WebTalk data collection is mandatory when using a ULT device. To see the specific WebTalk data collected for your design, open the usage_statistics_webtalk.html or usage_statistics_webtalk.xml file in the implementation directory.
-INFO: [Common 17-83] Releasing license: Implementation
-12 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
-write_bitstream completed successfully
-write_bitstream: Time (s): cpu = 00:00:17 ; elapsed = 00:00:15 . Memory (MB): peak = 2321.656 ; gain = 433.355
-INFO: [Common 17-206] Exiting Vivado at Thu Apr 14 13:36:44 2022...
-[Thu Apr 14 13:36:49 2022] impl_1 finished
-wait_on_runs: Time (s): cpu = 00:00:01 ; elapsed = 00:04:39 . Memory (MB): peak = 1239.352 ; gain = 0.000
-INFO: [Common 17-206] Exiting Vivado at Thu Apr 14 13:36:49 2022...
-Vivado exited.
-
-Finished building project.
+Block RAM: Final Mapping	Report
++------------+------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object                   | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+------------------------------+-------------------
