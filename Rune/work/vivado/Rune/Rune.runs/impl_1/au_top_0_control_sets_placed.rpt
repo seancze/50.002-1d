@@ -1,0 +1,111 @@
+Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2021.2 (win64) Build 3367213 Tue Oct 19 02:48:09 MDT 2021
+| Date         : Thu Apr 14 13:34:46 2022
+| Host         : DESKTOP-S68M59T running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file au_top_0_control_sets_placed.rpt
+| Design       : au_top_0
+| Device       : xc7a35t
+-------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    33 |
+|    Minimum number of control sets                        |    33 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    50 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    33 |
+| >= 0 to < 4        |     0 |
+| >= 4 to < 6        |     2 |
+| >= 6 to < 8        |     0 |
+| >= 8 to < 10       |     0 |
+| >= 10 to < 12      |     0 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     2 |
+| >= 16              |    29 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              23 |           12 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |              72 |           20 |
+| Yes          | No                    | No                     |             291 |          123 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |             372 |           99 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------+----------------------------------------------------------------+-------------------------------------------------------+------------------+----------------+--------------+
+|  Clock Signal  |                          Enable Signal                         |                    Set/Reset Signal                   | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+----------------------------------------------------------------+-------------------------------------------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG | cpu/cu/M_game_fsm_q[5]_i_1_n_0                                 | reset_cond/Q[0]                                       |                3 |              4 |         1.33 |
+|  clk_IBUF_BUFG |                                                                | reset_cond/M_reset_cond_in                            |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | cpu/vi_ur/edge_detector_rng/M_stage_q_reg[3]                   | reset_cond/Q[0]                                       |                6 |             14 |         2.33 |
+|  clk_IBUF_BUFG | cpu/slow_timer/M_stage_q_reg[3]                                | reset_cond/Q[0]                                       |                7 |             14 |         2.00 |
+|  clk_IBUF_BUFG | cpu/cu/M_game_fsm_q_reg[6]_7                                   |                                                       |                3 |             16 |         5.33 |
+|  clk_IBUF_BUFG | cpu/cu/M_game_fsm_q_reg[6]_5                                   |                                                       |                8 |             16 |         2.00 |
+|  clk_IBUF_BUFG | cpu/cu/M_game_fsm_q_reg[6]_4                                   |                                                       |                7 |             16 |         2.29 |
+|  clk_IBUF_BUFG | cpu/cu/p_0_in_0[0]                                             |                                                       |                8 |             16 |         2.00 |
+|  clk_IBUF_BUFG | cpu/cu/p_0_in_0[4]                                             | cpu/cu/M_game_fsm_q_reg[0]_125                        |                6 |             16 |         2.67 |
+|  clk_IBUF_BUFG | cpu/cu/p_0_in_0[7]                                             |                                                       |               10 |             16 |         1.60 |
+|  clk_IBUF_BUFG | cpu/cu/p_0_in_0[8]                                             | cpu/cu/M_game_fsm_q_reg[0]_124                        |                8 |             16 |         2.00 |
+|  clk_IBUF_BUFG | cpu/cu/p_0_in_0[6]                                             |                                                       |                7 |             16 |         2.29 |
+|  clk_IBUF_BUFG | cpu/vi/slowclock_forvariablecounter/M_edge_detector_seed_out   |                                                       |                4 |             16 |         4.00 |
+|  clk_IBUF_BUFG | cpu/vi_ur/slowclock_forvariablecounter/M_edge_detector_rng_out |                                                       |                4 |             16 |         4.00 |
+|  clk_IBUF_BUFG | cpu/cu/p_0_in_0[1]                                             |                                                       |                9 |             16 |         1.78 |
+|  clk_IBUF_BUFG | cpu/cu/p_0_in_0[5]                                             |                                                       |                9 |             16 |         1.78 |
+|  clk_IBUF_BUFG | cpu/cu/p_0_in_0[2]                                             | cpu/cu/M_game_fsm_q_reg[0]_126                        |                7 |             16 |         2.29 |
+|  clk_IBUF_BUFG | cpu/cu/M_game_fsm_q_reg[6]_6                                   |                                                       |                6 |             16 |         2.67 |
+|  clk_IBUF_BUFG | cpu/cu/M_game_fsm_q_reg[6]_3                                   |                                                       |                9 |             16 |         1.78 |
+|  clk_IBUF_BUFG | cpu/cu/M_game_fsm_q_reg[6]_1                                   |                                                       |                8 |             16 |         2.00 |
+|  clk_IBUF_BUFG | cpu/cu/M_game_fsm_q_reg[6]_2                                   |                                                       |                8 |             16 |         2.00 |
+|  clk_IBUF_BUFG | cpu/slow_timer/M_stage_q_reg[3]                                |                                                       |                7 |             18 |         2.57 |
+|  clk_IBUF_BUFG | cpu/vi_ur/edge_detector_rng/M_stage_q_reg[3]                   |                                                       |                8 |             18 |         2.25 |
+|  clk_IBUF_BUFG | buttoncond_gen_0[2].buttoncond/M_ctr_q[0]_i_2__1_n_0           | buttoncond_gen_0[2].buttoncond/sync/M_pipe_q_reg[1]_0 |                5 |             20 |         4.00 |
+|  clk_IBUF_BUFG | buttoncond_gen_0[3].buttoncond/M_ctr_q[0]_i_2__0_n_0           | buttoncond_gen_0[3].buttoncond/sync/M_pipe_q_reg[1]_0 |                5 |             20 |         4.00 |
+|  clk_IBUF_BUFG | buttoncond_gen_0[4].buttoncond/sel                             | buttoncond_gen_0[4].buttoncond/sync/clear             |                5 |             20 |         4.00 |
+|  clk_IBUF_BUFG | buttoncond_gen_0[0].buttoncond/M_ctr_q[0]_i_2__3_n_0           | buttoncond_gen_0[0].buttoncond/sync/M_pipe_q_reg[1]_0 |                5 |             20 |         4.00 |
+|  clk_IBUF_BUFG | buttoncond_gen_0[1].buttoncond/M_ctr_q[0]_i_2__2_n_0           | buttoncond_gen_0[1].buttoncond/sync/M_pipe_q_reg[1]_0 |                5 |             20 |         4.00 |
+|  clk_IBUF_BUFG |                                                                |                                                       |               12 |             23 |         1.92 |
+|  clk_IBUF_BUFG | cpu/cu/p_0_in_0[3]                                             |                                                       |                8 |             31 |         3.88 |
+|  clk_IBUF_BUFG |                                                                | reset_cond/Q[0]                                       |               18 |             68 |         3.78 |
+|  clk_IBUF_BUFG | cpu/game_timer_detector/E[0]                                   | reset_cond/Q[0]                                       |               19 |             96 |         5.05 |
+|  clk_IBUF_BUFG | cpu/vi_ur/slowclock_forvariablecounter/M_edge_detector_rng_out | reset_cond/Q[0]                                       |               18 |             96 |         5.33 |
++----------------+----------------------------------------------------------------+-------------------------------------------------------+------------------+----------------+--------------+
+
+

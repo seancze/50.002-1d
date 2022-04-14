@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Vivado v2021.2 (64-bit)
+# SW Build 3367213 on Tue Oct 19 02:48:09 MDT 2021
+# IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+# Start of session at: Thu Apr 14 13:32:22 2022
+# Process ID: 4832
+# Current directory: C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/impl_1
+# Command line: vivado.exe -log au_top_0.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source au_top_0.tcl -notrace
+# Log file: C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/impl_1/au_top_0.vdi
+# Journal file: C:/Users/Javier/Documents/Alchitry/Rune/work/vivado/Rune/Rune.runs/impl_1\vivado.jou
+# Running On: DESKTOP-S68M59T, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 17019 MB
+#-----------------------------------------------------------
+source au_top_0.tcl -notrace

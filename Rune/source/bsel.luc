@@ -1,0 +1,20 @@
+module bsel (
+    input rb_data[16],  // clock
+    input bsel[3],  // reset
+    output out[16]
+  ) {
+
+  always {
+    out = 0;
+    case (bsel) {
+      b000: out = rb_data;
+      b001: out = 16d1;
+      b010: out = 16d2;
+      b011: out = 16d3;
+      b100: out = 16d4;
+      b101: out = 16d9;
+      b110: out = 16d0;
+      default: 
+        out = 0;}
+  }
+}

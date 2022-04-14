@@ -1,0 +1,88 @@
+module full_circuit (
+    input clk,  // clock
+    input rst,  // reset
+    input reset_button,
+    input start_button,
+    input left,
+    input right,
+    input up,
+    input down,
+    output timer[16],
+    output score[16],
+    output out[10][16]
+  ) {
+  .clk(clk){
+    edge_detector game_timer_detector(#RISE(1), #FALL(0));
+    edge_detector vi_detector(#RISE(1), #FALL(0));
+    edge_detector vi_ur_detector(#RISE(1), #FALL(0));
+    counter slow_timer(#SIZE(1), #DIV(26), .rst(rst));
+    variable_counter vi(.rst(rst));
+    variable_counter_unrestricted vi_ur(.rst(rst));
+    game_CU cu(.rst(rst));
+    regfile rf;
+    }
+    alu alu_unit;
+    wasel wasel_mux;
+    ra2sel ra2sel_mux;
+    asel asel_mux;
+    bsel bsel_mux;
+    wdsel wdsel_mux;
+  always {
+    //Control Unit FSM inputs
+    game_timer_detector.in = slow_timer.value;
+    cu.st = game_timer_detector.out;
+    vi_detector.in = vi.out;
+    cu.vi = vi_detector.out;
+    
+    vi_ur_detector.in = vi_ur.out;
+    cu.vi_ur = vi_ur_detector.out;
+    
+    cu.reset_button = reset_button;
+    cu.start_button = start_button;
+    cu.rb_data = rf.rb_data;
+    cu.left_arrow = left;
+    cu.right_arrow = right;
+    cu.up_arrow = up;
+    cu.down_arrow = down;
+    
+    // regfile inputs from CU
+    rf.we = cu.we;
+    rf.rb = cu.rb;
+    
+    //ra2sel inputs and outputs
+    ra2sel_mux.ra = cu.ra;
+    ra2sel_mux.rb_data = rf.rb_data[3:0];
+    ra2sel_mux.ra2sel = cu.ra2sel;
+    rf.ra = ra2sel_mux.out;
+    
+    //wasel multipleer inputs and outputs
+    wasel_mux.rc = cu.rc;
+    wasel_mux.rb_data = rf.rb_data[3:0];
+    wasel_mux.wasel = cu.wasel;
+    rf.rc = wasel_mux.out;
+    
+    //asel inputs and outputs
+    asel_mux.asel = cu.asel;
+    asel_mux.ra_data = rf.ra_data;
+    alu_unit.a = asel_mux.out;
+    
+    //bsel inputs and outputs
+    bsel_mux.bsel = cu.bsel;
+    bsel_mux.rb_data = rf.rb_data;
+    alu_unit.b = bsel_mux.out;
+    
+    //alu inputs and outputs
+    alu_unit.alufn = cu.alufn;
+    wdsel_mux.alu = alu_unit.out;
+    
+    //wdsel inputs and outputs
+    wdsel_mux.wdsel = cu.wdsel;
+    rf.write_data = wdsel_mux.out;
+    
+    //regfile outputs
+    timer = rf.timer;
+    score = rf.score;
+    out = rf.out;
+    
+  }
+}

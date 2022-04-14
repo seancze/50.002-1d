@@ -1,0 +1,12 @@
+module ra2sel (
+    input ra[4],  // clock
+    input rb_data[4],  // reset
+    input ra2sel,
+    output out[4]
+  ) {
+
+  always {
+    if (ra2sel == 0) {out = ra;}
+    else {out = rb_data;}
+  }
+}

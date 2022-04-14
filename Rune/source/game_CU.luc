@@ -1,0 +1,948 @@
+module game_CU (
+    input clk,  // clock
+    input rst,  // reset
+    input rb_data[16],
+    input st,  // slow timer
+    input vi, //  variable input
+    input vi_ur, // variable input unrestricted
+    
+    input reset_button,
+    input start_button,
+    input left_arrow,
+    input right_arrow,
+    input up_arrow,
+    input down_arrow,
+    
+    
+    output we,
+    output ra[4],
+    output rb[4],
+    output rc[4],
+    output asel,
+    output bsel[3],
+    output wdsel[2],
+    output wasel,
+    output ra2sel,
+    output alufn[6]
+  ) {
+  
+  .clk(clk) {
+    fsm game_fsm={
+      START,
+      GAME_OVER,
+      INCREMENT_LEVEL,
+      CHECK_LEVEL_LTE9,
+      BRANCH_CHECK_LEVEL_LTE9,
+      INCREMENT_RANDOMIZER_1,
+      CHECK_RANDOMIZER_1_LTE4,
+      BRANCH_CHECK_RANDOMIZER_1_LTE4,
+      MAKE_RANDOMIZER_1_1,
+      
+      SET_CURRENT_ARROW_TO_1_RESET,
+      SET_CURRENT_ARROW_TO_1_RSA_1,
+      SET_CURRENT_ARROW_TO_1_RSA_2,
+      SET_CURRENT_ARROW_TO_1_IDLE,
+      SETUP_NTH_EQ_RANDOMIZER,
+      INCREMENT_CURRENT_ARROW_GREEN,
+      INCREMENT_CURRENT_ARROW_RESET,
+      INCREMENT_CURRENT_ARROW_RSA_1,
+      INCREMENT_CURRENT_ARROW_RSA_2,
+      IDLE,
+      IDLE1,
+      INCREMENT_RANDOMIZER_RSA_1,
+      CHECK_RANDOMIZER_RSA_1_LTE4,
+      BRANCH_CHECK_RANDOMIZER_RSA_1_LTE4,
+      MAKE_RANDOMIZER_RSA_1_1,
+      IDLE2,
+      INCREMENT_RANDOMIZER_RSA_2,
+      CHECK_RANDOMIZER_RSA_2_LTE4,
+      BRANCH_CHECK_RANDOMIZER_RSA_2_LTE4,
+      MAKE_RANDOMIZER_RSA_2_1,
+      IDLE3,
+      INCREMENT_RANDOMIZER_RSA_3,
+      CHECK_RANDOMIZER_RSA_3_LTE4,
+      BRANCH_CHECK_RANDOMIZER_RSA_3_LTE4,
+      MAKE_RANDOMIZER_RSA_3_1,
+      CHECK_CURRENT_ARROW_LTE_LEVEL,
+      BRANCH_CHECK_CURRENT_ARROW_LTE_LEVEL,
+      RESET_TIMER_EQ4,
+      LOAD_CURRENT_ARROW_DATA_TO_TEMP_LEFT,
+      LOAD_CURRENT_ARROW_DATA_TO_TEMP_RIGHT,
+      LOAD_CURRENT_ARROW_DATA_TO_TEMP_UP,
+      LOAD_CURRENT_ARROW_DATA_TO_TEMP_DOWN,
+      CHECK_CORRECT_INPUT_LEFT,
+      CHECK_CORRECT_INPUT_RIGHT,
+      CHECK_CORRECT_INPUT_UP,
+      CHECK_CORRECT_INPUT_DOWN,
+      BRANCH_CHECK_CORRECT_INPUT,
+      MAKE_NTH_ARROW_GREEN,
+      
+      // GAME TIMER SIDE
+      CHECK_GAME_TIMER_MT_0,
+      BRANCH_GAME_TIMER,
+      CHECK_NUMBER_OF_CORRECT_INPUT_EQ_LEVEL,
+      DECREASE_GAME_TIMER,
+      BRANCH_CHECK_NUMBER_OF_CORRECT_INPUT_EQ_LEVEL,
+      INCREMENT_SCORE,
+      SET_NUMBER_OF_CORRECT_INPUT_EQ_0,
+      // SET EACH RX TO 0
+      SET_R0_0,
+      SET_R1_0,
+      SET_R2_0,
+      SET_R3_0,
+      SET_R4_0,
+      SET_R5_0,
+      SET_R6_0,
+      SET_R7_0,
+      SET_R8_0,
+      SET_R9_0,
+      SET_R10_0,
+      SET_R11_0,
+      SET_R12_0,
+      SET_R13_0,
+      SET_R14_0,
+      SET_R15_0,
+      
+      
+      
+      INCREMENT_NUMBER_OF_CORRECT_INPUT,
+      CHECK_NUMBER_OF_CORRECT_INPUT,
+      CHECK_NUMBER_OF_CORRECT_INPUT_LT_LEVEL,
+      BRANCH_CHECK_LT_LEVEL,
+      BRANCH_CHECK_NTH_ARROW_EMPTY,
+      CHECK_NTH_ARROW_EMPTY,
+      CHECK_CURRENT_ARROW_LTE_NUMBER_OF_CORRECT_INPUT,
+      BRANCH_CHECK_CURRENT_ARROW_LTE_NUMBER_OF_CORRECT_INPUT,
+      MAKE_NTH_ARROW_WHITE,
+      
+      INCREMENT_RANDOMIZER_IDLE,
+      CHECK_RANDOMIZER_IDLE_LTE4,
+      BRANCH_CHECK_RANDOMIZER_IDLE_LTE4,
+      MAKE_RANDOMIZER_IDLE_1
+      };
+    
+    }
+
+  always {
+  
+    // STANDARD SETTINGS unless overridden by fsm case
+    alufn = b000000;
+    asel = b0; 
+    bsel = b0;
+    we = b0;
+    ra = b1111;
+    rb = b1111;
+    rc = b1111;
+    ra2sel = b0;
+    wdsel = b00;
+    wasel = b0;
+    
+    // go to start if reset signal is given
+    if (rst) {
+    game_fsm.d = game_fsm.START;
+    }
+    else if (reset_button){
+    game_fsm.d = game_fsm.SET_R0_0;
+    }
+    else{
+      case(game_fsm.q){
+        game_fsm.START:
+          we = b0;   
+          if (start_button){
+            game_fsm.d = game_fsm.INCREMENT_LEVEL;
+          }       
+          else {
+            game_fsm.d = game_fsm.START;
+          } 
+        game_fsm.SET_R0_0:
+          we = b1;
+          rc = h0;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R1_0;   
+        
+        game_fsm.SET_R1_0:
+          we = b1;
+          rc = h1;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R2_0;  
+        
+        game_fsm.SET_R2_0:
+          we = b1;
+          rc = h2;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R3_0;  
+          
+        game_fsm.SET_R3_0:
+          we = b1;
+          rc = h3;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R4_0;  
+        
+        game_fsm.SET_R4_0:
+          we = b1;
+          rc = h4;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R5_0;  
+          
+        game_fsm.SET_R5_0:
+          we = b1;
+          rc = h5;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R6_0;  
+          
+        game_fsm.SET_R6_0:
+          we = b1;
+          rc = h6;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R7_0; 
+          
+        game_fsm.SET_R7_0:
+          we = b1;
+          rc = h7;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R8_0;   
+          
+        game_fsm.SET_R8_0:
+          we = b1;
+          rc = h8;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R9_0;  
+          
+        game_fsm.SET_R9_0:
+          we = b1;
+          rc = h9;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R10_0;  
+          
+        game_fsm.SET_R10_0:
+          we = b1;
+          rc = hA;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R11_0;  
+          
+        game_fsm.SET_R11_0:
+          we = b1;
+          rc = hB;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R12_0;  
+          
+        game_fsm.SET_R12_0:
+          we = b1;
+          rc = hC;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R13_0; 
+          
+        game_fsm.SET_R13_0:
+          we = b1;
+          rc = hD;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R14_0; 
+          
+        game_fsm.SET_R14_0:
+          we = b1;
+          rc = hE;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_R15_0;   
+          
+        game_fsm.SET_R15_0:
+          we = b1;
+          rc = hF;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.START;   
+          
+        game_fsm.INCREMENT_LEVEL:
+          alufn = b000000;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = hB;
+          rc = hB;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.CHECK_LEVEL_LTE9;
+          
+        game_fsm.CHECK_LEVEL_LTE9:
+          alufn = b110111;
+          asel = b0;
+          bsel = b101;
+          we = b1;
+          ra = hB;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_LEVEL_LTE9;
+          
+        game_fsm.BRANCH_CHECK_LEVEL_LTE9:
+          we = b0;
+          rb = hF;
+          if (rb_data[0]) {
+            game_fsm.d = game_fsm.INCREMENT_RANDOMIZER_1;
+          }
+          
+          else {
+            game_fsm.d = game_fsm.GAME_OVER;
+          }
+          
+        game_fsm.GAME_OVER: //maybe can add something to indicate game over - Javier
+          we = b0;
+          if (reset_button) {
+            game_fsm.d = game_fsm.SET_R0_0;
+          }
+          
+          else {
+            game_fsm.d = game_fsm.GAME_OVER;
+          }
+          
+        game_fsm.INCREMENT_RANDOMIZER_1:
+          alufn = b000000;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = hC;
+          rc = hC;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.CHECK_RANDOMIZER_1_LTE4;
+          
+        game_fsm.CHECK_RANDOMIZER_1_LTE4:
+          alufn = b110111;
+          asel = b0;
+          bsel = b100;
+          we = b1;
+          ra = hC;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_RANDOMIZER_1_LTE4;
+          
+        game_fsm.BRANCH_CHECK_RANDOMIZER_1_LTE4:
+          we = b0;
+          rb = hF;
+          if (rb_data[0]){
+            game_fsm.d = game_fsm.INCREMENT_CURRENT_ARROW_RSA_1;
+            }
+          else {
+            game_fsm.d = game_fsm.MAKE_RANDOMIZER_1_1;
+            }
+          
+        game_fsm.MAKE_RANDOMIZER_1_1:
+          we = b1;
+          rc = hC;
+          wdsel = b10;
+          wasel = b00;
+          game_fsm.d = game_fsm.INCREMENT_CURRENT_ARROW_RSA_1;
+          
+        game_fsm.INCREMENT_CURRENT_ARROW_RSA_1:
+          we = b1;
+          rc = hE;
+          wdsel = b10;
+          wasel = b00;
+          game_fsm.d = game_fsm.SETUP_NTH_EQ_RANDOMIZER;
+          
+        game_fsm.SETUP_NTH_EQ_RANDOMIZER:
+          alufn = b011010;
+          asel = b0;
+          we = b1;
+          ra = hC;
+          rb = hE;
+          wdsel = b00;
+          wasel = b1;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.INCREMENT_CURRENT_ARROW_RSA_2;
+          
+        
+        game_fsm.INCREMENT_CURRENT_ARROW_RSA_2:
+          alufn = b000000;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = hE;
+          rc = hE;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.IDLE1;
+          
+        game_fsm.IDLE1:
+          we = b0;
+          if (vi_ur) {
+            game_fsm.d = game_fsm.INCREMENT_RANDOMIZER_RSA_1;
+          }
+          
+          else {
+            game_fsm.d = game_fsm.IDLE2;
+          }
+          
+        game_fsm.INCREMENT_RANDOMIZER_RSA_1:
+          alufn = b000000;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = hC;
+          rc = hC;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.CHECK_RANDOMIZER_RSA_1_LTE4;
+          
+        game_fsm.CHECK_RANDOMIZER_RSA_1_LTE4:
+          alufn = b110111;
+          asel = b0;
+          bsel = b100;
+          we = b1;
+          ra = hC;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_RANDOMIZER_RSA_1_LTE4;
+          
+        game_fsm.BRANCH_CHECK_RANDOMIZER_RSA_1_LTE4:
+          we = b0;
+          rb = hF;
+          if (rb_data[0]){
+            game_fsm.d = game_fsm.IDLE2;
+          }       
+          
+          else {
+            game_fsm.d = game_fsm.MAKE_RANDOMIZER_RSA_1_1;
+          } 
+          
+        game_fsm.MAKE_RANDOMIZER_RSA_1_1:
+          we = b1;
+          rc = hC;
+          wdsel = b10;
+          wasel = b0;
+          game_fsm.d = game_fsm.IDLE2;
+          
+        game_fsm.IDLE2:
+          if (vi_ur) {
+            game_fsm.d = game_fsm.INCREMENT_RANDOMIZER_RSA_2;
+          }          
+          
+          else {
+            game_fsm.d = game_fsm.IDLE3;
+          }
+        game_fsm.INCREMENT_RANDOMIZER_RSA_2:
+          alufn = b000000;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = hC;
+          rc = hC;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.CHECK_RANDOMIZER_RSA_2_LTE4;
+          
+        game_fsm.CHECK_RANDOMIZER_RSA_2_LTE4:
+          alufn = b110111;
+          asel = b0;
+          bsel = b100;
+          we = b1;
+          ra = hC;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_RANDOMIZER_RSA_2_LTE4;
+          
+        game_fsm.BRANCH_CHECK_RANDOMIZER_RSA_2_LTE4:
+          we = b0;
+          rb = hF;
+          if (rb_data[0]){
+            game_fsm.d = game_fsm.IDLE3;
+          }       
+          
+          else {
+            game_fsm.d = game_fsm.MAKE_RANDOMIZER_RSA_2_1;
+          } 
+          
+        game_fsm.MAKE_RANDOMIZER_RSA_2_1:
+          we = b1;
+          rc = hC;
+          wdsel = b10;
+          wasel = b0;
+          game_fsm.d = game_fsm.IDLE3;
+        
+        game_fsm.IDLE3:
+          if (vi_ur) {
+            game_fsm.d = game_fsm.INCREMENT_RANDOMIZER_RSA_3;
+          }          
+          
+          else {
+            game_fsm.d = game_fsm.CHECK_CURRENT_ARROW_LTE_LEVEL;
+          }
+        game_fsm.INCREMENT_RANDOMIZER_RSA_3:
+          alufn = b000000;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = hC;
+          rc = hC;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.CHECK_RANDOMIZER_RSA_3_LTE4;
+          
+        game_fsm.CHECK_RANDOMIZER_RSA_3_LTE4:
+          alufn = b110111;
+          asel = b0;
+          bsel = b100;
+          we = b1;
+          ra = hC;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_RANDOMIZER_RSA_3_LTE4;
+          
+        game_fsm.BRANCH_CHECK_RANDOMIZER_RSA_3_LTE4:
+          we = b0;
+          rb = hF;
+          if (rb_data[0]){
+            game_fsm.d = game_fsm.CHECK_CURRENT_ARROW_LTE_LEVEL;
+          }       
+          
+          else {
+            game_fsm.d = game_fsm.MAKE_RANDOMIZER_RSA_3_1;
+          } 
+          
+        game_fsm.MAKE_RANDOMIZER_RSA_3_1:
+          we = b1;
+          rc = hC;
+          wdsel = b10;
+          wasel = b0;
+          game_fsm.d = game_fsm.CHECK_CURRENT_ARROW_LTE_LEVEL;
+          
+        game_fsm.CHECK_CURRENT_ARROW_LTE_LEVEL:
+          alufn = b110111;
+          asel = b0;
+          bsel = b000;
+          we = b1;
+          ra = hE;
+          rb = hB;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_CURRENT_ARROW_LTE_LEVEL;
+          
+        game_fsm.BRANCH_CHECK_CURRENT_ARROW_LTE_LEVEL:
+          we = b0;
+          if (rb_data[0]) {
+            game_fsm.d = game_fsm.SETUP_NTH_EQ_RANDOMIZER;
+          }
+          
+          else {
+            game_fsm.d = game_fsm.RESET_TIMER_EQ4;
+          }
+          
+        game_fsm.RESET_TIMER_EQ4:
+          we = b1;
+          rc = h0;
+          wdsel = b11;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_CURRENT_ARROW_TO_1_IDLE;
+          
+          
+        game_fsm.SET_CURRENT_ARROW_TO_1_IDLE:
+          we = b1;
+          rc = hE;
+          wdsel = b10;
+          wasel = b0;
+          game_fsm.d = game_fsm.IDLE;
+          
+        game_fsm.IDLE: //potential conflicting problems here.. if have, add one more state to check input first before the rest
+          we = b0;
+          if (st){game_fsm.d = game_fsm.CHECK_GAME_TIMER_MT_0;}
+          else if (vi && ~up_arrow && ~down_arrow && ~left_arrow && ~right_arrow){game_fsm.d = game_fsm.INCREMENT_RANDOMIZER_IDLE;}
+          else if (up_arrow && ~down_arrow && ~left_arrow && ~right_arrow) {game_fsm.d = game_fsm.LOAD_CURRENT_ARROW_DATA_TO_TEMP_UP;}
+          else if (down_arrow && ~up_arrow && ~left_arrow && ~right_arrow) {game_fsm.d = game_fsm.LOAD_CURRENT_ARROW_DATA_TO_TEMP_DOWN;}
+          else if (left_arrow && ~up_arrow && ~down_arrow && ~right_arrow) {game_fsm.d = game_fsm.LOAD_CURRENT_ARROW_DATA_TO_TEMP_LEFT;}
+          else if (right_arrow && ~up_arrow && ~down_arrow && ~left_arrow) {game_fsm.d = game_fsm.LOAD_CURRENT_ARROW_DATA_TO_TEMP_RIGHT;}
+          else{game_fsm.d = game_fsm.IDLE;}
+          
+        game_fsm.LOAD_CURRENT_ARROW_DATA_TO_TEMP_UP:
+          alufn = b011010;
+          asel = b0;
+          we = b1;
+          rb = hE;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b1;
+          game_fsm.d = game_fsm.CHECK_CORRECT_INPUT_UP;
+          
+        game_fsm.LOAD_CURRENT_ARROW_DATA_TO_TEMP_DOWN:
+          alufn = b011010;
+          asel = b0;
+          we = b1;
+          rb = hE;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b1;
+          game_fsm.d = game_fsm.CHECK_CORRECT_INPUT_DOWN;
+          
+        game_fsm.LOAD_CURRENT_ARROW_DATA_TO_TEMP_LEFT:
+          alufn = b011010;
+          asel = b0;
+          we = b1;
+          rb = hE;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b1;
+          game_fsm.d = game_fsm.CHECK_CORRECT_INPUT_LEFT;
+          
+        game_fsm.LOAD_CURRENT_ARROW_DATA_TO_TEMP_RIGHT:
+          alufn = b011010;
+          asel = b0;
+          we = b1;
+          rb = hE;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b1;
+          game_fsm.d = game_fsm.CHECK_CORRECT_INPUT_RIGHT;
+          
+       // check correct input udlr
+        game_fsm.CHECK_CORRECT_INPUT_LEFT:
+          alufn = b110011;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = hF;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_CORRECT_INPUT;
+          
+        game_fsm.CHECK_CORRECT_INPUT_RIGHT:
+          alufn = b110011;
+          asel = b0;
+          bsel = b010;
+          we = b1;
+          ra = hF;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_CORRECT_INPUT;
+          
+        game_fsm.CHECK_CORRECT_INPUT_UP:
+          alufn = b110011;
+          asel = b0;
+          bsel = b011;
+          we = b1;
+          ra = hF;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_CORRECT_INPUT;
+          
+        game_fsm.CHECK_CORRECT_INPUT_DOWN:
+          alufn = b110011;
+          asel = b0;
+          bsel = b100;
+          we = b1;
+          ra = hF;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_CORRECT_INPUT;
+          
+        game_fsm.BRANCH_CHECK_CORRECT_INPUT:
+          we = b0;
+          rc = hF;
+          if (rb_data[0]) {
+            game_fsm.d = game_fsm.MAKE_NTH_ARROW_GREEN;
+          }
+          
+          else {
+            game_fsm.d = game_fsm.SET_CURRENT_ARROW_TO_1_RESET; 
+          }
+          
+          
+        game_fsm.MAKE_NTH_ARROW_GREEN:
+          alufn = b000000;
+          asel = b0;
+          bsel = b100;
+          we = b1;
+          rb = hE;
+          wdsel = b00;
+          wasel = b1;
+          ra2sel = b1;
+          game_fsm.d = game_fsm.INCREMENT_NUMBER_OF_CORRECT_INPUT;
+          
+        game_fsm.INCREMENT_NUMBER_OF_CORRECT_INPUT:
+          alufn = b000000;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = hD;
+          rc = hD;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.CHECK_NUMBER_OF_CORRECT_INPUT_LT_LEVEL;
+          
+        game_fsm.CHECK_NUMBER_OF_CORRECT_INPUT_LT_LEVEL:
+          alufn = b110101;
+          asel = b0;
+          bsel = b000;
+          we = b1;
+          ra = hD;
+          rb = hB;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_LT_LEVEL;
+          
+        game_fsm.BRANCH_CHECK_LT_LEVEL:
+          we = b0;
+          rc = hF;
+          if (rb_data[0]) {
+            game_fsm.d = game_fsm.INCREMENT_CURRENT_ARROW_GREEN;
+          }
+          
+          else {
+            game_fsm.d = game_fsm.IDLE;
+          }
+          
+        game_fsm.INCREMENT_CURRENT_ARROW_GREEN:
+          alufn = b000000;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = hE;
+          rc = hE;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.IDLE;
+          
+        game_fsm.SET_CURRENT_ARROW_TO_1_RESET:
+          we = b1;
+          rc = hE;
+          wdsel = b10;
+          wasel = b0;
+          game_fsm.d = game_fsm.CHECK_NTH_ARROW_EMPTY;
+          
+        game_fsm.CHECK_NTH_ARROW_EMPTY:
+          alufn = b110011;
+          asel = b0;
+          bsel = b110;
+          we = b1;
+          rb = hE;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b1;
+          game_fsm.d = game_fsm.BRANCH_CHECK_NTH_ARROW_EMPTY;
+          
+        game_fsm.BRANCH_CHECK_NTH_ARROW_EMPTY:
+          we = b0;
+          rb = hF;
+          if (rb_data[0]) {
+            game_fsm.d = game_fsm.SET_CURRENT_ARROW_TO_1_IDLE;
+          }
+          
+          else {
+            game_fsm.d = game_fsm.CHECK_CURRENT_ARROW_LTE_NUMBER_OF_CORRECT_INPUT;
+          }
+        game_fsm.CHECK_CURRENT_ARROW_LTE_NUMBER_OF_CORRECT_INPUT:
+          alufn = b110111;
+          asel = b0;
+          bsel = b000;
+          we = b1;
+          ra = hE;
+          rb = hD;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_CURRENT_ARROW_LTE_NUMBER_OF_CORRECT_INPUT;
+          
+        game_fsm.BRANCH_CHECK_CURRENT_ARROW_LTE_NUMBER_OF_CORRECT_INPUT:
+          we = b0;
+          rb = hF;
+          if(rb_data[0]){
+            game_fsm.d = game_fsm.MAKE_NTH_ARROW_WHITE;
+            }
+          else{
+            game_fsm.d = game_fsm.INCREMENT_CURRENT_ARROW_RESET;
+            }
+          
+        game_fsm.MAKE_NTH_ARROW_WHITE:
+          alufn = b000001;
+          asel = b0;
+          bsel = b100;
+          we = b1;
+          rb = hE;
+          wdsel = b00;
+          wasel = b1;
+          ra2sel = b1;
+          game_fsm.d = game_fsm.INCREMENT_CURRENT_ARROW_RESET;
+          
+        game_fsm.INCREMENT_CURRENT_ARROW_RESET:
+          alufn = b000000;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = hE;
+          rc = hE;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.CHECK_NTH_ARROW_EMPTY;
+        
+          
+          
+        //IDLE Randomizer Branch  
+        game_fsm.INCREMENT_RANDOMIZER_IDLE:
+          alufn = b000000;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = hC;
+          rc = hC;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.CHECK_RANDOMIZER_IDLE_LTE4;
+          
+        game_fsm.CHECK_RANDOMIZER_IDLE_LTE4:
+          alufn = b110111;
+          asel = b0;
+          bsel = b100;
+          we = b1;
+          ra = hC;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_RANDOMIZER_IDLE_LTE4;
+          
+        game_fsm.BRANCH_CHECK_RANDOMIZER_IDLE_LTE4:
+          we = b0;
+          rb = hF;
+          if (rb_data[0]){
+            game_fsm.d = game_fsm.IDLE;
+            }
+          else{
+            game_fsm.d = game_fsm.MAKE_RANDOMIZER_IDLE_1;
+            }
+          
+        game_fsm.MAKE_RANDOMIZER_IDLE_1:
+          we = b1;
+          rc = hC;
+          wdsel = b10;
+          wasel = b00;
+          game_fsm.d = game_fsm.IDLE;
+          
+        //TIMER
+        game_fsm.CHECK_GAME_TIMER_MT_0:
+          alufn = b110011;
+          asel = b0;
+          bsel = b110;
+          we = b1;
+          ra = h0;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_GAME_TIMER;
+          
+        game_fsm.BRANCH_GAME_TIMER:
+          we = b0;
+          rb = hF;
+          if (rb_data[0]){
+            game_fsm.d = game_fsm.CHECK_NUMBER_OF_CORRECT_INPUT_EQ_LEVEL;
+            }
+          else{
+            game_fsm.d = game_fsm.DECREASE_GAME_TIMER;
+            }
+          
+        game_fsm.DECREASE_GAME_TIMER:
+          alufn = b000001;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = h0;
+          rc = h0;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.IDLE;
+          
+        game_fsm.CHECK_NUMBER_OF_CORRECT_INPUT_EQ_LEVEL:
+          alufn = b110011;
+          asel = b0;
+          bsel = b000;
+          we = b1;
+          ra = hD;
+          rb = hB;
+          rc = hF;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.BRANCH_CHECK_NUMBER_OF_CORRECT_INPUT_EQ_LEVEL;
+          
+        game_fsm.BRANCH_CHECK_NUMBER_OF_CORRECT_INPUT_EQ_LEVEL:
+          we = b0;
+          rb = hF;
+          if (rb_data[0]){
+            game_fsm.d = game_fsm.INCREMENT_SCORE;
+            }
+          else{
+            game_fsm.d = game_fsm.SET_NUMBER_OF_CORRECT_INPUT_EQ_0;
+            }
+          
+        game_fsm.SET_NUMBER_OF_CORRECT_INPUT_EQ_0:
+          we = b1;
+          rc = hD;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.INCREMENT_LEVEL;
+          
+        game_fsm.INCREMENT_SCORE:
+          alufn = b000000;
+          asel = b0;
+          bsel = b001;
+          we = b1;
+          ra = hA;
+          rc = hA;
+          wdsel = b00;
+          wasel = b0;
+          ra2sel = b0;
+          game_fsm.d = game_fsm.SET_NUMBER_OF_CORRECT_INPUT_EQ_0;
+        
+        }
+    }
+}

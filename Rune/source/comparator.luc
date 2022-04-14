@@ -1,0 +1,22 @@
+module comparator (
+    
+    input alufn[6],
+    input z,
+    input n,
+    input v,
+    output out[16]
+  ) {
+  
+  sig temp[1];
+
+  always {
+    out[15:1] = 0;
+    case(alufn[2:1]) {
+      default: temp = 0;
+      b10: temp = n ^ v;      // A < B
+      b01: temp = z;          // A = B
+      b11: temp = (n^v) | z;  // A <= B
+      }
+      out[0] = temp;
+  }
+}

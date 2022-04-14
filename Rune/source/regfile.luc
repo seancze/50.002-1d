@@ -1,0 +1,31 @@
+module regfile (
+    input clk,  // clock
+    input ra[4],
+    input rb[4],
+    input rc[4],
+    input we,
+    input write_data[16],
+    output ra_data[16],
+    output rb_data[16],
+    output score[16],
+    output timer[16],
+    output out[10][16]
+  ) {
+
+  dff registers[16][16](.clk(clk));
+  
+  always {
+    //always read
+    ra_data = registers.q[ra];
+    rb_data = registers.q[rb];
+    score = registers.q[10];    // score is R10
+    timer = registers.q[0];     // timer is R0
+    out[0] = registers.q[11];   // out[0][15:0] is the integer for level
+    out[9:1] = registers.q[9:1];// out[9:1] are the integers for arrow 1 to arrow 9
+    
+    if (we){
+      registers.d[rc] = write_data;  // writing data to Rc
+      }
+    
+  }
+}

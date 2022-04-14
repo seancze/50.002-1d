@@ -1,0 +1,31 @@
+module boolean (
+    input a[16],
+    input b[16],
+    input alufn[4], // 5 control signal for each boolean operator
+    output out[16]
+  ) {
+  
+  sig temp[16];
+
+  always {
+ 
+    
+      
+    // 3 input for each boolean expression      
+    case(alufn[3:0]){
+      b1000: temp = a & b;// AND
+      b1110: temp = a | b; // OR
+      b0110: temp = a ^ b; // XOR
+      b1010: temp = a;  //"A"
+      b1100: temp = b; //"B"
+      b0111: temp = ~(a & b); //NAND
+      b0001: temp = ~(a | b); //NOR
+      b1001: temp = ~(a ^ b); // XNOR
+      default:
+        temp = 16b0;  
+      }
+    
+      out = temp;
+    
+  }
+}

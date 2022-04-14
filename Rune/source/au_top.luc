@@ -1,0 +1,58 @@
+module au_top (
+    input clk,              // 100MHz clock
+    input rst_n,            // reset button (active low)
+    output led [8],         // 8 user controllable LEDs
+    input usb_rx,           // USB->Serial input
+    output usb_tx,          // USB->Serial output
+    output io_led [3][8],   // LEDs on IO Shield
+    output io_seg [8],      // 7-segment LEDs on IO Shield
+    output io_sel [4],      // Digit select on IO Shield
+    input io_button [5],    // 5 buttons on IO Shield
+    input io_dip [3][8]     // DIP switches on IO Shield
+  ) {
+  
+  sig rst;                  // reset signal
+  full_circuit cpu(.clk(clk), .rst(rst));
+  
+  .clk(clk) {
+    // The reset conditioner is used to synchronize the reset signal to the FPGA
+    // clock. This ensures the entire FPGA comes out of reset at the same time.
+    reset_conditioner reset_cond;
+    button_conditioner buttoncond[5];
+    edge_detector buttondetector[5](#RISE(1), #FALL(0));
+  }
+ 
+  multi_seven_seg seg(.clk(clk),.rst(rst));
+  
+  always {
+    reset_cond.in = ~rst_n; // input raw inverted reset signal
+    rst = reset_cond.out;   // conditioned reset
+    
+    usb_tx = usb_rx;        // loop serial port
+    
+    led = 8h00;             // turn LEDs off
+    
+    io_led = 3x{{8h00}};    // turn LEDs off
+    io_seg = 8hff;          // turn segments off
+    io_sel = 4hf;           // select no digits
+    
+    //start here
+    buttoncond.in = io_button[4:0];
+    buttondetector.in = buttoncond.out;
+    
+    cpu.up = buttondetector.out[0];
+    cpu.down = buttondetector.out[2];
+    cpu.left = buttondetector.out[3];
+    cpu.right = buttondetector.out[4];
+    cpu.start_button = buttondetector.out[1];
+    cpu.reset_button = io_dip[0][0];
+    
+    //io_led[1:0] = $build(cpu.timer,2);
+    
+    seg.values = {cpu.out[1][3:0], cpu.out[2][3:0], cpu.out[3][3:0], cpu.timer[3:0]};
+    io_seg = ~seg.seg;
+    io_sel = ~seg.sel;
+    
+    io_led[1:0] = $build(cpu.score,2);
+  }
+}

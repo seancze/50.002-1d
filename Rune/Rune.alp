@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Rune" board="Alchitry Au" language="Lucid" version="3">
+  <files>
+    <src>multi_seven_seg.luc</src>
+    <src>seven_seg.luc</src>
+    <component>pipeline.luc</component>
+    <component>counter.luc</component>
+    <src>game_CU.luc</src>
+    <src>comparator.luc</src>
+    <src>alu.luc</src>
+    <src>variable_counter.luc</src>
+    <src>adder.luc</src>
+    <src>ra2sel.luc</src>
+    <src>wasel.luc</src>
+    <src>wdsel.luc</src>
+    <component>reset_conditioner.luc</component>
+    <component>button_conditioner.luc</component>
+    <src>shifter.luc</src>
+    <src top="true">au_top.luc</src>
+    <src>boolean.luc</src>
+    <src>multiplier.luc</src>
+    <component>decoder.luc</component>
+    <src>regfile.luc</src>
+    <component>pn_gen.luc</component>
+    <src>asel.luc</src>
+    <src>bsel.luc</src>
+    <src>variable_counter_unrestricted.luc</src>
+    <component>edge_detector.luc</component>
+    <src>full_circuit.luc</src>
+    <constraint lib="true">alchitry.acf</constraint>
+    <constraint lib="true">io.acf</constraint>
+    <constraint lib="true">au.xdc</constraint>
+  </files>
+</project>

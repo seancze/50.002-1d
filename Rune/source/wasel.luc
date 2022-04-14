@@ -1,0 +1,16 @@
+module wasel (
+    input rc[4],
+    input rb_data[4],
+    input wasel,
+    output out[4]
+  ) {
+
+  always {
+    if (wasel==0){
+      out = rc;
+      }
+    else{
+      out = rb_data[3:0];
+      }
+  }
+}

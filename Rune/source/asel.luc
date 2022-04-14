@@ -1,0 +1,12 @@
+module asel (
+    input ra_data[16],  // clock
+    input asel,  // reset
+    output out[16]
+  ) {
+
+  always {
+    out = 0;
+    if (asel == 0){out = ra_data;}
+    else {out = 16d1;}
+  }
+}
