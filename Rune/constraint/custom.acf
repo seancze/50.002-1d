@@ -91,6 +91,13 @@ pin io_button[1] B27 pulldown;
 pin io_button[2] B23 pulldown;
 pin io_button[3] B24 pulldown;
 pin io_button[4] C49 pulldown;
+pin arrow_button[0] D43 pulldown;
+pin arrow_button[1] D11 pulldown;
+pin arrow_button[2] D42 pulldown;
+pin arrow_button[3] D8 pulldown;
+pin arrow_button[4] D9 pulldown;
+pin arrow_button[5] D12 pulldown;
+
 
 pin io_sel[0] A9;
 pin io_sel[1] A8;

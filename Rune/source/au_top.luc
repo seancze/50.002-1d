@@ -9,6 +9,7 @@ module au_top (
     output io_sel [4],      // Digit select on IO Shield
     input io_button [5],    // 5 buttons on IO Shield
     input io_dip [3][8],     // DIP switches on IO Shield
+    input arrow_button[6],
     
     // to matrix. See custom.acf for pins
     output red0,
@@ -41,8 +42,8 @@ module au_top (
     // The reset conditioner is used to synchronize the reset signal to the FPGA
     // clock. This ensures the entire FPGA comes out of reset at the same time.
     reset_conditioner reset_cond;
-    button_conditioner buttoncond[5];
-    edge_detector buttondetector[5](#RISE(1), #FALL(0));
+    button_conditioner buttoncond[6];
+    edge_detector buttondetector[6](#RISE(1), #FALL(0));
   }
   
   always {
@@ -72,15 +73,17 @@ module au_top (
     
     //start here
     // 0: UP 1: MIDDLE 2: DOWN 3: LEFT 4: RIGHT
-    buttoncond.in = io_button[4:0];
+    //buttoncond.in = io_button[4:0];
+    buttoncond.in = arrow_button[5:0];
     buttondetector.in = buttoncond.out;
     
+    //cpu.up = buttondetector.out[0]
     cpu.up = buttondetector.out[0];
     cpu.down = buttondetector.out[2];
     cpu.left = buttondetector.out[3];
     cpu.right = buttondetector.out[4];
     cpu.start_button = buttondetector.out[1];
-    cpu.reset_button = io_dip[0][0];
+    cpu.reset_button = buttondetector.out[5];
     
     //io_led[1:0] = $build(cpu.timer,2);
     

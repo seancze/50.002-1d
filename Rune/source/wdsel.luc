@@ -8,7 +8,7 @@ module wdsel (
     case(wdsel) {
       b01 : out = b0000000000000000;
       b10 : out = 16d1;
-      b11 : out = 16d4;
+      b11 : out = 16d2;
         default: out = alu;}
   }
 }
