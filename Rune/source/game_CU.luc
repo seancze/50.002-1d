@@ -103,7 +103,7 @@ module game_CU (
       SET_R14_0,
       SET_R15_0,
       
-      
+      RESET_NUMBER_OF_CORRECT_INPUT_TO_0,
       
       INCREMENT_NUMBER_OF_CORRECT_INPUT,
       CHECK_NUMBER_OF_CORRECT_INPUT,
@@ -770,12 +770,19 @@ module game_CU (
           we = b0;
           rb = hF;
           if (rb_data[0]) {
-            game_fsm.d = game_fsm.SET_CURRENT_ARROW_TO_1_IDLE;
+            game_fsm.d = game_fsm.RESET_NUMBER_OF_CORRECT_INPUT_TO_0;
           }
           
           else {
             game_fsm.d = game_fsm.CHECK_CURRENT_ARROW_LTE_NUMBER_OF_CORRECT_INPUT;
           }
+        game_fsm.RESET_NUMBER_OF_CORRECT_INPUT_TO_0:
+          we = b1;
+          rc = hD;
+          wdsel = b01;
+          wasel = b0;
+          game_fsm.d = game_fsm.SET_CURRENT_ARROW_TO_1_IDLE;
+ 
         game_fsm.CHECK_CURRENT_ARROW_LTE_NUMBER_OF_CORRECT_INPUT:
           alufn = b110111;
           asel = b0;
