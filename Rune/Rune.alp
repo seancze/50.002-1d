@@ -15,6 +15,7 @@
     <src>adder.luc</src>
     <component>reset_conditioner.luc</component>
     <src>shifter.luc</src>
+    <src>number_rom.luc</src>
     <src>game_CU.luc</src>
     <component>button_conditioner.luc</component>
     <src>regfile.luc</src>

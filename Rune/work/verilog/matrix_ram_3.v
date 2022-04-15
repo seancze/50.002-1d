@@ -36,7 +36,7 @@ module matrix_ram_3 (
   reg [3-1:0] M_top_ram_write_data;
   reg [1-1:0] M_top_ram_write_en;
   reg [10-1:0] M_top_ram_raddr;
-  simple_dual_ram_10 #(.SIZE(2'h3), .DEPTH(12'h400)) top_ram (
+  simple_dual_ram_11 #(.SIZE(2'h3), .DEPTH(12'h400)) top_ram (
     .rclk(clk),
     .wclk(clk),
     .waddr(M_top_ram_waddr),
@@ -51,7 +51,7 @@ module matrix_ram_3 (
   reg [3-1:0] M_bottom_ram_write_data;
   reg [1-1:0] M_bottom_ram_write_en;
   reg [10-1:0] M_bottom_ram_raddr;
-  simple_dual_ram_10 #(.SIZE(2'h3), .DEPTH(12'h400)) bottom_ram (
+  simple_dual_ram_11 #(.SIZE(2'h3), .DEPTH(12'h400)) bottom_ram (
     .rclk(clk),
     .wclk(clk),
     .waddr(M_bottom_ram_waddr),

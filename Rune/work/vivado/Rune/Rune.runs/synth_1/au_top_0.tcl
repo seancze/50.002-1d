@@ -84,40 +84,41 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/adder_31.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/alu_16.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/adder_32.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/alu_17.v}
   {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/arrow_rom_9.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/asel_19.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/boolean_33.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/bsel_20.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/asel_20.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/boolean_34.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/bsel_21.v}
   {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/button_conditioner_7.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/comparator_30.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_11.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_22.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_27.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_29.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/decoder_24.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/edge_detector_26.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/comparator_31.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_12.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_23.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_28.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/counter_30.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/decoder_25.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/edge_detector_27.v}
   {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/edge_detector_8.v}
   {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/full_circuit_4.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/game_CU_14.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/game_CU_15.v}
   {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/matrix_ram_3.v}
   {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/matrix_ram_writer_2.v}
   {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/matrix_writer_1.v}
   {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/multi_seven_seg_5.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/multiplier_34.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/pipeline_25.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/pn_gen_28.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/ra2sel_18.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/regfile_15.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/multiplier_35.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/number_rom_10.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/pipeline_26.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/pn_gen_29.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/ra2sel_19.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/regfile_16.v}
   {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/reset_conditioner_6.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/seven_seg_23.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/shifter_32.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/simple_dual_ram_10.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_12.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_13.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/wasel_17.v}
-  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/wdsel_21.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/seven_seg_24.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/shifter_33.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/simple_dual_ram_11.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_13.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/variable_counter_unrestricted_14.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/wasel_18.v}
+  {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/wdsel_22.v}
   {C:/Users/seanc/OneDrive/Desktop/Work/SUTD/50.002 1D/50.002-1d/Rune/work/vivado/Rune/Rune.srcs/sources_1/imports/verilog/au_top_0.v}
 }
 OPTRACE "Adding files" END { }

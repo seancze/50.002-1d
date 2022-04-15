@@ -42,14 +42,14 @@ module full_circuit_4 (
     .out(M_vi_ur_detector_out)
   );
   wire [1-1:0] M_slow_timer_value;
-  counter_11 slow_timer (
+  counter_12 slow_timer (
     .clk(clk),
     .rst(rst),
     .value(M_slow_timer_value)
   );
   wire [1-1:0] M_vi_out;
   wire [16-1:0] M_vi_debug;
-  variable_counter_12 vi (
+  variable_counter_13 vi (
     .clk(clk),
     .rst(rst),
     .out(M_vi_out),
@@ -57,7 +57,7 @@ module full_circuit_4 (
   );
   wire [1-1:0] M_vi_ur_out;
   wire [16-1:0] M_vi_ur_debug;
-  variable_counter_unrestricted_13 vi_ur (
+  variable_counter_unrestricted_14 vi_ur (
     .clk(clk),
     .rst(rst),
     .out(M_vi_ur_out),
@@ -83,7 +83,7 @@ module full_circuit_4 (
   reg [1-1:0] M_cu_right_arrow;
   reg [1-1:0] M_cu_up_arrow;
   reg [1-1:0] M_cu_down_arrow;
-  game_CU_14 cu (
+  game_CU_15 cu (
     .clk(clk),
     .rst(rst),
     .rb_data(M_cu_rb_data),
@@ -117,7 +117,7 @@ module full_circuit_4 (
   reg [4-1:0] M_rf_rc;
   reg [1-1:0] M_rf_we;
   reg [16-1:0] M_rf_write_data;
-  regfile_15 rf (
+  regfile_16 rf (
     .clk(clk),
     .ra(M_rf_ra),
     .rb(M_rf_rb),
@@ -138,7 +138,7 @@ module full_circuit_4 (
   reg [6-1:0] M_alu_unit_alufn;
   reg [16-1:0] M_alu_unit_a;
   reg [16-1:0] M_alu_unit_b;
-  alu_16 alu_unit (
+  alu_17 alu_unit (
     .alufn(M_alu_unit_alufn),
     .a(M_alu_unit_a),
     .b(M_alu_unit_b),
@@ -152,7 +152,7 @@ module full_circuit_4 (
   reg [4-1:0] M_wasel_mux_rc;
   reg [4-1:0] M_wasel_mux_rb_data;
   reg [1-1:0] M_wasel_mux_wasel;
-  wasel_17 wasel_mux (
+  wasel_18 wasel_mux (
     .rc(M_wasel_mux_rc),
     .rb_data(M_wasel_mux_rb_data),
     .wasel(M_wasel_mux_wasel),
@@ -163,7 +163,7 @@ module full_circuit_4 (
   reg [4-1:0] M_ra2sel_mux_ra;
   reg [4-1:0] M_ra2sel_mux_rb_data;
   reg [1-1:0] M_ra2sel_mux_ra2sel;
-  ra2sel_18 ra2sel_mux (
+  ra2sel_19 ra2sel_mux (
     .ra(M_ra2sel_mux_ra),
     .rb_data(M_ra2sel_mux_rb_data),
     .ra2sel(M_ra2sel_mux_ra2sel),
@@ -173,7 +173,7 @@ module full_circuit_4 (
   wire [16-1:0] M_asel_mux_out;
   reg [16-1:0] M_asel_mux_ra_data;
   reg [1-1:0] M_asel_mux_asel;
-  asel_19 asel_mux (
+  asel_20 asel_mux (
     .ra_data(M_asel_mux_ra_data),
     .asel(M_asel_mux_asel),
     .out(M_asel_mux_out)
@@ -182,7 +182,7 @@ module full_circuit_4 (
   wire [16-1:0] M_bsel_mux_out;
   reg [16-1:0] M_bsel_mux_rb_data;
   reg [3-1:0] M_bsel_mux_bsel;
-  bsel_20 bsel_mux (
+  bsel_21 bsel_mux (
     .rb_data(M_bsel_mux_rb_data),
     .bsel(M_bsel_mux_bsel),
     .out(M_bsel_mux_out)
@@ -191,7 +191,7 @@ module full_circuit_4 (
   wire [16-1:0] M_wdsel_mux_out;
   reg [16-1:0] M_wdsel_mux_alu;
   reg [2-1:0] M_wdsel_mux_wdsel;
-  wdsel_21 wdsel_mux (
+  wdsel_22 wdsel_mux (
     .alu(M_wdsel_mux_alu),
     .wdsel(M_wdsel_mux_wdsel),
     .out(M_wdsel_mux_out)

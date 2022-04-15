@@ -18,8 +18,8 @@ module matrix_ram_writer_2 (
     input [4:0] button_clicked,
     input [3:0] level_input,
     input [143:0] arrow_type_input,
-    input [3:0] timer,
-    input [3:0] score,
+    input [3:0] timer_input,
+    input [3:0] score_input,
     output reg [3:0] row_address_top,
     output reg [5:0] col_address_top,
     output reg we_top,
@@ -52,21 +52,48 @@ module matrix_ram_writer_2 (
   
   reg M_button_state_d, M_button_state_q = READY_button_state;
   
+  
+  localparam READY_bottom_half_state = 2'd0;
+  localparam PART_ONE_LOAD_SCORE_bottom_half_state = 2'd1;
+  localparam PART_TWO_LOAD_TIMER_bottom_half_state = 2'd2;
+  
+  reg [1:0] M_bottom_half_state_d, M_bottom_half_state_q = READY_bottom_half_state;
+  
   localparam NUM_ARROW_TYPES = 4'h9;
   
   localparam MAX_LEVEL = 4'h9;
+  
+  localparam NUM_ROM_OUTER_ARRAY_SIZE = 5'h1c;
+  
+  localparam MAX_TIME = 3'h5;
+  
+  localparam MAX_SCORE = 4'ha;
   
   localparam START_DATA = 48'h787f7fe07fff;
   
   localparam PSEUDO_OFFSET = 96'h8208204a44a4c20410318930;
   
-  wire [192-1:0] M_rom_arrow;
-  wire [3-1:0] M_rom_colour;
-  reg [4-1:0] M_rom_choice;
-  arrow_rom_9 rom (
-    .choice(M_rom_choice),
-    .arrow(M_rom_arrow),
-    .colour(M_rom_colour)
+  wire [192-1:0] M_my_arrow_rom_arrow;
+  wire [3-1:0] M_my_arrow_rom_colour;
+  reg [4-1:0] M_my_arrow_rom_choice;
+  arrow_rom_9 my_arrow_rom (
+    .choice(M_my_arrow_rom_choice),
+    .arrow(M_my_arrow_rom_arrow),
+    .colour(M_my_arrow_rom_colour)
+  );
+  
+  wire [336-1:0] M_my_timer_rom_number;
+  reg [4-1:0] M_my_timer_rom_choice;
+  number_rom_10 my_timer_rom (
+    .choice(M_my_timer_rom_choice),
+    .number(M_my_timer_rom_number)
+  );
+  
+  wire [336-1:0] M_my_score_rom_number;
+  reg [4-1:0] M_my_score_rom_choice;
+  number_rom_10 my_score_rom (
+    .choice(M_my_score_rom_choice),
+    .number(M_my_score_rom_number)
   );
   
   reg [3:0] M_bitloader_d, M_bitloader_q = 1'h0;
@@ -79,20 +106,27 @@ module matrix_ram_writer_2 (
   
   reg [3:0] M_current_level_d, M_current_level_q = 1'h0;
   
+  reg [2:0] M_timer_value_d, M_timer_value_q = 1'h0;
+  
   reg [5:0] M_data_col_address_d, M_data_col_address_q = 1'h0;
   
   reg [3:0] M_data_row_address_d, M_data_row_address_q = 1'h0;
   
+  reg [4:0] M_bottom_half_col_index_d, M_bottom_half_col_index_q = 1'h0;
+  
   reg [9:0] M_ram_writer_address_d, M_ram_writer_address_q = 1'h0;
   
   always @* begin
+    M_bottom_half_state_d = M_bottom_half_state_q;
     M_button_state_d = M_button_state_q;
     M_writer_state_d = M_writer_state_q;
+    M_bottom_half_col_index_d = M_bottom_half_col_index_q;
     M_data_d = M_data_q;
     M_bitloader_d = M_bitloader_q;
-    M_current_arrow_d = M_current_arrow_q;
     M_current_level_d = M_current_level_q;
+    M_current_arrow_d = M_current_arrow_q;
     M_prev_arrows_d = M_prev_arrows_q;
+    M_timer_value_d = M_timer_value_q;
     M_data_col_address_d = M_data_col_address_q;
     M_data_row_address_d = M_data_row_address_q;
     
@@ -105,25 +139,31 @@ module matrix_ram_writer_2 (
     col_address_btm = 1'h0;
     wd_top = 1'h0;
     wd_btm = 1'h0;
-    M_rom_choice = arrow_type_input[(M_current_arrow_q)*16+0+3-:4];
+    M_my_arrow_rom_choice = arrow_type_input[(M_current_arrow_q)*16+0+3-:4];
+    M_my_timer_rom_choice = M_timer_value_q;
+    M_my_score_rom_choice = score_input;
     
     case (M_writer_state_q)
       START_writer_state: begin
-        M_current_arrow_d = level_input;
-        M_current_level_d = 1'h0;
+        M_current_level_d = level_input;
+        M_current_arrow_d = 1'h0;
+        M_timer_value_d = 4'h4;
         M_data_d = 48'h787f7fe07fff;
         M_prev_arrows_d = arrow_type_input[(M_current_arrow_q)*16+0+3-:4];
         M_writer_state_d = LOAD_ADDRESS_writer_state;
         M_button_state_d = READY_button_state;
+        M_bottom_half_state_d = READY_bottom_half_state;
       end
       LOAD_ADDRESS_writer_state: begin
         if (M_button_state_q == LOADING_button_state) begin
           row_address_top = M_data_row_address_q;
           col_address_top = M_data_col_address_q;
+          row_address_btm = M_data_row_address_q;
+          col_address_btm = M_data_col_address_q;
         end else begin
-          row_address_top = M_rom_arrow[(M_bitloader_q)*12+6+5-:6];
+          row_address_top = M_my_arrow_rom_arrow[(M_bitloader_q)*12+6+5-:6];
           
-          case (M_rom_arrow[(M_bitloader_q)*12+0+5-:6])
+          case (M_my_arrow_rom_arrow[(M_bitloader_q)*12+0+5-:6])
             6'h0c: begin
               col_address_top = 7'h40 / (M_current_level_q + 1'h1) * (M_current_arrow_q + 1'h1) + 2'h2;
             end
@@ -140,35 +180,99 @@ module matrix_ram_writer_2 (
               col_address_top = 7'h40 / (M_current_level_q + 1'h1) * (M_current_arrow_q + 1'h1) - 2'h2;
             end
             default: begin
-              col_address_top = M_rom_arrow[(M_bitloader_q)*12+0+5-:6];
+              col_address_top = M_my_arrow_rom_arrow[(M_bitloader_q)*12+0+5-:6];
             end
           endcase
+          if (M_data_col_address_q < 6'h20) begin
+            row_address_btm = M_my_score_rom_number[(M_bottom_half_col_index_q)*12+6+5-:6];
+            
+            case (M_my_score_rom_number[(M_bottom_half_col_index_q)*12+0+5-:6])
+              6'h0c: begin
+                col_address_btm = 8'h17;
+              end
+              6'h0b: begin
+                col_address_btm = 8'h16;
+              end
+              6'h0a: begin
+                col_address_btm = 7'h15;
+              end
+              6'h09: begin
+                col_address_btm = 8'h14;
+              end
+              6'h08: begin
+                col_address_btm = 8'h13;
+              end
+              6'h07: begin
+                col_address_btm = 8'h12;
+              end
+              default: begin
+                col_address_btm = M_my_score_rom_number[(M_bottom_half_col_index_q)*12+0+5-:6];
+              end
+            endcase
+            M_bottom_half_col_index_d = M_bottom_half_col_index_q + 1'h1;
+          end else begin
+            if (M_bottom_half_col_index_q == 6'h20) begin
+              M_bottom_half_col_index_d = 1'h0;
+            end else begin
+              M_bottom_half_col_index_d = M_bottom_half_col_index_q + 1'h1;
+            end
+            row_address_btm = M_my_timer_rom_number[(M_bottom_half_col_index_q)*12+6+5-:6];
+            
+            case (M_my_timer_rom_number[(M_bottom_half_col_index_q)*12+0+5-:6])
+              6'h0c: begin
+                col_address_btm = 10'h02c;
+              end
+              6'h0b: begin
+                col_address_btm = 10'h02b;
+              end
+              6'h0a: begin
+                col_address_btm = 9'h02a;
+              end
+              6'h09: begin
+                col_address_btm = 10'h029;
+              end
+              6'h08: begin
+                col_address_btm = 10'h028;
+              end
+              6'h07: begin
+                col_address_btm = 10'h027;
+              end
+              default: begin
+                col_address_btm = M_my_timer_rom_number[(M_bottom_half_col_index_q)*12+0+5-:6];
+              end
+            endcase
+          end
         end
-        row_address_btm = M_data_row_address_q;
-        col_address_btm = M_data_col_address_q;
         wd_top = 3'h0;
+        wd_btm = 3'h0;
         if (M_button_state_q == READY_button_state && M_current_level_q != 1'h0) begin
-          wd_top = M_rom_colour;
+          wd_top = M_my_arrow_rom_colour;
+          wd_btm = 3'h4;
         end
-        wd_btm = 3'h4;
         we_top = 1'h1;
         we_btm = 1'h1;
         M_writer_state_d = LOAD_WAIT_writer_state;
         if ((&M_bitloader_q) == 1'h1) begin
           M_bitloader_d = 1'h0;
           M_writer_state_d = LOAD_ADDRESS_writer_state;
-          if (M_data_col_address_q < 8'h3f) begin
+          if ((M_data_col_address_q < 8'h3f) && M_button_state_q == LOADING_button_state) begin
             M_data_col_address_d = M_data_col_address_q + 1'h1;
+            M_button_state_d = LOADING_button_state;
           end else begin
             if (M_current_arrow_q < (M_current_level_q - 1'h1)) begin
               M_current_arrow_d = M_current_arrow_q + 1'h1;
             end else begin
-              M_current_arrow_d = 1'h0;
-              M_button_state_d = READY_button_state;
-              if (M_button_state_q == LOADING_button_state) begin
-                M_current_level_d = level_input;
+              if ((M_data_col_address_q < 8'h3f) && M_button_state_q == READY_button_state) begin
+                M_data_col_address_d = M_data_col_address_q + 1'h1;
               end else begin
-                M_writer_state_d = LOOP_writer_state;
+                M_current_arrow_d = 1'h0;
+                M_data_col_address_d = 1'h0;
+                M_bottom_half_col_index_d = 1'h0;
+                M_button_state_d = READY_button_state;
+                M_current_level_d = level_input;
+                if (M_button_state_q == READY_button_state) begin
+                  M_writer_state_d = LOOP_writer_state;
+                end
               end
             end
           end
@@ -177,27 +281,35 @@ module matrix_ram_writer_2 (
       LOAD_WAIT_writer_state: begin
         M_bitloader_d = M_bitloader_q + 1'h1;
         M_data_row_address_d = M_data_row_address_q + 1'h1;
+        M_bottom_half_col_index_d = M_bottom_half_col_index_q + 1'h1;
         M_writer_state_d = LOAD_ADDRESS_writer_state;
       end
       LOOP_writer_state: begin
         ready = 1'h1;
         M_writer_state_d = LOOP_writer_state;
-        if (button_clicked[0+0-:1] || button_clicked[1+0-:1] || button_clicked[2+0-:1] || button_clicked[3+0-:1] || button_clicked[4+0-:1]) begin
+        if (button_clicked[0+0-:1] || button_clicked[1+0-:1] || button_clicked[2+0-:1] || button_clicked[3+0-:1] || button_clicked[4+0-:1] || (M_timer_value_q != timer_input && M_timer_value_q >= 1'h0)) begin
           M_writer_state_d = LOAD_ADDRESS_writer_state;
           M_button_state_d = LOADING_button_state;
+          if ((M_timer_value_q != timer_input && M_timer_value_q >= 1'h0)) begin
+            M_bottom_half_state_d = PART_ONE_LOAD_SCORE_bottom_half_state;
+            M_timer_value_d = M_timer_value_q - 1'h1;
+          end
         end else begin
-          if (timer == 1'h0) begin
+          if (timer_input == 1'h0) begin
             M_writer_state_d = WAIT_FOR_NEXT_LEVEL_writer_state;
           end
         end
       end
       WAIT_FOR_NEXT_LEVEL_writer_state: begin
-        if (timer == 1'h0) begin
+        ready = 1'h1;
+        if (timer_input == 1'h0) begin
           M_writer_state_d = WAIT_FOR_NEXT_LEVEL_writer_state;
         end else begin
           M_data_col_address_d = 1'h0;
           M_writer_state_d = LOAD_ADDRESS_writer_state;
           M_button_state_d = LOADING_button_state;
+          M_timer_value_d = 4'h4;
+          M_bottom_half_state_d = PART_ONE_LOAD_SCORE_bottom_half_state;
         end
       end
     endcase
@@ -205,18 +317,9 @@ module matrix_ram_writer_2 (
   
   always @(posedge clk) begin
     if (rst == 1'b1) begin
-      M_bitloader_q <= 1'h0;
+      M_ram_writer_address_q <= 1'h0;
     end else begin
-      M_bitloader_q <= M_bitloader_d;
-    end
-  end
-  
-  
-  always @(posedge clk) begin
-    if (rst == 1'b1) begin
-      M_data_row_address_q <= 1'h0;
-    end else begin
-      M_data_row_address_q <= M_data_row_address_d;
+      M_ram_writer_address_q <= M_ram_writer_address_d;
     end
   end
   
@@ -232,27 +335,9 @@ module matrix_ram_writer_2 (
   
   always @(posedge clk) begin
     if (rst == 1'b1) begin
-      M_ram_writer_address_q <= 1'h0;
+      M_data_row_address_q <= 1'h0;
     end else begin
-      M_ram_writer_address_q <= M_ram_writer_address_d;
-    end
-  end
-  
-  
-  always @(posedge clk) begin
-    if (rst == 1'b1) begin
-      M_current_arrow_q <= 1'h0;
-    end else begin
-      M_current_arrow_q <= M_current_arrow_d;
-    end
-  end
-  
-  
-  always @(posedge clk) begin
-    if (rst == 1'b1) begin
-      M_current_level_q <= 1'h0;
-    end else begin
-      M_current_level_q <= M_current_level_d;
+      M_data_row_address_q <= M_data_row_address_d;
     end
   end
   
@@ -268,9 +353,9 @@ module matrix_ram_writer_2 (
   
   always @(posedge clk) begin
     if (rst == 1'b1) begin
-      M_button_state_q <= 1'h0;
+      M_timer_value_q <= 1'h0;
     end else begin
-      M_button_state_q <= M_button_state_d;
+      M_timer_value_q <= M_timer_value_d;
     end
   end
   
@@ -286,9 +371,63 @@ module matrix_ram_writer_2 (
   
   always @(posedge clk) begin
     if (rst == 1'b1) begin
+      M_button_state_q <= 1'h0;
+    end else begin
+      M_button_state_q <= M_button_state_d;
+    end
+  end
+  
+  
+  always @(posedge clk) begin
+    if (rst == 1'b1) begin
       M_writer_state_q <= 1'h0;
     end else begin
       M_writer_state_q <= M_writer_state_d;
+    end
+  end
+  
+  
+  always @(posedge clk) begin
+    if (rst == 1'b1) begin
+      M_current_level_q <= 1'h0;
+    end else begin
+      M_current_level_q <= M_current_level_d;
+    end
+  end
+  
+  
+  always @(posedge clk) begin
+    if (rst == 1'b1) begin
+      M_bitloader_q <= 1'h0;
+    end else begin
+      M_bitloader_q <= M_bitloader_d;
+    end
+  end
+  
+  
+  always @(posedge clk) begin
+    if (rst == 1'b1) begin
+      M_current_arrow_q <= 1'h0;
+    end else begin
+      M_current_arrow_q <= M_current_arrow_d;
+    end
+  end
+  
+  
+  always @(posedge clk) begin
+    if (rst == 1'b1) begin
+      M_bottom_half_state_q <= 1'h0;
+    end else begin
+      M_bottom_half_state_q <= M_bottom_half_state_d;
+    end
+  end
+  
+  
+  always @(posedge clk) begin
+    if (rst == 1'b1) begin
+      M_bottom_half_col_index_q <= 1'h0;
+    end else begin
+      M_bottom_half_col_index_q <= M_bottom_half_col_index_d;
     end
   end
   

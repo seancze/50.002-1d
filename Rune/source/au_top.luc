@@ -97,8 +97,8 @@ module au_top (
 
     ramwriter.level_input = cpu.out[0][3:0];
     ramwriter.arrow_type_input = cpu.out[9:1];
-    ramwriter.timer = cpu.timer[3:0];
-    ramwriter.score = cpu.score[3:0];
+    ramwriter.timer_input = cpu.timer[3:0];
+    ramwriter.score_input = cpu.score[3:0];
     ramwriter.button_clicked = buttondetector.out;
     ramwriter.new_data = {c{io_dip[2], io_dip[2]}, c{io_dip[1], io_dip[1]}, c{io_dip[0], io_dip[0]}}; // replace this from reg content from CPU
     
