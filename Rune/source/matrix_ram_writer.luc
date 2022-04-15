@@ -29,7 +29,7 @@ module matrix_ram_writer #(
   ) {
   
     fsm writer_state(.clk(clk), .rst(rst)) = {START, LOAD_ADDRESS, LOAD_WAIT, LOOP, WAIT_FOR_NEXT_LEVEL};
-    fsm button_state(.clk(clk), .rst(rst)) = {READY, LOADING};
+    fsm loading_state(.clk(clk), .rst(rst)) = {READY, CLEAR_PREVIOUS};
     fsm bottom_half_state(.clk(clk), .rst(rst)) = {READY, PART_ONE_LOAD_SCORE, PART_TWO_LOAD_TIMER};
 
     const NUM_ARROW_TYPES = 9;
@@ -86,10 +86,6 @@ module matrix_ram_writer #(
 
 
     // TODO: Cause score_input and timer_input to remain on screen after everything is done
-    // ISSUE: Timer is not erasing itself
-    // ISSUE: Score is only partially printing at the start
-    // ISSUE: When I tap the button, all the time inputs will print at once; Something wrong with my logic ah
-    // ISSUE: First time score is printed, it only prints 16 bits and timer is not even printed
 
 
     case(writer_state.q){
@@ -100,7 +96,7 @@ module matrix_ram_writer #(
         data.d = START_DATA;
         prev_arrows.d = arrow_type_input[current_arrow.q][3:0];
         writer_state.d = writer_state.LOAD_ADDRESS;
-        button_state.d = button_state.READY;
+        loading_state.d = loading_state.READY;
         bottom_half_state.d = bottom_half_state.READY;
         
 
@@ -108,7 +104,7 @@ module matrix_ram_writer #(
         // START_DATA is used to showcase the first colours
       writer_state.LOAD_ADDRESS:
 
-          if (button_state.q == button_state.LOADING) {
+          if (loading_state.q == loading_state.CLEAR_PREVIOUS) {
             row_address_top = data_row_address.q;
             col_address_top = data_col_address.q;
             row_address_btm = data_row_address.q;
@@ -170,9 +166,9 @@ module matrix_ram_writer #(
         // By default, switch off
         wd_top = b000;
         wd_btm = b000;
-        // If button_state.READY AND current_level is not 0, then set the colour
-        // Why? Because when button_state.LOADING, it is still erasing the previous level's arrows
-        if (button_state.q == button_state.READY && current_level.q != 0) {
+        // If loading_state.READY AND current_level is not 0, then set the colour
+        // Why? Because when loading_state.CLEAR_PREVIOUS, it is still erasing the previous level's arrows
+        if (loading_state.q == loading_state.READY && current_level.q != 0) {
           wd_top = my_arrow_rom.colour;  
           wd_btm = b100; // Set bottom colour to blue
         } 
@@ -192,18 +188,18 @@ module matrix_ram_writer #(
           // (B) Display arrows
           // (C) Display score + timer
           // Workaround: Clear the entire LED matrix first
-          if ((data_col_address.q < (MATRIX_WIDTH-1)) && button_state.q == button_state.LOADING) {
+          if ((data_col_address.q < (MATRIX_WIDTH-1)) && loading_state.q == loading_state.CLEAR_PREVIOUS) {
             // Case 1: LOADING && LED matrix have not been cleared
             data_col_address.d = data_col_address.q + 1;
             // TODO: Remove if it doesn't help; Used to ensure that all bits of score is printed when button is first pressed
-            button_state.d = button_state.LOADING;
+            loading_state.d = loading_state.CLEAR_PREVIOUS;
 
           } else if (current_arrow.q < (current_level.q - 1)) {
             // Case 2: Not all arrows have been printed
             // If still less than the required number, increment the num_arrow index by 1
             current_arrow.d = current_arrow.q + 1;
 
-          } else if ((data_col_address.q < (MATRIX_WIDTH-1)) && button_state.q == button_state.READY) {
+          } else if ((data_col_address.q < (MATRIX_WIDTH-1)) && loading_state.q == loading_state.READY) {
             // Case 3: READY && Score / Timer NOT yet printed
             data_col_address.d = data_col_address.q + 1;
 
@@ -214,13 +210,13 @@ module matrix_ram_writer #(
             current_arrow.d = 0;
             data_col_address.d = 0;
             bottom_half_col_index.d = 0;
-            // Reset button_state to START
-            // Note: I can set button_state here because I am setting for the next cycle
-            button_state.d = button_state.READY;
+            // Reset loading_state to START
+            // Note: I can set loading_state here because I am setting for the next cycle
+            loading_state.d = loading_state.READY;
             current_level.d = level_input;
 
             
-            if(button_state.q == button_state.READY) {
+            if(loading_state.q == loading_state.READY) {
               // Case 3: READY && All arrows have been printed
               // START: Only go back to loop AFTER all arrows have been generated, where # of arrows == (current level + 1)
               writer_state.d = writer_state.LOOP;
@@ -244,19 +240,20 @@ module matrix_ram_writer #(
 
         // Only load address if current_level is less than max_level        
         // OR (if timer_value differs from timer_input AND timer_input is NOT 0)
-        // if (current_level.q <= MAX_LEVEL) {
-          if (button_clicked[0] || button_clicked[1] || button_clicked[2] || button_clicked[3] || button_clicked[4] || (timer_value.q != timer_input && timer_value.q >= 0)) {
+        if (current_level.q <= MAX_LEVEL + 1) {
+          if ((timer_value.q != timer_input && timer_value.q >= 0)) {
+            bottom_half_state.d = bottom_half_state.PART_ONE_LOAD_SCORE; 
+            timer_value.d = timer_value.q - 1;
             writer_state.d = writer_state.LOAD_ADDRESS;
-            button_state.d = button_state.LOADING;
-            if ((timer_value.q != timer_input && timer_value.q >= 0)) {
-              bottom_half_state.d = bottom_half_state.PART_ONE_LOAD_SCORE; 
-              timer_value.d = timer_value.q - 1;
-            }
+            loading_state.d = loading_state.CLEAR_PREVIOUS;
+          } else if (button_clicked[0] || button_clicked[1] || button_clicked[2] || button_clicked[3] || button_clicked[4]) {
+            writer_state.d = writer_state.LOAD_ADDRESS;
+            loading_state.d = loading_state.CLEAR_PREVIOUS;
           } else if (timer_input == 0) {
             writer_state.d = writer_state.WAIT_FOR_NEXT_LEVEL;
           }
 
-        // }
+        }
 
       // Handle that ~1s when timer_input is outputting 0
       writer_state.WAIT_FOR_NEXT_LEVEL:
@@ -268,7 +265,7 @@ module matrix_ram_writer #(
           // Only set data_col_address.d to be 0 here because you only want to clear the lED matrix when loading the next level, not on every button click
           data_col_address.d = 0;
           writer_state.d = writer_state.LOAD_ADDRESS;
-          button_state.d = button_state.LOADING;
+          loading_state.d = loading_state.CLEAR_PREVIOUS;
           timer_value.d = (MAX_TIME - 1);
           bottom_half_state.d = bottom_half_state.PART_ONE_LOAD_SCORE;
         }
