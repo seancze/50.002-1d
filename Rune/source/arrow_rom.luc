@@ -92,7 +92,7 @@ module arrow_rom (
       // No arrows
       0: 
         arrow = RIGHT_ARROW; // placeholder value
-        colour = COLOUR[4]; // TODO: Change colour back to 0 (no colour); Set to red for debugging purposes
+        colour = COLOUR[0]; // TODO: Change colour back to 0 (no colour); Set to red for debugging purposes
       1: 
         arrow = LEFT_ARROW;
         colour = COLOUR[1];

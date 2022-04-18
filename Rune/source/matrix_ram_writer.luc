@@ -28,10 +28,9 @@ module matrix_ram_writer #(
     output ready
   ) {
   
-    fsm writer_state(.clk(clk), .rst(rst)) = {START, LOAD_ADDRESS, LOAD_WAIT, LOOP, WAIT_FOR_NEXT_LEVEL};
+    fsm writer_state(.clk(clk), .rst(rst)) = {START, LOAD_ADDRESS, LOAD_WAIT, LOOP};
     fsm loading_state(.clk(clk), .rst(rst)) = {READY, CLEAR_PREVIOUS};
-    fsm bottom_half_state(.clk(clk), .rst(rst)) = {READY, PART_ONE_LOAD_SCORE, PART_TWO_LOAD_TIMER, LOAD_FINAL_SCORE};
-    fsm game_state(.clk(clk), .rst(rst)) = {IN_PROGRESS, COMPLETED};
+    fsm game_state(.clk(clk), .rst(rst)) = {IN_PROGRESS, LOAD_FINAL_SCORE, COMPLETED};
 
     const NUM_ARROW_TYPES = 9;
     const MAX_LEVEL = 9;    
@@ -61,6 +60,7 @@ module matrix_ram_writer #(
     dff current_level[$clog2(MAX_LEVEL)](#INIT(0), .clk(clk), .rst(rst));
 // Workaround: Used to decrement timer_input only during the first time that timer_input drops in value
     dff timer_value[$clog2(MAX_TIME)](#INIT(0), .clk(clk), .rst(rst));
+    dff score_value[$clog2(MAX_SCORE)](#INIT(0), .clk(clk), .rst(rst));
 
   
     dff data_col_address[$clog2(MATRIX_WIDTH)](#INIT(0),.clk(clk),.rst(rst));
@@ -83,22 +83,18 @@ module matrix_ram_writer #(
     wd_btm = 0;
     my_arrow_rom.choice = arrow_type_input[current_arrow.q][3:0]; // Connect arrow_type dff to my_arrow_rom.choice to allow for toggling between arrows
     my_timer_rom.choice = timer_value.q;
-    my_score_rom.choice = score_input;
-
-
-    // TODO: Cause score_input and timer_input to remain on screen after everything is done
-
+    my_score_rom.choice = score_value.q;
 
     case(writer_state.q){
       writer_state.START:
         current_level.d = level_input;
         current_arrow.d = 0;
         timer_value.d = (MAX_TIME-1);
+        score_value.d = 0;
         data.d = START_DATA;
         prev_arrows.d = arrow_type_input[current_arrow.q][3:0];
         writer_state.d = writer_state.LOAD_ADDRESS;
         loading_state.d = loading_state.READY;
-        bottom_half_state.d = bottom_half_state.READY;
         game_state.d = game_state.IN_PROGRESS;
         
 
@@ -193,9 +189,6 @@ module matrix_ram_writer #(
           if ((data_col_address.q < (MATRIX_WIDTH-1)) && loading_state.q == loading_state.CLEAR_PREVIOUS) {
             // Case 1: LOADING && LED matrix have not been cleared
             data_col_address.d = data_col_address.q + 1;
-            // TODO: Remove if it doesn't help; Used to ensure that all bits of score is printed when button is first pressed
-            loading_state.d = loading_state.CLEAR_PREVIOUS;
-
           } else if (current_arrow.q < (current_level.q - 1)) {
             // Case 2: Not all arrows have been printed
             // If still less than the required number, increment the num_arrow index by 1
@@ -215,15 +208,21 @@ module matrix_ram_writer #(
             // Reset loading_state to START
             // Note: I can set loading_state here because I am setting for the next cycle
             loading_state.d = loading_state.READY;
-            current_level.d = level_input;
+
+            // Ensure that current_level does not exceed maximum level
+            if (level_input > MAX_LEVEL) {
+              current_level.d = MAX_LEVEL;
+            } else {
+              current_level.d = level_input;
+            }
 
             
             if(loading_state.q == loading_state.READY) {
-              // Case 3: READY && All arrows have been printed
+              // Case 4: READY && All arrows have been printed
               // START: Only go back to loop AFTER all arrows have been generated, where # of arrows == (current level + 1)
               writer_state.d = writer_state.LOOP;
             } 
-            // Case 4: Otherwise, LOADING && All arrows have been printed
+            // Case 5: Otherwise, LOADING && All arrows have been printed
           }
 
         }     
@@ -244,60 +243,49 @@ module matrix_ram_writer #(
         // OR (if timer_value differs from timer_input AND timer_input is NOT 0)
         // Timer becomes 0 > Check if sequence is correct, if so increase score > Then, increase level
         if (game_state.q != game_state.COMPLETED) {
-            // if (bottom_half_state.q == bottom_half_state.LOAD_FINAL_SCORE) {
-            //   writer_state.d = writer_state.LOAD_ADDRESS;
-            //   loading_state.d = loading_state.CLEAR_PREVIOUS;
-            //   game_state.d = game_state.COMPLETED;
-            // } else 
-            
-            if ((timer_value.q != timer_input && timer_value.q >= 0)) {
-              bottom_half_state.d = bottom_half_state.PART_ONE_LOAD_SCORE; 
+            if (game_state.q == game_state.LOAD_FINAL_SCORE) {
+              writer_state.d = writer_state.LOAD_ADDRESS;
+              loading_state.d = loading_state.CLEAR_PREVIOUS;
+              game_state.d = game_state.COMPLETED;
+            } else if ((timer_value.q != timer_input && timer_value.q >= 0)) {
               timer_value.d = timer_value.q - 1;
               writer_state.d = writer_state.LOAD_ADDRESS;
               loading_state.d = loading_state.CLEAR_PREVIOUS;
+            } else if (score_value.q != score_input ) {
+              score_value.d = score_value.q + 1;
+              writer_state.d = writer_state.LOAD_ADDRESS;
+              loading_state.d = loading_state.CLEAR_PREVIOUS;
             } else if (timer_input == 0) {
-              if (current_level.q >= MAX_LEVEL) {
-                bottom_half_state.d = bottom_half_state.LOAD_FINAL_SCORE;
-                writer_state.d = writer_state.LOAD_ADDRESS;
-                loading_state.d = loading_state.CLEAR_PREVIOUS;
-                current_level.d = 1;
-              } else {
-                writer_state.d = writer_state.WAIT_FOR_NEXT_LEVEL;
-
-              }
+              // if (current_level.q >= MAX_LEVEL) {
+              //   game_state.d = game_state.LOAD_FINAL_SCORE;
+              //   writer_state.d = writer_state.LOAD_ADDRESS;
+              //   loading_state.d = loading_state.CLEAR_PREVIOUS;
+              //   current_level.d = 1;
+              // }
+              
             } 
-
-        }
-
         // Always handle button click
         if (button_clicked[0] || button_clicked[1] || button_clicked[2] || button_clicked[3] || button_clicked[4]) {
           writer_state.d = writer_state.LOAD_ADDRESS;
           loading_state.d = loading_state.CLEAR_PREVIOUS;
-          // Ensure that the game is no longer completed
-          if (button_clicked[1]) {
-            // Reinitialise variables to start
-            game_state.d = game_state.IN_PROGRESS;
-            timer_value.d = (MAX_TIME - 1);
-            current_level.d = level_input;
-            bottom_half_state.d = bottom_half_state.READY;
-            
-          }
+          
         }
 
-      // Handle that ~1s when timer_input is outputting 0
-      writer_state.WAIT_FOR_NEXT_LEVEL:
-      // Set ready = 1 to not show a blank screen when timer_input is 0
-        ready = 1;
-        if (timer_input == 0) {
-            writer_state.d = writer_state.WAIT_FOR_NEXT_LEVEL;
         } else {
-          // Only set data_col_address.d to be 0 here because you only want to clear the lED matrix when loading the next level, not on every button click
-          data_col_address.d = 0;
-          writer_state.d = writer_state.LOAD_ADDRESS;
-          loading_state.d = loading_state.CLEAR_PREVIOUS;
-          timer_value.d = (MAX_TIME - 1);
-          bottom_half_state.d = bottom_half_state.PART_ONE_LOAD_SCORE;
+          // // Reset the game when middle button is clicked
+          // if (button_clicked[1]) {
+          //   // Reinitialise variables to start
+          //   game_state.d = game_state.IN_PROGRESS;
+          //   timer_value.d = (MAX_TIME - 1);
+          //   current_level.d = level_input;
+          //   writer_state.d = writer_state.LOAD_ADDRESS;
+          //   loading_state.d = loading_state.CLEAR_PREVIOUS;
+            
+          // }
+
+
         }
+
   }
       
  
