@@ -17,7 +17,7 @@
 
 ### ALU
 
-The implementation of the ALU and a testing interface (using Alchitry Io shield)
+The implementation of our Arithmetic Logic Unit (ALU) and a testing interface (using Alchitry Io shield)
 
 ### LEDMatrix
 
