@@ -33,7 +33,10 @@ Standalone code of LEDMatrix built upon [Prof Nat's Repo](https://github.com/nat
 ### Rune
 
 Our complete game! Key the runes (arrows) in order to unlock the secrets to acing\* Computation Structures! :)
+
 _\*Effort and exam smarts sold separately_
+
+![50.002 1D Game Demonstration](https://github.com/seancze/50.002-1d/blob/master/assets/50.002_1d_video.gif)
 
 **Key features**
 
@@ -45,4 +48,4 @@ _\*Effort and exam smarts sold separately_
 6. (Frustration-friendly feature) Typing a wrong input only resets you to the start of the current level, not the entire game (you're welcome)
 7. 0-9 digit mappings
 
-![50.002 1D Poster](https://github.com/seancze/50.002-1d/blob/master/images/50.002_1d_poster.png)
+![50.002 1D Poster](https://github.com/seancze/50.002-1d/blob/master/assets/50.002_1d_poster.png)
