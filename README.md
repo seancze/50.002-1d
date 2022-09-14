@@ -38,6 +38,8 @@ _\*Effort and exam smarts sold separately_
 
 ![50.002 1D Game Demonstration](https://github.com/seancze/50.002-1d/blob/master/assets/50.002_1d_video.gif)
 
+PS: **Click [here](https://youtu.be/M7g4iqoyrY0)** to watch our Youtube trailer :)
+
 **Key features**
 
 1. Press start to play the game
