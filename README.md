@@ -30,7 +30,7 @@ Standalone code of LEDMatrix built upon [Prof Nat's Repo](https://github.com/nat
 3. Use up arrow to increase the number of arrows appearing on LED matrix
 4. Use right arrow to change the type of arrow displayed on the LED matrix
 
-### Rune
+### Runes
 
 Our complete game! Key the runes (arrows) in order to unlock the secrets to acing\* Computation Structures! :)
 

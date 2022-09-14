@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Rune" board="Alchitry Au" language="Lucid" version="3">
+<project name="Runes" board="Alchitry Au" language="Lucid" version="3">
   <files>
     <src>seven_seg.luc</src>
     <component>pipeline.luc</component>
